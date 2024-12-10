@@ -1,1 +1,276 @@
-this is for cosyvoice2
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>CosyVoice2.0</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+	
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>FunAudioLLM: Voice Understanding and Generation Foundation Models for Natural Interaction Between Humans and LLMs </h2>
+
+      [<a href="">Paper</a>]
+		[<a href="">Code</a>]
+		[<a href="">HuggingFace</a>]
+		[<a href="">ModelScope</a>]
+
+        <p class="fst-italic mb-0">
+			<br>
+			FunAudioLLM Team
+		<p></p>
+        </p>
+        <p><b>SpeechLab@Tongyi, Alibaba Group</b></p>
+	</div>
+	<p><b>Abstract:</b>
+<!--		We introduce FunAudioLLM, ....-->
+		This report introduces <b>FunAudioLLM</b>, a framework designed to enhance natural voice interactions between humans and large language models (LLMs). At its core are two innovative models: <b>SenseVoice</b> for high-precision multilingual speech recognition, emotion recognition, and audio event detection; and <b>CosyVoice</b> for natural speech generation with multi-language, timbre, and emotion control. SenseVoice delivers exceptionally low latency and supports over 50 languages, while CosyVoice excels in multi-lingual voice generation, zero-shot voice generation, cross-lingual voice cloning, and instruction-following capabilities. The models related to SenseVoice and CosyVoice have been open-sourced on Modelscope and Huggingface, along with the corresponding training, inference, and fine-tuning codes released on GitHub. By integrating these models with LLMs, FunAudioLLM enables applications such as speech translation, emotional voice chat, interactive podcasts, and expressive audiobook narration, thereby pushing the boundaries of voice interaction technology.
+	<p style="text-align: center;">
+		<img src="pics/highlight.png" height="400" width="1024">
+	</p>
+</p>
+	</p>
+
+	<p>
+	<b>Contents</b>
+      <ul><li><a href="#Zero-shot In-context Generation">Zero-shot In-context Generation</a></li>
+	  <li><a href="#Speech-to-Speech Translation">Speech-to-Speech Translation</a></li>
+	  <li><a href="#motionally Expressive Voice Generation">motionally Expressive Voice Generation</a></li>
+	  <li><a href="#Mixed-language speech generation">Mixed-language speech generation</a></li>
+	</p>
+
+</div>
+
+<!------ Application -------------------------->
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Zero-shot In-context Generation" style="text-align: center;">Zero-shot In-context Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Language </th>
+					<th style="vertical-align : middle;text-align: center">Prompt </th>
+					<th style="vertical-align : middle;text-align: center">Generated 1</th>
+					<th style="vertical-align : middle;text-align: center">Generated 2</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="4">ZH</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_2_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>对，这就是我，万人敬仰的太乙真人，虽然有点婴儿肥，但也掩不住我逼人的帅气。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_2_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>突然，身边一阵笑声。我看着他们，意气风发地挺直了胸膛，甩了甩那稍显肉感的双臂，轻笑道："我身上的肉，是为了掩饰我爆棚的魅力，否则，岂不吓坏了你们呢？"</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_2_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>不少人从四面八方赶来，只为目睹我的风采。看，他们眼中流露出的崇敬，足以让我感到自豪。我微微一笑，挥手致意，心中默念着：责任重大，不容懈怠。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_3_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>啊，事情怎么这么多啊，明天又要开会了啊，做不完啊，说了你又不听，听又不懂，懂又不做，做又做错，错又不认，认又不改，改又不服，不服又不说，你说叫我怎么办</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_3_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>这次机会让我能够在新的领域中不断学习和成长，同时也激励我去克服自身的不足。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_3_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>我觉得这种运动其实不是说靠机会的，我觉得对每个人来讲，像我们歌手来讲，我觉得其实都是你要自己去努力，然后才可以达到自己的梦想。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_6_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>周日被我射熄火了，所以今天是周一。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_6_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>有一种撕心裂肺的感觉，是辣椒，我加了辣椒！</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_6_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>新的一周开始了，我计划好好利用这段时间来完成手头的工作和项目。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/Zh_7_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>今夜的月光如此清亮，不做些什么真是浪费。随我一同去月下漫步吧，不许拒绝。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_7_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>梯度是一个多变量微积分中的概念，用于描述一个标量场在某一点处的最大变化率，以及变化最快的方向。在物理学中，梯度通常用来表示某个物理量的空间变化情况。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/ZH_7_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>在这宁静的夜晚，我们可以沿着小路慢慢走，感受微风拂面的轻柔，与自然融为一体。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">EN</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/EN_2_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>I think people online have actually assembled videos showing every launch and it just gets like crazy fast as you get to twenty twenty three. So yeah, so we've done a nineteen three flight. We're now qualifying Falcon nine to be able to do forty flights.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/EN_2_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>In the quest for sustainable energy, Tesla leads the charge; every electric vehicle on the road is an emissary saluting clearer skies, collectively weaving the tapestry of our planet's verdant future.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/EN_2_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>From space exploration to subterranean tunnels, from AI to the neurotechnology revolution, my pursuit transcends mere technological frontiers; it's about carving out unprecedented realms of existence and progress for mankind.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/En_3_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br> I'm so happy I got to do this. I really wanted to work with Tom Hooper. I know that he records live and he films and records your vocals live. It's such an interesting thing to me and I wanted to see him work. I had actually done screen tests for Les Mis.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/EN_3_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>Every stage is a fresh adventure, and as the lights ignite, it's an unspoken pact between me and the audience, weaving unforgettable nights where dreams meet reality.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/EN_3_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>Creating is my way of extracting magic from life's moments. Whether it's joy or tears, I embrace it all, transmuting those feelings into notes, with the hope of touching the depths of every soul.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">JP</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/JP_0_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>の匂いを嗅ぎつけて現場に赴き、モテる感覚の全てを使って犯人を割り出し、食らいついたら相手が観念するまで証拠という鋭い歯を食い込ませるそれが探偵さん。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/JP_0_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>投資で安定収入を得たい人達で情報交換をしませんか？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/JP_0_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>自分でもユナに提案してからやっぱり暑すぎるか。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/JP_1_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>どうして、どうしてお姉ちゃんを助けてくれなかったの？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/JP_1_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>クレジットカード現金化の店舗のスタッフブログです。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/JP_1_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>某ハンドメイドブログの別館ともなっております。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">KO</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/KO_2_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>괴로우나 즐거우나.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/KO_2_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>장로와 다른 교인들이 들어와 병원으로 가기를 번차례로 권하였다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/KO_2_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>비상한 흥분과 그 흥분에 반비례되는 시원치 않은 결과, 이러한 불만의 십 년이 지났습니다.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/KO_3_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>그는 무슨 난처한 일이나 있는 듯이 유쾌하지 못한 표정으로 술만 따른다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/KO_3_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>그날 저녁에 실례한 것은 이 사람이었소이다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/1.ZeroShot/KO_3_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>기천은 상을 물리고 담배를 붙여 물었다..</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Speech-to-Speech Translation" style="text-align: center;">Speech-to-Speech Translation</h2>
+	<!-- <p>By integrating LLMs and CosyVoice, we can easily perform speech-to-speech translation (S2ST).
+		Note that the original recordings are bolded.
+	</p> -->
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">ZH </th>
+					<th style="vertical-align : middle;text-align: center">EN </th>
+					<th style="vertical-align : middle;text-align: center">JP </th>
+					<th style="vertical-align : middle;text-align: center">KO </th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/2_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br><b>老兵不死，只会逐渐凋零</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/2_EN.wav" autoplay/>Your browser does not support the audio element.</audio><br> Old soldiers never die; they just fade away. </td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/2_JP.wav" autoplay/>Your browser does not support the audio element.</audio><br>老兵は死なず、ただ消え去るのみ。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/2_KO.wav" autoplay/>Your browser does not support the audio element.</audio><br>노병은 죽지 않고, 다만 사라져갈 뿐이다.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/3_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>在那之后，完全收购那家公司。因此，保持管理层的一致性，利益与即将加入家族的资产保持一致，这就是我们有时不买下全部的原因。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/3_EN_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br><b>And then later on, fully acquiring that company. So keeping management in line, interest in line with the asset that's coming into the family is a reason why sometimes we don't buy the whole thing.</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/3_JP.wav" autoplay/>Your browser does not support the audio element.</audio><br>その後、その会社を完全に買収する。だから、経営陣を一列に並べ、家族に入る資産との利益を一致させることが、私たちが全てを買わない理由の一つです。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/3_KO.wav" autoplay/>Your browser does not support the audio element.</audio><br>그리고 나중에, 그 회사를 완전히 인수하게 됩니다. 그래서 경영진을 일치시키고, 가족에 들어오는 자산과의 이익을 일치시키는 것이 우리가 가끔 전부를 사지 않는 이유입니다.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/7_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>只是雨滴有什么麻烦的？这还没有打雷呢！</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/7_EN.wav" autoplay/>Your browser does not support the audio element.</audio><br>Rainfall alone does not constitute a storm. Thunder is required.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/7_JP_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br><b>雨なんて大したことありません。まだ雷も鳴っていないのですから。</b></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/7_KO.wav" autoplay/>Your browser does not support the audio element.</audio><br>고작 빗방울로 호들갑은, 아직 번개도 치지 않았는데.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/9_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>如果能对小事感到感激和满足，那他就是幸福的人。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/9_EN.wav" autoplay/>Your browser does not support the audio element.</audio><br>If one knows how to be grateful and content with small things, then he is a happy person.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/9_JP.wav" autoplay/>Your browser does not support the audio element.</audio><br>小さなことに感謝し満足することができれば、その人は幸せな人です。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/2.Translation/9_KO_Prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br><b>작은 것을 가지고도 고마워하고 만족할 줄 안다면 그는 행복한 사람이다.</b></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+
+
+	<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Emotionally Expressive Voice Generation" style="text-align: center;">Emotionally Expressive Voice Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Emotion </th>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Generated</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Happy</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Happy_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>能和大家在一起，我好开心啊。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Happy_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>不久以后，王后果然生下了一个可爱的小公主。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Sad</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Sad_EN_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>Dogs are sitting by the door.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Sad_EN.wav" autoplay/>Your browser does not support the audio element.</audio><br>Their heads lowered and eyes drooping, letting out soft whimpers as they wait for their owner to return.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Surprise</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Surprise_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>天呐，这么好一部小说，竟然出自一个怨碎的小作者之手。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Surprise_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>进入小木屋后，里面竟然整齐排列着七张小小的床！</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Neutral</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Neutral_EN_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>Dogs are sitting by the door.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Neutral_EN.wav" autoplay/>Your browser does not support the audio element.</audio><br>Their expressions steady and unmoved, simply observing the world outside with quiet interest.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Angry</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Angry_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>刚才还好好的，一眨眼又消失了，真的是要气死我了。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Angry_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>可恶的恶魔！你胡作非为，竟敢抓走公主。</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Mixed-language speech generation" style="text-align: center;">Mixed-language speech generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Generated</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/1_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>晴空万里不如你心情愉悦，今天有什么开心的事吗？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>你昨天的 presentation がよかったので, 오늘도 좋은 피드백을 받을 거예요。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/2_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>그런 걸 별짓을 다해 가면서 억지루 시작을 했었지요.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>최근에 한국어를 배우기 시작했어, I find it fascinating, 特に文化の違いを理解するのが 재미있어.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/3_prompt.mp3" autoplay/>Your browser does not support the audio element.</audio><br>…덥다… 이렇게 독한 햇빛이라면 서리꽃도 녹아버리겠지…? 아, 생각해보니까 그럴 일은 없겠네. 하하… 아, 으윽…</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_3.wav" autoplay/>Your browser does not support the audio element.</audio><br>生活は簡単ではないが, happiness 是自己追求的 목표, 맞죠?</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/4_prompt.mp3" autoplay/>Your browser does not support the audio element.</audio><br>The world looks glorious in the snow. Pure white, like the light of the moon. A perfect backdrop for bloodshed.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>내일의 meeting は几点开始？一緒に行きますか?</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 style="text-align: center;">Disclaimer</h2>
+	<p>The content provided above is for academic purposes only and is intended to demonstrate technical capabilities. Some examples are sourced from the internet. If any content infringes on your rights, please contact us to request its removal.</p>
+</div>
+
+</article>
+</main>
+</div>
+
+</body>
+
+</script>
+</html>
