@@ -27,7 +27,7 @@
 	
 <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
 	<div class="text-center">
-	<h2>FunAudioLLM: Voice Understanding and Generation Foundation Models for Natural Interaction Between Humans and LLMs </h2>
+	<h2>CosyVoice 2: Scalable Streaming Speech Synthesis with Large Language Models </h2>
 
       [<a href="">Paper</a>]
 		[<a href="">Code</a>]
@@ -43,19 +43,32 @@
 	</div>
 	<p><b>Abstract:</b>
 <!--		We introduce FunAudioLLM, ....-->
-		This report introduces <b>FunAudioLLM</b>, a framework designed to enhance natural voice interactions between humans and large language models (LLMs). At its core are two innovative models: <b>SenseVoice</b> for high-precision multilingual speech recognition, emotion recognition, and audio event detection; and <b>CosyVoice</b> for natural speech generation with multi-language, timbre, and emotion control. SenseVoice delivers exceptionally low latency and supports over 50 languages, while CosyVoice excels in multi-lingual voice generation, zero-shot voice generation, cross-lingual voice cloning, and instruction-following capabilities. The models related to SenseVoice and CosyVoice have been open-sourced on Modelscope and Huggingface, along with the corresponding training, inference, and fine-tuning codes released on GitHub. By integrating these models with LLMs, FunAudioLLM enables applications such as speech translation, emotional voice chat, interactive podcasts, and expressive audiobook narration, thereby pushing the boundaries of voice interaction technology.
+		In our previous work, we proposed <b>CosyVoice</b>, a multilingual speech synthesis model based on supervised discrete speech token. By performing progressive semantic decoding with two popular generative models: language models (LMs) and Flow Matching, CosyVoice achieved high prosody naturalness, content consistency, and speaker similarity in speech in-context learning. Recently, there have been significant advancements in multi-modal large language models (LLMs), in which the response latency and real-time factor of speech synthesis play a crucial role in the interactive experience. Therefore, in this work, we introduce an improved streaming speech synthesis model, <b>CosyVoice 2</b>, with comprehensive and systematic optimizations. Firstly, we introduce finite-scalar quantization to improve the codebook utilization of speech tokens.  Secondly, we simplify the model architecture of the text-speech LM, so as the pre-trained LLMs can be directly used as the backbone. Additionally, we also design a chunk-aware causal flow matching model to accommodate different synthesis scenarios. As a result, we can perform the streaming and non-streaming synthesis within a single model. By training on a large-scale multilingual dataset, CosyVoice 2 achieves human-comparable synthesis quality with very low response latency and real-time factor.
 	<p style="text-align: center;">
-		<img src="pics/highlight.png" height="400" width="1024">
+		<img src="pics/CosyVoice2-overview.png" height="400" width="1024">
 	</p>
+<body>
+    <p><b>Ultra-Low Latency: </b>CosyVoice 2.0 introduces a large-scale voice generation model technology that integrates offline and streaming modeling, supporting bidirectional streaming speech synthesis. The first packet synthesis latency can reach 150ms with minimal loss in quality.</p>
+
+    <p><b>High Accuracy: </b>Compared to CosyVoice 1.0, CosyVoice 2.0 reduces pronunciation errors in synthesized audio by 30% to 50%. It achieves the current lowest character error rate on the hard test set of the Seed-TTS evaluation set.</p>
+    
+    <p><b>Strong Stability: </b>CosyVoice 2.0 ensures excellent consistency in timbre for zero-shot voice generation and cross-language speech synthesis. It shows significant improvement in cross-language synthesis compared to version 1.0.</p>
+
+    <p><b>Natural Experience: </b>The prosody, sound quality, and emotional alignment of the synthesized audio in CosyVoice 2.0 have significantly improved compared to version 1.0. The MOS evaluation score increased from 5.4 to 5.53 (with a comparable score of 5.52 for a commercialized large-scale speech synthesis model). Additionally, CosyVoice 2.0 has upgraded its controllable audio generation capabilities, supporting more granular emotional controls and dialect accent adjustments.</p>
+</body>
+
 </p>
 	</p>
 
 	<p>
 	<b>Contents</b>
       <ul><li><a href="#Zero-shot In-context Generation">Zero-shot In-context Generation</a></li>
-	  <li><a href="#Speech-to-Speech Translation">Speech-to-Speech Translation</a></li>
+	  <li><a href="#Crosslingual In-context Generation">Crosslingual In-context Generation</a></li>
+	  <li><a href="#Mixlingual In-context Generation">Mixlingual In-context Generation</a></li>
 	  <li><a href="#motionally Expressive Voice Generation">motionally Expressive Voice Generation</a></li>
-	  <li><a href="#Mixed-language speech generation">Mixed-language speech generation</a></li>
+	  <li><a href="#Hardcase Voice Generation">Hardcase Voice Generation</a></li>
+	  <li><a href="#Instructed Voice Generation ">Instructed Voice Generation </a></li>
+	  <li><a href="#Target Speaker Fine-tune Models">Target Speaker Fine-tune Models </a></li>
 	</p>
 
 </div>
@@ -135,7 +148,7 @@
 
 
 <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
-	<h2 id="Speech-to-Speech Translation" style="text-align: center;">Speech-to-Speech Translation</h2>
+	<h2 id="Crosslingual In-context Generation" style="text-align: center;">Crosslingual In-context Generation</h2>
 	<!-- <p>By integrating LLMs and CosyVoice, we can easily perform speech-to-speech translation (S2ST).
 		Note that the original recordings are bolded.
 	</p> -->
@@ -179,6 +192,39 @@
 		</div>
 </div>
 
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Mixlingual In-context Generation" style="text-align: center;">Mixlingual In-context Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Generated</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/1_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>晴空万里不如你心情愉悦，今天有什么开心的事吗？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>你昨天的 presentation がよかったので, 오늘도 좋은 피드백을 받을 거예요。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/2_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>그런 걸 별짓을 다해 가면서 억지루 시작을 했었지요.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>최근에 한국어를 배우기 시작했어, I find it fascinating, 特に文化の違いを理解するのが 재미있어.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/3_prompt.mp3" autoplay/>Your browser does not support the audio element.</audio><br>…덥다… 이렇게 독한 햇빛이라면 서리꽃도 녹아버리겠지…? 아, 생각해보니까 그럴 일은 없겠네. 하하… 아, 으윽…</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_3.wav" autoplay/>Your browser does not support the audio element.</audio><br>生活は簡単ではないが, happiness 是自己追求的 목표, 맞죠?</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/4_prompt.mp3" autoplay/>Your browser does not support the audio element.</audio><br>The world looks glorious in the snow. Pure white, like the light of the moon. A perfect backdrop for bloodshed.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>내일의 meeting は几点开始？一緒に行きますか?</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
 
 
 
@@ -218,41 +264,6 @@
 						<td style="vertical-align : middle;text-align:center;">Angry</td>
 						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Angry_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>刚才还好好的，一眨眼又消失了，真的是要气死我了。</td>
 						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/4.Emotion/Angry_ZH.wav" autoplay/>Your browser does not support the audio element.</audio><br>可恶的恶魔！你胡作非为，竟敢抓走公主。</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-</div>
-
-
-
-
-<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
-	<h2 id="Mixed-language speech generation" style="text-align: center;">Mixed-language speech generation</h2>
-		<div class="table-responsive pt-3">
-			<table class="table table-hover pt-2">
-				<thead>
-				<tr>
-					<th style="vertical-align : middle;text-align: center">Prompt</th>
-					<th style="vertical-align : middle;text-align: center">Generated</th>
-				</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/1_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>晴空万里不如你心情愉悦，今天有什么开心的事吗？</td>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>你昨天的 presentation がよかったので, 오늘도 좋은 피드백을 받을 거예요。</td>
-					</tr>
-					<tr>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/2_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>그런 걸 별짓을 다해 가면서 억지루 시작을 했었지요.</td>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>최근에 한국어를 배우기 시작했어, I find it fascinating, 特に文化の違いを理解するのが 재미있어.</td>
-					</tr>
-					<tr>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/3_prompt.mp3" autoplay/>Your browser does not support the audio element.</audio><br>…덥다… 이렇게 독한 햇빛이라면 서리꽃도 녹아버리겠지…? 아, 생각해보니까 그럴 일은 없겠네. 하하… 아, 으윽…</td>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_3.wav" autoplay/>Your browser does not support the audio element.</audio><br>生活は簡単ではないが, happiness 是自己追求的 목표, 맞죠?</td>
-					</tr>
-					<tr>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/4_prompt.mp3" autoplay/>Your browser does not support the audio element.</audio><br>The world looks glorious in the snow. Pure white, like the light of the moon. A perfect backdrop for bloodshed.</td>
-						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/3.Mix_language/Mix_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>내일의 meeting は几点开始？一緒に行きますか?</td>
 					</tr>
 				</tbody>
 			</table>
