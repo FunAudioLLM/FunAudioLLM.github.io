@@ -4,4 +4,5 @@ FunAudioLLM is an open-source project for voice understanding and generation mod
 The project includes the demo homepage for each subproject of FunAudioLLM.
 
 SenseVoice & CosyVoice: https://funaudiollm.github.io
+
 CosyVoice2.0: https://funaudiollm.github.io/cosyvoice2
