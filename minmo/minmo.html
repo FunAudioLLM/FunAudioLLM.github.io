@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>MinMo</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>MinMo: A Multimodal large Language Model for Seamless Voice Interaction </h2>
+      <!-- 
+      [<a href="">Paper</a>]
+      [Code & Model: will be released soon]
+		[<a href="https://github.com/MinMo">Code</a>]
+		[HuggingFace:<a href="">MinMo</a>]
+		[Modelscope:<a href="https://www.modelscope.cn/studios/iic/MinMo">MinMo</a>]
+    -->
+        <p class="fst-italic mb-0">
+			<br>
+			FunAudioLLM Team
+		<p></p>
+        </p>
+        <p><b>
+SpeechLab@Tongyi, Alibaba Group</b></p>
+	</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .justified {
+            text-align: justify;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <p class="justified">
+        <b>Abstract:</b> Recent advancements of large language models (LLMs) and subsequent multimodal speech-text models have provided promising foundation technologies for achieving seamless voice interactions, that is, real-time, natural, smooth, and human-like voice conversations between the user and the system. 
+        Prior works of speech-text multimodal models for voice interactions can be roughly categorized into native and aligned models. 
+        Native multimodal models simultaneously model end-to-end understanding and generation of both speech and text with a single framework; however, they face the challenges of drastic discrepancy between speech and text sequence lengths, insufficient speech pre-training, and catastrophic forgetting of knowledge of text LLMs. 
+        Aligned multimodal models are more successful at maintaining capabilities of text LLMs; yet existing models are usually trained on small-scale speech data, investigated on a limited set of speech tasks, and lack systematic exploration of instruction-following capabilities for rich and nuanced speaking styles. 
+        In this work, we introduce <b>MinMo</b>, a Multimodal Large Language Model with approximately 8B parameters for seamless voice interaction. 
+        We address the main limitations of prior aligned multimodal models. 
+        We train MinMo through multiple stages of speech-to-text alignment, text-to-speech alignment, speech-to-speech alignment, and duplex interaction alignment, on 1.4 million hours of diverse speech data and a broad range of speech tasks. 
+        After the multi-stage training, MinMo achieves state-of-the-art performance across various benchmarks for voice comprehension and generation while maintaining the capabilities of text LLMs, and also facilitates full-duplex conversation, that is, simultaneous two-way communication between the user and the system. 
+        Moreover, we propose a novel and simple voice decoder that outperforms prior models in voice generation. The enhancedinstruction-following capabilities of MinMo supports controlling speech generation based on user instructions, with various nuances including emotions, dialects, and speaking rates, and mimicking specific voices. For MinMo, the speech-to-text latency is approximately 100ms, full-duplex latency is approximately 600ms in theory and 800ms in practice.
+    </p>
+</body>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/MinMo.png" height="480" width="800">
+	</body>
+</p>
+<body>
+    <p class="justified">
+    <ul>
+    <li><strong>State-of-the-art (SOTA) Performance:</strong> MinMo achieves current SOTA performance in benchmarks such as voice dialogue, multilingual speech recognition, multilingual speech translation, emotion recognition, speaker analysis, and audio event analysis, while also ensuring that the capabilities of the text large model remain largely intact.</li>
+    <li><strong>Instruction-Controlled Audio Generation:</strong> MinMo supports end-to-end voice interaction that follows user instructions to control the emotion, dialect, and speaking style of the generated audio, as well as mimicking specific voice tones, with a generation efficiency of over 90%.</li>
+    <li><strong>Low-Latency Duplex Voice Interaction:</strong> MinMo supports full-duplex voice interaction, enabling smooth multi-turn conversations and preventing interruptions from background noise. The speech-to-text latency is approximately 100ms, full-duplex latency is approximately 600ms in theory and 800ms in practice.</li>
+</ul>
+ </p>
+</body>
+
+
+	</p>
+
+	<p>
+	<b>Contents</b>
+      <ul>
+      	<li><a href="#MinMo-Overview-results">Performance overview of benchmarks </a></li>
+      	<li><a href="#MinMo-demo">VoiceChat Demo </a></li>
+      </ul>
+	</p>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="MinMo-Overview-results" style="text-align: center;"> Performance overview of benchmarks </h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/benchmark_radar.png" height="400" width="800">
+	</body>
+		<p style="text-align: center;" >
+            <p class="justified">
+			<b>Figure 3.</b> Performance comparison between our MinMo(∼8B parameters) and top-tier speech-text multimodal models, including Moshi(7B) (Défossez et al., 2024), Freeze-Omni(7.5B) (Wang et al., 2024b), GLM-4-Voice(9B) (Zeng et al., 2024b), SeamlessM4T Large v2(2.3B) (Communication et al., 2023), NExT-GPT (Wu et al., 2024a), speech-to-text model Qwen2-Audio(∼8B) (Chu et al., 2024), Whisper-large-v3(1.55B) (Radford et al., 2023a), and others. We demonstrate capabilities of MinMo on automatic speech recognition (ASR), speech-to-text translation (S2TT),Spoken question answering (SQA) encompasses both speech-to-text (S2T) and speech-to-speech(S2S), vocal sound classification (VSC), speech emotion recognition (SER), language identification (LID), age recognition and gender detection. ASR is evaluated using 1-WER%, with Fleurs & Common Voice results are averaged over 10 languages (zh, en, ja, ko, yue, de, fr, ru, es, it). S2TT is evaluated using BLEU, with CoVoST2 results averaged over en2zh, en2ja, zh/ja/de/fr/ru/es/it2en translation directions. SQA is eavaluated using Accuracy. SER is evaluated using Weighted Accuracy. <b>MinMo surpasses the previous SOTA models on all these tasks</b>.
+        </p>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="MinMo-demo" style="text-align: center;">VoiceChat Demo</h2>
+
+   <video width="1080" height="600" controls>
+   <source src="demo/1_Chat_english.mp4" type="video/mp4">
+   </video>
+   <p class="caption">
+  Demo1: Chat with MinMo in English about movies.
+   </p>
+
+   <video width="1080" height="600" controls>
+   <source src="demo/2_Chat_Chinese_Dialect _instruct.mp4" type="video/mp4">
+    </video>
+    <p class="caption">
+   Demo2: Chat with MinMo in Chinese while controlling MinMo's accent (Sichuan dialect, Cantonese, etc.) during the conversation.
+    </p>
+ 
+    <video width="1080" height="600" controls>
+   <source src="demo/3_emtion_role_play_Chinese.mp4" type="video/mp4">
+    </video>
+    <p class="caption">
+    Demo3: Chat with MinMo in Chinese, instructing MinMo to engage in emotional interactions and role-playing.
+    </p>
+
+
+</div>
+
+
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 style="text-align: center;">Disclaimer</h2>
+	<p>The content provided above is for academic purposes only and is intended to demonstrate technical capabilities. Some examples are sourced from the internet. If any content infringes on your rights, please contact us to request its removal.</p>
+</div>
+
+</article>
+</main>
+</div>
+
+</body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<script>
+	function updateAudio(playerId, sliderValueId) {
+		var slider = document.getElementById(playerId.replace('audioPlayer', 'slider'));
+		var sliderValue = document.getElementById(sliderValueId);
+		var audioSource = document.getElementById(playerId.replace('audioPlayer', 'audioSource'));
+		var audioPlayer = document.getElementById(playerId);
+
+		var value = slider.value;
+		sliderValue.textContent = value;
+
+		var audioFileName = 'audio/' + value.toFixed(1) + '.mp3';
+
+		audioSource.src = audioFileName;
+
+		audioPlayer.load();
+	}
+</script>
+
+
+
+
+</html>
