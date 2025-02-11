@@ -8,3 +8,5 @@ SenseVoice & CosyVoice: https://funaudiollm.github.io
 CosyVoice2.0: https://funaudiollm.github.io/cosyvoice2
 
 MinMo: https://funaudiollm.github.io/minmo
+
+InspireMusic: https://funaudiollm.github.io/inspiremusic
