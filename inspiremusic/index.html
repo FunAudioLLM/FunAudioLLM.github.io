@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>InspireMusic Homepage</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>InspireMusic: A Unified Framework for Controlled Music, Song, Audio Generation with Collaborative Semantic and Acoustic Tokens</h2>
+
+<!--      [<a href="https://arxiv.org/abs/2407.04051">Paper</a>]-->
+		[<a href="https://github.com/FunAudioLLM/InspireMusic">Code</a>]
+		[Modelscope:<a href="https://www.modelscope.cn/iic/InspireMusic">InspireMusic</a>]
+<!--		[Modelscope Studio:<a href="https://www.modelscope.cn/studios/iic/InspireMusic">InspireMusic</a>]-->
+		[HuggingFace: <a href="https://huggingface.co/FunAudioLLM/InspireMusic-Base">InspireMusic</a>]
+        <p class="fst-italic mb-0">
+			<br>
+			Tongyi Lab
+		<p></p>
+        </p>
+        <p><b>Alibaba Group</b></p>
+	</div>
+	<p><b>Abstract</b>
+
+	This report introduces <b>InspireMusic</b>, a unified framework for music generation that combines semantic and acoustic tokens with an autoregressive
+		Transformer and conditional flow-matching modeling to create expressive high-quality audio.
+		InspireMusic utilizes an audio tokenizer designed to produce discrete tokens with a single codebook that captures both acoustic and semantic characteristics of the audio waveform.
+		To maintain musical structure, inputs include musical form and timestamps. These tokens are processed by an audio language model configured as an autoregressive transformer,
+		to learn and predict intricate musical patterns. Subsequently, the generated tokens are refined using a flow-matching model with
+		a sophisticated acoustic neural codec model with multiple codebooks, yielding high-fidelity audio.
+		This approach ensures the generated music is coherent and rich, facilitating tasks in music, song, and audio generation.</p>
+	</p>
+
+	<p><b>Highlights</b>
+	<ul>
+	- Long-form music generation.
+	</ul>
+	<ul>
+	- High audio quality, support 48kHz, 24kHz.
+	</ul>
+	<ul>
+	- A unified high efficiency music generation framework.
+	</ul>
+</p>
+	</p>
+
+	<p>
+	<b>Contents</b>
+      <ul>
+        <li><a href="InspireMusic-overview">Music Generation Model: InspireMusic</a>
+			<ul>
+				<li><a href="#InspireMusic-overview">Overview of InspireMusic</a></li>
+				<li><a href="#InspireMusic-basic">Text-to-Music Generation</a></li>
+				<li><a href="#InspireMusic-continuation">Music Continuation</a></li>
+				<li><a href="#InspireMusic-reconstruction">Music Reconstruction</a></li>
+				<ul>
+					<li><a href="#InspireMusic-sampling">Music Generation with Different Sampling Methods</a></li>
+					<li><a href="#InspireMusic-cfm">Music Generation with & without Conditional Flow Matching</a></li>
+				</ul>
+				<li><a href="#InspireMusic-demos">More Diverse Generation Samples</a></li>
+				<ul>
+					<li><a href="#InspireMusic-ras-sampling">Music Generation with Repetition Aware Sampling</a></li>
+					<li><a href="#InspireMusic-topk-sampling">Music Generation with Top-K Sampling</a></li>
+				</ul>
+
+			</ul>
+
+		</li>
+		</ul>
+
+<!------ Application -------------------------->
+
+<!------ InspireMusic -------------------------->
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="InspireMusic-overview" style="text-align: center;">Overview of InspireMusic</h2>
+	<body>
+	<p style="text-align: center;">
+		<img src="pics/InspireMusic.png" height="250" width="1024">
+	</p>
+	</body>
+		<p style="text-align: center;" >
+			<b>Figure 1.</b> An overview of the InspireMusic framework.
+			We introduce InspireMusic, a unified framework for music, song and audio generation, capable of producing 48kHz long-form audio. 
+			InspireMusic employs an autoregressive transformer to generate music tokens in response to textual input. Complementing this, an ODE-based diffusion model, specifically flow matching, is utilized to reconstruct latent features from these generated music tokens.
+			Then a vocoder generates audio waveforms from the reconstructed features.
+			for input text, an ODE-based diffusion model, flow matching,
+			to reconstruct latent features from the generated music tokens,
+			and a vocoder to generate audio waveforms. InspireMusic is capable of text-to-music, music continuation, music reconstruction, and music super resolution tasks.
+			It employs WavTokenizer as an audio tokenizer to convert 24kHz audio into 75Hz discrete tokens, while HifiCodec serves as a music tokenizer, transforming 48kHz audio into 150Hz latent features compatible with the flow matching model.
+<!--			[<a href="https://arxiv.org/abs/">Paper</a>]-->
+		</p>
+</div>
+
+	<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="InspireMusic-basic" style="text-align: center;">Text-to-Music Generation</h2>
+		<p>
+		This section showcases a collection of musical pieces generated by InspireMusic.
+		</p>
+<!--		<h3 id="InspireMusic-sampling" style="text-align: center;">Shortform Music Generation</h3>-->
+		<p>
+		The music was generated by InspireMusic and MusicGen, serving as a comparison of short-form text-to-music generation.
+		</p>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Text Description</th>
+				<th style="vertical-align : middle;text-align: center"><Augi></Augi>InspireMusic</th>
+					<th style="vertical-align : middle;text-align: center">InspireMusic w/o CFM</th>
+					<th style="vertical-align : middle;text-align: center">MusicGen-Small</th>
+					<th style="vertical-align : middle;text-align: center">MusicGen-Medium</th>
+					<th style="vertical-align : middle;text-align: center">MusicGen-Large</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:left; width: 250px;">Experience soothing and sensual instrumental jazz with a touch of Bossa Nova, perfect for a relaxing restaurant or spa ambiance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 120px;"><source src="audios/inspiremusic/inspiremusic_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 120px;"><source src="audios/inspiremusic/inspiremusic_noflow_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 120px;"><source src="audios/musicgen/small_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 120px;"><source src="audios/musicgen/medium_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 120px;"><source src="audios/musicgen/large_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	<h3 id="InspireMusic-sampling" style="text-align: center;">Music Generation w/ Different Sampling Methods</h3>
+		<p>
+		This section showcases a collection of musical pieces generated by InspireMusic, utilizing repetition-aware sampling and top-k sampling methods, respectively.
+	</p>
+
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Text Description</th>
+				<th style="vertical-align : middle;text-align: center">w/ Repetition Aware Sampling w/ CFM</th>
+					<th style="vertical-align : middle;text-align: center">w/ Repetition Aware Sampling w/o CFM</th>
+					<th style="vertical-align : middle;text-align: center">w/ Top-K Sampling w/ CFM</th>
+					<th style="vertical-align : middle;text-align: center">w/ Top-K Sampling w/o CFM</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:left; width: 300px;">Experience soothing and sensual instrumental jazz with a touch of Bossa Nova, perfect for a relaxing restaurant or spa ambiance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_w_cfm_verse.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_wo_cfm_verse.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_w_cfm_verse_topk.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_wo_cfm_verse_topk.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h3 id="InspireMusic-cfm" style="text-align: center;">Music Generation with & without Conditional Flow Matching</h3>
+		This section showcases a collection of musical pieces generated by InspireMusic with and without Conditional Flow Matching (CFM), utilizing repetition-aware sampling.
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Music Structure</th>
+				<th style="vertical-align : middle;text-align: center">Genre</th>
+				<th style="vertical-align : middle;text-align: center">Text Description</th>
+				<th style="vertical-align : middle;text-align: center"><Augi></Augi>Audio Output w/ Conditional Flow Matching</th>
+					<th style="vertical-align : middle;text-align: center">Audio Output w/o Conditional Flow Matching</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Intro</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Instrumental</td>
+						<td style="vertical-align : middle;text-align:center;">A delightful collection of classical keyboard music, purely instrumental, exuding a timeless and elegant charm.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_w_cfm_intro.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_wo_cfm_intro.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Chorus</td>
+						<td style="vertical-align : middle;text-align:center;">R&B</td>
+						<td style="vertical-align : middle;text-align:center;">A soothing blend of instrumental and R&B rhythms, featuring serene and calming melodies.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_w_cfm_chorus.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_wo_cfm_chorus.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Verse</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Jazz</td>
+						<td style="vertical-align : middle;text-align:center;">Experience soothing and sensual instrumental jazz with a touch of Bossa Nova, perfect for a relaxing restaurant or spa ambiance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_w_cfm_verse.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_wo_cfm_verse.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Outro</td>
+						<td style="vertical-align : middle;text-align:center;">Rock</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental rock piece features dynamic oscillations and wave-like progressions, creating an immersive and energetic atmosphere. The music is purely instrumental, with no vocals, and it blends elements of rock and post-rock for a powerful and evocative experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_w_cfm_outro.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/inspiremusic_wo_cfm_outro.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		Long-form music generation.
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Text Prompt</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B-Long</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B-Long_no_flow</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">The instrumental rock piece features dynamic oscillations and wave-like progressions, creating an immersive and energetic atmosphere. The music is purely instrumental, with no vocals, and it blends elements of rock and post-rock for a powerful and evocative experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-Long_t2m_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-Long_no_flow_t2m_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+	<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="InspireMusic-basic" style="text-align: center;">Music Continuation</h2>
+		<p>
+		This section showcases a collection of musical pieces generated by InspireMusic for music continuation task.
+		</p>
+<!--		<h3 id="InspireMusic-sampling" style="text-align: center;">Shortform Music Generation</h3>-->
+
+		<h3 id="InspireMusic-cfm" style="text-align: center;">Music Continuation Samples</h3>
+		This section showcases a collection of musical pieces generated by InspireMusic for music continuation task, audio output with Conditional Flow Matching.
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Music Prompt</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B-Long</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B-24kHz</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-Base</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-Base-24kHz</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/prompt/2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-Long_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-24kHz_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-Base_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-Base-24kHz_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/prompt/1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-Long_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-24kHz_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-Base_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-Base-24kHz_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		This section showcases a collection of musical pieces generated by InspireMusic for music continuation task, audio output without Conditional Flow Matching.
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Music Prompt</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B-Long_no_flow</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-1.5B_no_flow</th>
+				<th style="vertical-align : middle;text-align: center">InspireMusic-Base_no_flow</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/prompt/2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-Long_no_flow_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B_no_flow_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-Base_no_flow_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/prompt/1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B-Long_no_flow_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-1.5B_no_flow_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/inspiremusic/InspireMusic-Base_no_flow_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+	<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+		<h2 id="InspireMusic-demos" style="text-align: center;">More Diverse Generation Samples</h2>
+		This section showcases a collection of musical pieces generated by InspireMusic with different music structures and genre.
+		<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+		<h3 id="InspireMusic-ras-sampling" style="text-align: center;">InspireMusic w/ Repetition-Aware Sampling</h3>
+		<p>
+		This section showcases a collection of musical pieces generated by InspireMusic for short-form text-to-music generation with conditional flow matching, utilizing repetition-aware sampling.
+		</p>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Music Structure</th>
+				<th style="vertical-align : middle;text-align: center">Genre</th>
+				<th style="vertical-align : middle;text-align: center">Text Description</th>
+				<th style="vertical-align : middle;text-align: center">Audio Output</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="6">Intro</td>
+						<td style="vertical-align : middle;text-align:center;">Instrumental</td>
+						<td style="vertical-align : middle;text-align:center;">A serene instrumental piece with a nostalgic feel, blending traditional and modern elements for a soothing auditory experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/intro/intro_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Metal</td>
+						<td style="vertical-align : middle;text-align:center;">Exploring a blend of symphonic metal with a primal, rhythmic instrumental backdrop, this track features powerful, creating an epic and immersive auditory experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/intro/intro_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Pop</td>
+						<td style="vertical-align : middle;text-align:center;">Featuring a soothing blend of Mandarin pop with a gentle instrumental backdrop, this track offers a serene and reflective ambiance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/intro/intro_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Instrumental</td>
+						<td style="vertical-align : middle;text-align:center;">A serene blend of instrumental modern classical music, evoking a contemplative and tranquil atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/intro/intro_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">Experience an electrifying journey through high-energy electronic beats and mesmerizing trance rhythms.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/intro/intro_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Game</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental track from a video game soundtrack exudes an adventurous and lively atmosphere, characterized by its energetic and playful melodies.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/intro/intro_06.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="8">Verse</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Hip-hop | Laid-back</td>
+						<td style="vertical-align : middle;text-align:center;">The track exudes a laid-back, instrumental hip-hop vibe with a relaxing beat.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_01.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Piano</td>
+						<td style="vertical-align : middle;text-align:center;">A serene and elegant classical piano piece, evoking a sense of tranquility and nobility, with a purely instrumental arrangement.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_08.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Game</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental and anime-inspired music evokes a nostalgic journey through classic video game soundscapes, blending energetic and atmospheric elements.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_02.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Latin</td>
+						<td style="vertical-align : middle;text-align:center;">A vibrant blend of Latin and Latin American instrumental music, likely featuring in a heartfelt and rhythmic style.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_03.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">The electronic track exudes a warm, wintery vibe with instrumental.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_04.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">The track delivers an immersive electronic experience with a hypnotic, psychedelic atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_05.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">The track delivers an immersive electronic experience with a hypnotic, psychedelic atmosphere, featuring English vocals that add a captivating layer to the progressive soundscape.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_06.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Punk</td>
+						<td style="vertical-align : middle;text-align:center;">The music exudes a gritty, rebellious energy with a raw punk vibe.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/verse/verse_07.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="10">Chorus</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Classical Instrumental</td>
+						<td style="vertical-align : middle;text-align:center;">A captivating piece of classical instrumental music, characterized by its intricate variations and timeless elegance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_10.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic, Folk</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental track blends electronic and folk elements, creating a serene and atmospheric soundscape.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_01.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Reggae</td>
+						<td style="vertical-align : middle;text-align:center;">Experience a deep, instrumental journey through reggae and dub, characterized by echoing rhythms and a laid-back, atmospheric vibe. The music is purely instrumental, allowing the rich, resonant basslines and intricate soundscapes to take center stage.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_02.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">TThe music exudes a serene and atmospheric electronic vibe.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_03.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Instrumental | Playful | Whimsical </td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental piece exudes a playful and whimsical atmosphere, likely featuring lively and rhythmic elements. The music seems to be inspired by nature and animals, creating an engaging and light-hearted experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_04.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">An energetic electronic track with a trance-like feel, featuring instrumental melodies and a dynamic beat. The music likely has a Chinese influence, given the tags, and is purely instrumental without any vocal performance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">A soothing blend of instrumental and electronic sounds, likely featuring relaxing and ambient tones. The music is instrumental, suggesting no vocals, and it evokes a serene, space-themed atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_06.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Instrumental</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental track exudes a serene and reflective ambiance, characterized by its smooth and melodic composition. The absence of vocals allows the music to create a tranquil and contemplative atmosphere, perfect for relaxation or introspection.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_07.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Jazz</td>
+						<td style="vertical-align : middle;text-align:center;">A serene blend of contemporary jazz and instrumental music, characterized by drifting melodies and a smooth, floating ambiance. The piece likely features instrumental performances without vocals, creating a tranquil and sophisticated atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_08.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Reggae | Pop</td>
+						<td style="vertical-align : middle;text-align:center;">A vibrant blend of reggae and pop, delivering a soulful and energetic performance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/chorus/chorus_09.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="5">Outro</td>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">World Fusion Music</td>
+						<td style="vertical-align : middle;text-align:center;">Exploring the vibrant rhythms and intricate beats of Egyptian percussion, this offers a captivating journey into world fusion music, blending traditional sounds with modern influences. The vocals, likely in Arabic, add an authentic touch, with a dynamic performance that complements the energetic and immersive instrumental backdrop.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/outro/outro_01.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">An energetic electronic track with a trance vibe, featuring instrumental elements and a dynamic beat.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/outro/outro_02.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental track exudes a progressive house vibe with electronic elements, creating a serene and futuristic atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/outro/outro_03.wav " autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Rock | Funky</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental rock track exudes a funky, energetic vibe with a touch of rock elements, creating a dynamic and engaging listening experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/outro/outro_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental track exudes a serene and atmospheric electronic vibe, blending ambient sounds with a touch of tranquility.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/ras/outro/outro_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+		<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h3 id="InspireMusic-topk-sampling" style="text-align: center;">InspireMusic w/ TopK Sampling</h3>
+	<p>
+	This section presents the demo of shortform instrumental music generation with 30 seconds pre-trained InspireMusic-Base model based on Top-K sampling method.
+	</p>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Music Structure</th>
+				<th style="vertical-align : middle;text-align: center">Genre</th>
+				<th style="vertical-align : middle;text-align: center">Text Description</th>
+				<th style="vertical-align : middle;text-align: center">Audio Output</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="8">Verse</td>
+						<td style="vertical-align : middle;text-align:center;">Pop</td>
+						<td style="vertical-align : middle;text-align:center;">Dreamy and ethereal, this English-language track blends elements of pop and dream pop, featuring a remix that adds a neon-lit twist. The vocals, likely delivered by a male singer, float effortlessly over the lush, atmospheric soundscape.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Pop</td>
+						<td style="vertical-align : middle;text-align:center;">A lively and rhythmic instrumental track, characterized by its upbeat and danceable pop style.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Classical</td>
+						<td style="vertical-align : middle;text-align:center;">A serene instrumental piece blending classical and contemporary elements, performed in English, evoking a timeless and elegant atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">A vibrant electronic instrumental experience blending drum and bass elements, likely featuring soothing Chinese vocals.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Rock</td>
+						<td style="vertical-align : middle;text-align:center;">A dynamic blend of instrumental rock and math rock, featuring intricate rhythms and a powerful, energetic feel. The music is purely instrumental, allowing listeners to immerse themselves in the complex, yet harmonious soundscapes.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Electronic House | Dance</td>
+						<td style="vertical-align : middle;text-align:center;">The track exudes a captivating electronic house vibe, characterized by its instrumental purity and energetic dance beats.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_06.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">New Age Music</td>
+						<td style="vertical-align : middle;text-align:center;">Experience soothing instrumental New Age music designed to balance chakras, enhance happiness, and maintain calm, perfect for yoga sessions and relaxation.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_07.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Game Music</td>
+						<td style="vertical-align : middle;text-align:center;">An energetic blend of Japanese anime and game music, featuring dynamic instrumentals and possibly female vocals, creating a nostalgic and vibrant atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/verse/verse_08.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="9">Chorus</td>
+						<td style="vertical-align : middle;text-align:center;">R&B</td>
+						<td style="vertical-align : middle;text-align:center;">The music exudes a soulful and rhythmic vibe, blending elements of R&B and soul. The performance likely features a smooth, emotive delivery.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic | Anime</td>
+						<td style="vertical-align : middle;text-align:center;">A mysterious and atmospheric track, blending elements of dark electronic and anime soundtrack styles.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Jazz</td>
+						<td style="vertical-align : middle;text-align:center;">Imagine a lively instrumental jazz piece with a swinging rhythm that evokes a sense of joy and nostalgia. The music, characterized by its upbeat tempo and smooth melodies, creates an atmosphere perfect for dancing or simply enjoying a cheerful moment.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic Dance</td>
+						<td style="vertical-align : middle;text-align:center;">The energetic electronic dance track features nostalgic vibes.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">An energetic electronic track with a trance-like feel, featuring instrumental melodies and a dynamic beat. The music likely has a Chinese influence, given the tags, and is purely instrumental without any vocal performance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Instrumental</td>
+						<td style="vertical-align : middle;text-align:center;">A serene and melodic Chinese ballad featuring gentle, harmonious with an instrumental version that highlights traditional musical elements.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_06.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Heavy Metal</td>
+						<td style="vertical-align : middle;text-align:center;">The intense live performance delivers a raw and aggressive sound, characterized by heavy, distorted guitars and powerful drumming, delivered with a harsh, guttural style, typical of extreme metal genres.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_07.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Energetic | Cardiac Sound</td>
+						<td style="vertical-align : middle;text-align:center;">The instrumental track delivers an energetic and rhythmic experience, characterized by a pulsating beat and dynamic soundscapes.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_08.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Indian Classical</td>
+						<td style="vertical-align : middle;text-align:center;">A soothing blend of traditional Indian classical music featuring intricate flute melodies and rhythmic tabla beats.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/chorus/chorus_09.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">Intro</td>
+						<td style="vertical-align : middle;text-align:center;">Electronic Dance</td>
+						<td style="vertical-align : middle;text-align:center;">A serene instrumental piece with a nostalgic feel, likely featuring male vocals in Mandarin, blending traditional and modern elements for a soothing auditory experience.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/intro/intro_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Electronic</td>
+						<td style="vertical-align : middle;text-align:center;">The track exudes a deeply immersive electronic vibe, characterized by pure instrumental sounds and a rich deep house rhythm. The overall feel is intoxicating and hypnotic.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/intro/intro_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="4">Outro</td>
+						<td style="vertical-align : middle;text-align:center;">Modern Instrumentation</td>
+						<td style="vertical-align : middle;text-align:center;">A soothing blend of traditional Chinese melodies and modern instrumentation, featuring gentle that evoke a serene and tranquil atmosphere.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/outro/outro_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">House</td>
+						<td style="vertical-align : middle;text-align:center;">The vibrant mix of house and classical crossover creates an energetic and sophisticated atmosphere, featuring with a powerful performance.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/outro/outro_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Hip-hop | Rap style</td>
+						<td style="vertical-align : middle;text-align:center;"><article></article>A dynamic blend of West Coast hip-hop with a storytelling rap style, featuring English vocals that convey a gritty, urban narrative.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/outro/outro_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Latin dance</td>
+						<td style="vertical-align : middle;text-align:center;">The vibrant and energetic rhythms of this music blend Latin dance styles with a global influence, featuring lively salsa and merengue beats. The vocals, likely in Spanish, are delivered with passionate intensity, possibly by a male singer.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audios/topk/outro/outro_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+</div>
+	
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 style="text-align: center;">Disclaimer</h2>
+	<p>The content provided above is for academic purposes only and is intended to demonstrate technical capabilities. Some examples are sourced from the internet. If any content infringes on your rights, please contact us to request its removal.</p>
+</div>
+
+</article>
+</main>
+</div>
+
+</body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+
+<script>
+	function updateAudio(playerId, sliderValueId) {
+		var slider = document.getElementById(playerId.replace('audioPlayer', 'slider'));
+		var sliderValue = document.getElementById(sliderValueId);
+		var audioSource = document.getElementById(playerId.replace('audioPlayer', 'audioSource'));
+		var audioPlayer = document.getElementById(playerId);
+
+		var value = slider.value;
+		sliderValue.textContent = value;
+
+		var audioFileName = 'audio/' + value.toFixed(1) + '.mp3';
+
+		audioSource.src = audioFileName;
+
+		audioPlayer.load();
+	}
+</script>
+
+<script defer>
+    // Replace "path/to/generated1.wav", "path/to/generated2.wav", etc. with actual paths to generated audio files
+    const generatedAudioPaths = [
+        [
+        "audios/chorus/chorus_01.wav",
+        "audios/chorus/chorus_02.wav",
+        "audios/chorus/chorus_03.wav",
+        "audios/chorus/chorus_04.wav",
+        "audios/chorus/chorus_05.wav",
+        "audios/chorus/chorus_06.wav",
+        "audios/chorus/chorus_07.wav",
+        "audios/chorus/chorus_08.wav",
+        "audios/chorus/chorus_09.wav",
+            // Add more paths for source 1
+        ],
+        [
+        "audios/verse/verse_01.wav",
+        "audios/verse/verse_02.wav",
+        "audios/verse/verse_03.wav",
+        "audios/verse/verse_04.wav",
+        "audios/verse/verse_05.wav",
+        "audios/verse/verse_06.wav",
+        "audios/verse/verse_07.wav",
+        "audios/verse/verse_08.wav",
+        "audios/verse/verse_09.wav",
+            // Add more paths for source 2
+        ],
+        [
+        "audios/outro/outro_01.wav",
+        "audios/outro/outro_02.wav",
+        "audios/outro/outro_03.wav",
+        "audios/outro/outro_04.wav",
+            // Add more paths for source 3
+        ],
+        [
+        "audios/intro/intro_01.wav",
+        "audios/intro/intro_02.wav",
+            // Add more paths for source 4
+        ]
+    ];
+
+
+    // Trigger initial update on page load
+    updateGeneratedAudio(1);
+    updateGeneratedAudio(2);
+    updateGeneratedAudio(3);
+    updateGeneratedAudio(4);
+	updateGeneratedAudio(5);
+    
+    // Function to update generated audio source and slider value
+    function updateGeneratedAudio(groupIndex) {
+        const audioSlider = document.getElementById(`audioSlider${groupIndex}`);
+        const sliderValueSpan = document.getElementById(`sliderValue${groupIndex}`);
+        const generatedAudio = document.getElementById(`generatedAudio${groupIndex}`);
+        
+        const currentGroupPaths = generatedAudioPaths[groupIndex-1];
+
+        const sliderValue = parseFloat(audioSlider.value);
+        const selectedIndex = Math.floor(sliderValue * (currentGroupPaths.length-1));
+        console.log(sliderValue * currentGroupPaths.length)
+        console.log(selectedIndex)
+        const selectedPath = currentGroupPaths[selectedIndex];
+        
+        generatedAudio.src = selectedPath;
+        sliderValueSpan.textContent = `\u03B1=${sliderValue.toFixed(1)}`;
+        generatedAudio.load(); 
+    }
+</script>
+</html>
