@@ -26,7 +26,7 @@
 
 <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
 	<div class="text-center">
-	<h2>InspireMusic: A Unified Framework for Controlled High-Fidelity Long-Form Music, Song and Audio Generation with Dual Audio Tokenizations</h2>
+	<h2>InspireMusic: A Unified Framework for Controlled High-Fidelity Long-Form Music, Song and Audio Generation</h2>
 
 <!--      [<a href="https://arxiv.org/abs/2407.04051">Paper</a>]-->
 		[<a href="https://github.com/FunAudioLLM/InspireMusic">Code</a>]
@@ -44,13 +44,7 @@
 	</div>
 	<p><b>Abstract</b>
 
-	This report introduces <b>InspireMusic</b>, a unified framework for music generation that combines semantic and acoustic tokens with an autoregressive
-		Transformer and conditional flow-matching modeling to create expressive high-quality audio.
-		InspireMusic utilizes an audio tokenizer designed to produce discrete tokens with a single codebook that captures both acoustic and semantic characteristics of the audio waveform.
-		To maintain musical structure, inputs include musical form and timestamps. These tokens are processed by an audio language model configured as an autoregressive transformer,
-		to learn and predict intricate musical patterns. Subsequently, the generated tokens are refined using a flow-matching model with
-		a sophisticated acoustic neural codec model with multiple codebooks, yielding high-fidelity audio.
-		This approach ensures the generated music is coherent and rich, facilitating tasks in music, song, and audio generation.</p>
+	Recent advances in generative modeling have transformed the landscape of music and audio generation. In this work, we introduce <b>InspireMusic</b>, a unified framework designed to generate high-fidelity music, songs, and audio, which integrates an autoregressive transformer with a super-resolution flow-matching model. This framework enables the direct generation of high-fidelity long-form audio at 48kHz from both text and audio modalities. Unlike prior systems that focus solely on symbolic or raw audio generation, our approach employs dual audio tokenizers to capture both the global musical structure and the fine-grained acoustic details, allowing for high quality audio generation with long-form coherence. This framework represents a significant advancement in music generation by directly modeling raw audio, ensuring both diversity and high-fidelity output.</p>
 	</p>
 
 	<p><b>Highlights</b>
@@ -101,15 +95,18 @@
 	</p>
 	</body>
 		<p style="text-align: center;" >
-			<b>Figure 1.</b> An overview of the InspireMusic framework.
-			We introduce InspireMusic, a unified framework for music, song and audio generation, capable of producing 48kHz long-form audio. 
-			InspireMusic employs an autoregressive transformer to generate music tokens in response to textual input. Complementing this, an ODE-based diffusion model, specifically flow matching, is utilized to reconstruct latent features from these generated music tokens.
-			Then a vocoder generates audio waveforms from the reconstructed features.
-			for input text, an ODE-based diffusion model, flow matching,
-			to reconstruct latent features from the generated music tokens,
-			and a vocoder to generate audio waveforms. InspireMusic is capable of text-to-music, music continuation, music reconstruction, and music super resolution tasks.
-			It employs WavTokenizer as an audio tokenizer to convert 24kHz audio into 75Hz discrete tokens, while HifiCodec serves as a music tokenizer, transforming 48kHz audio into 150Hz latent features compatible with the flow matching model.
-<!--			[<a href="https://arxiv.org/abs/">Paper</a>]-->
+			<b>Figure 1.</b> An overview of the InspireMusic framework. We introduce InspireMusic, a unified framework for music, song, and audio generation capable of producing high-quality 48kHz long-form audio. InspireMusic consists of three key components:
+
+- **Dual Audio Tokenizers**:
+The framework first converts raw audio waveforms into discrete tokens that are efficiently processed by the autoregressive model. We employ two tokenizers: WavTokenizer converts 24kHz audio into 75Hz discrete tokens, while Hifi-Codec transforms 48kHz audio into 150Hz latent features suited for our flow matching model.
+
+- **Autoregressive Transformer**:
+This component is trained using a next-token prediction approach on both text and audio tokens, enabling it to generate coherent and contextually relevant audio sequences.
+
+- **Super-Resolution Flow Matching** Model:
+An ODE-based diffusion model, specifically a super-resolution flow matching (SRFM) model, maps the lower-resolution audio tokens to latent features with a higher sampling rate. A vocoder then generates the final audio waveform from these enhanced latent features.
+
+InspireMusic supports a range of tasks including text-to-music, music continuation, music reconstruction, and music super-resolution.--			[<a href="https://arxiv.org/abs/">Paper</a>]-->
 		</p>
 </div>
 
