@@ -43,8 +43,10 @@
         <p><b>Alibaba Group</b></p>
 	</div>
 	<p><b>Abstract</b>
-
-	Recent advances in generative modeling have transformed the landscape of music and audio generation. In this work, we introduce <b>InspireMusic</b>, a unified framework designed to generate high-fidelity music, songs, and audio, which integrates an autoregressive transformer with a super-resolution flow-matching model. This framework enables the direct generation of high-fidelity long-form audio at 48kHz from both text and audio modalities. Unlike prior systems that focus solely on symbolic or raw audio generation, our approach employs dual audio tokenizers to capture both the global musical structure and the fine-grained acoustic details, allowing for high quality audio generation with long-form coherence. This framework represents a significant advancement in music generation by directly modeling raw audio, ensuring both diversity and high-fidelity output.</p>
+		We introduce <b>InspireMusic</b>, a unified framework designed to generate high-fidelity music, songs, and audio, which integrates an autoregressive transformer with a super-resolution flow-matching model.
+		This framework enables the direct generation of high-fidelity long-form audio at 48kHz from both text and audio modalities. Our model differs from previous approaches, we utilize dual audio tokenizers: a high-bitrate compression audio tokenizer contains richer semantic information,
+		thereby reducing training costs and enhancing efficiency, and an acoustic codec that preserves fine-grained acoustic details during flow-matching model training. This combination enables us to achieve high-quality audio generation with long-form coherence.
+	</p>
 	</p>
 
 	<p><b>Highlights</b>
