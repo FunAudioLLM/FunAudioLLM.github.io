@@ -28,13 +28,12 @@
 	<div class="text-center">
 	<h2>InspireMusic: A Unified Framework for Controlled High-Fidelity Long-Form Music, Song and Audio Generation</h2>
 
-<!--      [<a href="https://arxiv.org/abs/2407.04051">Paper</a>]-->
 		[<a href="https://github.com/FunAudioLLM/InspireMusic">Code</a>]
 		[Studio: <a href="https://modelscope.cn/studios/iic/InspireMusic">Modelscope</a>]
 		[Spaces: <a href="https://huggingface.co/spaces/FunAudioLLM/InspireMusic">HuggingFace</a>]
 		[Models: <a href="https://modelscope.cn/collections/InspireMusic-1e934504470e46">Modelscope</a>]
 		[Models: <a href="https://huggingface.co/FunAudioLLM/InspireMusic-1.5B-Long">HuggingFace</a>]
-		[Technical Report (coming soon)]
+		[Paper: <a href="http://arxiv.org/abs/2503.00084">Technical Report</a>]
         <p class="fst-italic mb-0">
 			<br>
 			Tongyi Lab
@@ -43,10 +42,7 @@
         <p><b>Alibaba Group</b></p>
 	</div>
 	<p><b>Abstract</b>
-		We introduce <b>InspireMusic</b>, a unified framework designed to generate high-fidelity music, songs, and audio, which integrates an autoregressive transformer with a super-resolution flow-matching model.
-		This framework enables to generate high-fidelity long-form audio at 48kHz from both text and audio modalities. Our model differs from previous approaches, we utilize dual audio tokenizers: a high-bitrate compression audio tokenizer contains richer semantic information,
-		thereby reducing training costs and enhancing efficiency, and an acoustic codec that preserves fine-grained acoustic details during flow-matching model training. This combination enables us to achieve high-quality audio generation with long-form coherence.
-		Then an autoregressive transformer model based on Qwen2.5 to predict 75Hz audio tokens. Next, we employ a super resolution flow matching model to learn the latent features of the audio from 150Hz music tokenzier, and finally, we output high-quality audio waveforms through a Vocoder. This framework represents a significant advancement in music generation by directly modeling raw audio, ensuring both diversity and high-fidelity output.
+		We introduce <b>InspireMusic</b>, a framework integrated super resolution and large language model for high-fidelity long-form music generation. A unified framework generates high-fidelity music, songs, and audio, which incorporates an autoregressive transformer with a super-resolution flow-matching model. This framework enables the controllable generation of high-fidelity long-form music at a higher sampling rate from both text and audio prompts. Our model differs from previous approaches, as we utilize an audio tokenizer with one codebook that contains richer semantic information, thereby reducing training costs and enhancing efficiency. This combination enables us to achieve high-quality audio generation with long-form coherence. Then, an autoregressive transformer model based on Qwen 2.5 predicts audio tokens. Next, we employ a super-resolution flow-matching model to generate high-sampling rate audio with fine-grained details learned from an acoustic codec model.
 	</p>
 	</p>
 
@@ -55,10 +51,10 @@
 	- Long-form music generation.
 	</ul>
 	<ul>
-	- High audio quality, support 48kHz, 24kHz.
+	- High audio quality.
 	</ul>
 	<ul>
-	- A unified high efficiency music generation framework.
+	- A unified music, song and audio generation framework.
 	</ul>
 </p>
 	</p>
@@ -100,16 +96,16 @@
 		<p style="text-align: center;" >
 			<b>Figure 1.</b> An overview of the InspireMusic framework. We introduce InspireMusic, a unified framework for music, song, and audio generation capable of producing high-quality 48kHz long-form audio. InspireMusic consists of three key components:
 
-- **Dual Audio Tokenizers**:
-The framework first converts raw audio waveforms into discrete tokens that are efficiently processed by the autoregressive model. We employ two tokenizers: WavTokenizer converts 24kHz audio into 75Hz discrete tokens, while Hifi-Codec transforms 48kHz audio into 150Hz latent features suited for our flow matching model.
+- **Audio Tokenizers**:
+Convert the raw audio waveform into discrete audio tokens that can be efficiently processed and trained by the autoregressive transformer model. Audio waveform of lower sampling rate has converted to discrete tokens via a high bitrate compression audio tokenizer.
 
 - **Autoregressive Transformer**:
-This component is trained using a next-token prediction approach on both text and audio tokens, enabling it to generate coherent and contextually relevant audio sequences.
+Autoregressive transformer model is based on Qwen2.5 as the backbone model and is trained using a next-token prediction approach on both text and audio tokens, enabling it to generate coherent and contextually relevant token sequences. The audio and text tokens are the inputs of an autoregressive model with the next token prediction to generate tokens.
 
 - **Super-Resolution Flow Matching** Model:
-An ODE-based diffusion model, specifically a super-resolution flow matching (SRFM) model, maps the lower-resolution audio tokens to latent features with a higher sampling rate. A vocoder then generates the final audio waveform from these enhanced latent features.
+An ODE-based flow matching model, specifically a super-resolution flow matching (SRFM) model, maps the generated tokens to latent features with high-resolution fine-grained acoustic details obtained from a higher sampling rate of audio to ensure the acoustic information flow connected with high fidelity through models. A vocoder then generates the final audio waveform from these enhanced latent features.
 
-InspireMusic supports a range of tasks including text-to-music, music continuation, music reconstruction, and music super-resolution.--			[<a href="https://arxiv.org/abs/">Paper</a>]-->
+InspireMusic supports a range of tasks including text-to-music, music continuation, music reconstruction, and music super-resolution.--			[<a href="http://arxiv.org/abs/2503.00084">Technical Report</a>]-->
 		</p>
 </div>
 
