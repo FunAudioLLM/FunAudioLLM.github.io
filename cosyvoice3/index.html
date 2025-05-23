@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="generator" content="Hugo 0.88.1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href=""https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+	<link rel="stylesheet" href="css/custom.css">
+	<link rel="stylesheet" href="css/normalize.css">
+
+	<title>CosyVoice3.0</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+
+	<style>
+    .image-container {
+        display: flex; /* 使用flex布局使内容并排 */
+        justify-content: center; /* 水平居中显示 */
+        align-items: center; /* 垂直居中显示 */
+        margin-bottom: 20px; /* 下边距 */
+    }
+    .image-container img {
+        margin-right: 20px; /* 图片之间的间隔 */
+        width: 600px; /* 图片宽度 */
+    }
+    .image-container img:last-child {
+        margin-right: 0; /* 最后一张图片不需要右边距 */
+    }
+    .caption {
+        text-align: center; /* 标题居中 */
+        font-size: 16px; /* 字体大小 */
+    }
+</style>
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="14.1091.0" data-gr-ext-installed="">
+
+<div class="container" >
+<header role="banner">
+</header>
+<main role="main">
+<article itemscope itemtype="https://schema.org/BlogPosting">
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<div class="text-center">
+	<h2>CosyVoice 3: Towards In-the-wild Speech Generation via Scaling-up and Post-training
+</h2>
+
+      [<a href="pdf/CosyVoice3_0.pdf">Paper</a>]
+
+        <p class="fst-italic mb-0">
+			<br>
+			FunAudioLLM Team
+		<p></p>
+        </p>
+        <p><b>SpeechLab@Tongyi, Alibaba Group</b></p>
+	</div>
+	<p><b>Abstract:</b>
+<!--		We introduce FunAudioLLM, ....-->
+		In our prior works, we introduced a scalable streaming speech synthesis model, CosyVoice 2, which integrates a large language model (LLM) and a chunk-aware flow matching (FM) model, and achieves low-latency bi-streaming speech synthesis and human-parity quality. Despite these advancements, CosyVoice 2 exhibits limitations in language coverage, domain diversity, data volume, text formats, and post-training techniques. In this paper, we present CosyVoice 3, an improved model designed for zero-shot multilingual speech synthesis in the wild, surpassing its predecessor in content consistency, speaker similarity, and prosody naturalness. Key features of CosyVoice 3 include:
+		<p><b>A novel speech tokenizer</b> to improve prosody naturalness, developed via supervised multi-task training, including automatic speech recognition, speech emotion recognition, language identification, audio event detection, and speaker analysis.</p>
+		<p><b>A new differentiable reward model</b> for post-training applicable not only to CosyVoice 3 but also to other LLM-based speech synthesis models. </p>
+		<p><b>Dataset Size Scaling:</b> Training data is expanded from ten thousand hours to one million hours, encompassing 9 languages and 18 Chinese dialects across various domains and text formats. </p>
+		<p><b>Model Size Scaling:</b> Model parameters are increased from 0.5 billion to 1.5 billion, resulting in enhanced performance on our multilingual benchmark due to the larger model capacity. </p>
+		<p>These advancements contribute significantly to the progress of speech synthesis in the wild.</p>
+
+	<div class="image-container">
+		<div>
+			<img src="pics/benchmark_radar_cc.png" alt="Content Consistency" height="600" width="600">
+			<p class="caption">Content Consistency</p>
+		</div>
+		<div>
+			<img src="pics/benchmark_radar_ss.png" alt="Content Consistency" height="600" width="600">
+			<p class="caption">Content Consistency</p>
+		</div>
+	</div>
+</p>
+	</p>
+
+	<p>
+	<b>Contents</b>
+      <ul><li><a href="#Zero-shot In-context Generation">Zero-shot In-context Generation</a></li>
+	  <li><a href="#Mixed-lingual In-context Generation">Mixed-lingual In-context Generation</a></li>
+	  <li><a href="#Emotionally Expressive Voice Generation">Emotionally Expressive Voice Generation</a></li>
+	  <li><a href="#Chinese dialect Voice Generation">Chinese dialect Voice Generation</a></li>
+	  <li><a href="#Cross-lingual In-context Generation">Cross-lingual In-context Generation</a></li>
+	  <li><a href="#Post-training">Post-training</a></li>
+	  <li><a href="#Hotfix Capability">Hotfix Capability</a></li>
+	  <li><a href="#Instructed Voice Generation">Instructed Voice Generation</a></li>
+	  <li><a href="#Target Speaker Fine-tune Models">Target Speaker Fine-tune Models</a></li>
+	</p>
+
+</div>
+
+<!------ Application -------------------------->
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Zero-shot In-context Generation" style="text-align: center;">Zero-shot In-context Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Language</th>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 2.0</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-0.5B</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-1.5B</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">ZH</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/zh/prompt_audio_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>转任福建路转运判官。</td>
+						<td style="vertical-align : middle;text-align:center;">这个记者俱乐部将成为该部门发放资讯的唯一渠道。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/zero-shot/zh/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/zh/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/zh/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">HARD-ZH</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/hard-zh/prompt_audio_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>在中国鸦片泛滥的年代，不同材质的烟枪甚至成为了身份和地位的象征。</td>
+						<td style="vertical-align : middle;text-align:center;">八百标兵奔北坡，北坡炮兵并排跑，炮兵怕把标兵碰，标兵怕碰炮兵炮。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/zero-shot/hard-zh/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/hard-zh/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/hard-zh/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">EN</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/en/prompt_audio_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>There is no lock but a golden key will open it.</td>
+						<td style="vertical-align : middle;text-align:center;">Butler tranquilizes Holly with a hypodermic dart gun.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/zero-shot/en/uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/en/uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/en/uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">HARD-EN</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/hard-en/prompt_audio_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>And there were dunes, rocks, and plants that insisted on living where survival seemed impossible.</td>
+						<td style="vertical-align : middle;text-align:center;">Fuzzy Wuzzy was a bear. Fuzzy Wuzzy had no hair. Fuzzy Wuzzy wasn't very fuzzy, was he?</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/zero-shot/hard-en/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/hard-en/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/hard-en/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">JA</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/ja/prompt_audio_25.wav" autoplay/>Your browser does not support the audio element.</audio><br>来週、美容院で髪を切ろうと思っています。</td>
+						<td style="vertical-align : middle;text-align:center;">結合することができないから矛盾するというのである。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/zero-shot/ja/uttid_25.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/ja/uttid_25.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/ja/uttid_25.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>		
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">KO</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/ko/prompt_audio_5.wav" autoplay/>Your browser does not support the audio element.</audio><br>그들이 집까지 왔을 때는 어슬어슬한 황혼이었다.</td>
+						<td style="vertical-align : middle;text-align:center;">동혁은 환자의 머리맡을 떠나지 않았다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/zero-shot/ko/uttid_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/ko/uttid_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/ko/uttid_5.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">DE</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/de/prompt_audio_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>Zieht euch bitte draußen die Schuhe aus.</td>
+						<td style="vertical-align : middle;text-align:center;">Die Gemeinde liegt im Westerwald im Einzugsbereich der Westerwälder Seenplatte.</td>
+						<td style="vertical-align : middle;text-align:center;">Not supported</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/de/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/de/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">ES</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/es/prompt_audio_1.wav"autoplay/>Your browser does not support the audio element.</audio><br>Durante unos años, enseñó Física e Historia en el colegio de nobles de Parma.</td>
+						<td style="vertical-align : middle;text-align:center;">En el horizonte, un sol radiante, símbolo del nacimiento de la nación.</td>
+						<td style="vertical-align : middle;text-align:center;">Not supported</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/es/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/es/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">FR</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/fr/prompt_audio_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>Ce dernier a évolué tout au long de l'histoire romaine.</td>
+						<td style="vertical-align : middle;text-align:center;">De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+						<td style="vertical-align : middle;text-align:center;">Not supported</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/fr/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/fr/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">IT</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/it/prompt_audio_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>Fin dall'inizio la sede episcopale è stata immediatamente soggetta alla Santa Sede.</td>
+						<td style="vertical-align : middle;text-align:center;">Il suo primo utilizzo è stato in Vietnam da parte dell'esercito statunitense.</td>
+						<td style="vertical-align : middle;text-align:center;">Not supported</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/it/uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/it/uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">RU</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/zero-shot/ru/prompt_audio_3.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;">Таким образом, мы услышим от них более сфокусированные и полезные выступления.</td>
+						<td style="vertical-align : middle;text-align:center;">Not supported</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/zero-shot/ru/uttid_3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/zero-shot/ru/uttid_3.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Mixed-lingual In-context Generation" style="text-align: center;">Mixed-lingual In-context Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 2.0</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-0.5B</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-1.5B</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="5"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/mix/clone_jr.WAV" autoplay/>Your browser does not support the audio element.</audio><br>今天我们看到模型的本质，其实在很多时候是今天把我们人类的知识能够有效的聚集起来。能够成为今天我们一个重要的一个智慧体，去帮助我们的业务的开发，帮助我们去解决行业的知识。今天我们实际上是从一个信息时代，真正进入到了一个智能时代。在智能时代里面一个重要的一个环节就是模型变得无处不在，也是模型所代表的知识体系。</td>
+						<td style="vertical-align : middle;text-align:center;">听客户反馈说我们的cosyvoice的声音复刻能力，音色相似度比较高，我也来试一试，大家听听这句话像我说的吗？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/mix/clone_jr_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/mix/clone_jr_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/mix/clone_jr_01.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">晚上去超市买了很多水果，还有一些美味的アイスクリーム。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/mix/clone_jr_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/mix/clone_jr_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/mix/clone_jr_02.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">今天晚饭吃了韩国泡菜찌개，味道真的很好。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/mix/clone_jr_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/mix/clone_jr_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/mix/clone_jr_03.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">I can't wait to try the new 비빔밥 restaurant downtown this weekend!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/mix/clone_jr_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/mix/clone_jr_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/mix/clone_jr_04.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Tomorrow, I'm planning to go shopping for a new テレビ at the electronics store.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/mix/clone_jr_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/mix/clone_jr_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/mix/clone_jr_05.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Emotionally Expressive Voice Generation" style="text-align: center;">Emotionally Expressive Voice Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Emotion</th>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 2.0</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-0.5B</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-1.5B</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">Happy</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/happy/prompt_audio_25.wav" autoplay/>Your browser does not support the audio element.</audio><br>Great, yeah. I mean, it has been great, too. You know, some of these people must have seen me play before because they were requesting a bunch of my songs.</td>
+						<td style="vertical-align : middle;text-align:center;">I actually managed to grab tickets to Eason Chan’s concert! It’s amazing! I can’t wait to hear his voice live!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/en/happy_high_uttid_25.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/en/happy_high_uttid_25.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/en/happy_high_uttid_25.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/happy/prompt_audio_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>终于去看运动会啦,舒畅啊!</td>
+						<td style="vertical-align : middle;text-align:center;">等到七月底项目结束,我就可以申请休年假了,好期待哦!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/zh/happy_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/zh/happy_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/zh/happy_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">Sad</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/sad/prompt_audio_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>Born once every 100 years, dies in flames.</td>
+						<td style="vertical-align : middle;text-align:center;">The research institute won’t renew my contract, so I have to go back to my country. I don’t even have a job anymore.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/en/sad_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/en/sad_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/en/sad_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/sad/prompt_audio_7.wav" autoplay/>Your browser does not support the audio element.</audio><br>红了鼻头的小丑,眼泪止不住的流,流到嘴边咽下悲伤。</td>
+						<td style="vertical-align : middle;text-align:center;">原来父皇什么都知道了,我真笨。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/zh/sad_high_uttid_7.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/zh/sad_high_uttid_7.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/zh/sad_high_uttid_7.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">Fearful</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/fearful/prompt_audio_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>I... I'm really nervous about getting my hair cut here... What if it doesn't turn out the way I want? I... I don't know if I can go through with it.</td>
+						<td style="vertical-align : middle;text-align:center;">I’m too scared to be here alone, can you stay with me?</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/en/fearful_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/en/fearful_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/en/fearful_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/fearful/prompt_audio_8.wav" autoplay/>Your browser does not support the audio element.</audio><br>不断进步的科技，是不是会让医生不再需要人类来担任呢？</td>
+						<td style="vertical-align : middle;text-align:center;">求你了，别再说那些吓人的话，我真的快撑不住了。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/zh/fearful_high_uttid_8.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/zh/fearful_high_uttid_8.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/zh/fearful_high_uttid_8.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">Angry</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/angry/prompt_audio_13.wav" autoplay/>Your browser does not support the audio element.</audio><br>The boy, O'brien, was specially maltreated.</td>
+						<td style="vertical-align : middle;text-align:center;">I told you, stop nagging, alright? Haven’t you nagged enough in this lifetime?</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/en/angry_high_uttid_13.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/en/angry_high_uttid_13.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/en/angry_high_uttid_13.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/angry/prompt_audio_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>受到处罚你可不能怨别人,知道吗,臭小子!</td>
+						<td style="vertical-align : middle;text-align:center;">老喜欢出阴招,使手段,太不厚道了!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/zh/angry_high_uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/zh/angry_high_uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/zh/angry_high_uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="2">Surprised</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/surprised/prompt_audio_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>I can't believe it— the lions just broke out of their enclosure and are walking around freely!</td>
+						<td style="vertical-align : middle;text-align:center;">What did you just say? Is this really true? I can’t believe it at all!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/en/surprised_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/en/surprised_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/en/surprised_high_uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/emotion/surprised/prompt_audio_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>真的吗？！每个人居然真的都有权利追求自己的幸福？！这真是太不可思议了！</td>
+						<td style="vertical-align : middle;text-align:center;">我怎么听着像在做梦一样，怎么可能会发生这样的事？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/emotion/zh/surprised_high_uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/emotion/zh/surprised_high_uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/emotion/zh/surprised_high_uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Chinese dialect Voice Generation" style="text-align: center;">Chinese dialect Voice Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Dialect</th>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 2.0</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-0.5B</th>
+					<th style="vertical-align : middle;text-align: center">CosyVoice 3.0-1.5B</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Cantonese</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/dialect/tbJ6z3v8qCQ_533_1600_24800_addLeadSil80_addTrailSil160_trim_db27.wav" autoplay/>Your browser does not support the audio element.</audio><br>但系，好明显唔系啦。</td>
+						<td style="vertical-align : middle;text-align:center;">各方面令到一啲行业咧嗰个营运咧系受较为大影响嘅，比如教育啊，即系补习社啊。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/dialect/tbJ6z3v8qCQ_533.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/dialect/tbJ6z3v8qCQ_533.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/dialect/tbJ6z3v8qCQ_533.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Dongbei</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/dialect/dongbei_wav000_0018_dongbei_dialect_4_237_800_61504_addLeadSil80_addTrailSil160_trim_db27.wav" autoplay/>Your browser does not support the audio element.</audio><br>我媳妇说：“啥？玩愣？你说啥？我没听清，你再说一遍。”</td>
+						<td style="vertical-align : middle;text-align:center;">但是，没事的时候呢，我们一起来回忆回忆，想一想过去的我们。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/dialect/dongbei_wav000_0018_dongbei_dialect_4_237.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/dialect/dongbei_wav000_0018_dongbei_dialect_4_237.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/dialect/dongbei_wav000_0018_dongbei_dialect_4_237.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Tianjin</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/dialect/tianjin_wav000_0192_tianjin_dialect_3_64_0_53600_addLeadSil80_addTrailSil160_trim_db27.wav" autoplay/>Your browser does not support the audio element.</audio><br>就问问，这锣是哪儿的人告诉是天津的。</td>
+						<td style="vertical-align : middle;text-align:center;">地方志都没有，就凭脑子记，有些不是那么准确的，有些个就遗忘。这就随时代呀，都都在改变。嗯，这是很正常的事。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/dialect/tianjin_wav000_0192_tianjin_dialect_3_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/dialect/tianjin_wav000_0192_tianjin_dialect_3_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/dialect/tianjin_wav000_0192_tianjin_dialect_3_64.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Sichuan</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/dialect/sichuan_wav000_0006_Speaker0001_Android_s1_025_9600_77600_addLeadSil80_addTrailSil160_trim_db27.wav" autoplay/>Your browser does not support the audio element.</audio><br>此次新增的两列车，是整个增车项目的首批。</td>
+						<td style="vertical-align : middle;text-align:center;">目前，由于小张不配合，导致交警没有对事故划分责任。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/dialect/sichuan_wav000_0006_Speaker0001_Android_s1_025.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/dialect/sichuan_wav000_0006_Speaker0001_Android_s1_025.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/dialect/sichuan_wav000_0006_Speaker0001_Android_s1_025.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="1">Shanghai</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/dialect/wav038_0035_T0065G0615S0381_2400_42400_addLeadSil80_addTrailSil160_trim_db27.wav" autoplay/>Your browser does not support the audio element.</audio><br>没钞票侬凭啥爱我？</td>
+						<td style="vertical-align : middle;text-align:center;">侬为啥背上炸药包？</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c2_base/dialect/wav038_0035_T0065G0615S0381.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_base/dialect/wav038_0035_T0065G0615S0381.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/dialect/wav038_0035_T0065G0615S0381.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Cross-lingual In-context Generation" style="text-align: center;">Cross-lingual In-context Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Gender</th>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Lang1</th>
+					<th style="vertical-align : middle;text-align: center">Lang2</th>
+					<th style="vertical-align : middle;text-align: center">Lang3</th>
+					<th style="vertical-align : middle;text-align: center">Lang4</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="4">Male</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/zh_m.wav" autoplay/>Your browser does not support the audio element.</audio><br>至今为止，元气火箭总共发行了两张专辑。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_1.wav" autoplay/>Your browser does not support the audio element.</audio><br>アラバマ シュー ノ サイダイ トシ ワ バーミングハム デ アル。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_2.wav" autoplay/>Your browser does not support the audio element.</audio><br>바람은 파도 소리처럼 쏴아쏴아 하고 머리 맡에서 뒤설렌다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_3.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_4.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/en_m.wav" autoplay/>Your browser does not support the audio element.</audio><br>Hey look, a flying pig!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_5.wav" autoplay/>Your browser does not support the audio element.</audio><br>アラバマ シュー ノ サイダイ トシ ワ バーミングハム デ アル。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_6.wav" autoplay/>Your browser does not support the audio element.</audio><br>바람은 파도 소리처럼 쏴아쏴아 하고 머리 맡에서 뒤설렌다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_7.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_8.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/ja_m.wav" autoplay/>Your browser does not support the audio element.</audio><br>コノ リョーリ ワ カテー デ ツクレ マス。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_9.wav" autoplay/>Your browser does not support the audio element.</audio><br>至今为止，元气火箭总共发行了两张专辑。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_10.wav" autoplay/>Your browser does not support the audio element.</audio><br>Hey look, a flying pig!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_11.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_12.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/ko_m.wav" autoplay/>Your browser does not support the audio element.</audio><br>그리고 일이 손에 붙지를 않고 툭하면 실이 끊어지곤 하였다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_13.wav" autoplay/>Your browser does not support the audio element.</audio><br>至今为止，元气火箭总共发行了两张专辑。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_14.wav" autoplay/>Your browser does not support the audio element.</audio><br>Hey look, a flying pig!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_15.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/male/uttid_16.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+
+					<tr>
+						<td style="vertical-align : middle;text-align:center;" rowspan="4">Female</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/zh_f.wav" autoplay/>Your browser does not support the audio element.</audio><br>我说你这只大鸟，真是不讲理，我对你做什么了呀，你就要吞了我！</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f1.wav" autoplay/>Your browser does not support the audio element.</audio><br>アラバマ シュー ノ サイダイ トシ ワ バーミングハム デ アル。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f2.wav" autoplay/>Your browser does not support the audio element.</audio><br>바람은 파도 소리처럼 쏴아쏴아 하고 머리 맡에서 뒤설렌다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f3.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f4.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/en_f.wav" autoplay/>Your browser does not support the audio element.</audio><br>I am the ghost of Christmas present. You have never seen anything like me before.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f5.wav" autoplay/>Your browser does not support the audio element.</audio><br>アラバマ シュー ノ サイダイ トシ ワ バーミングハム デ アル。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f6.wav" autoplay/>Your browser does not support the audio element.</audio><br>바람은 파도 소리처럼 쏴아쏴아 하고 머리 맡에서 뒤설렌다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f7.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f8.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/ja_f.wav" autoplay/>Your browser does not support the audio element.</audio><br>マイトシ カゾク デ リョコー ニ イキ マス。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f9.wav" autoplay/>Your browser does not support the audio element.</audio><br>至今为止，元气火箭总共发行了两张专辑。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f10.wav" autoplay/>Your browser does not support the audio element.</audio><br>Hey look, a flying pig!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f11.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f12.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/prompt/cross-lingual/ko_f.wav" autoplay/>Your browser does not support the audio element.</audio><br>나는 털썩 그 자리에 주저앉고 말았습니다.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f13.wav" autoplay/>Your browser does not support the audio element.</audio><br>至今为止，元气火箭总共发行了两张专辑。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f14.wav" autoplay/>Your browser does not support the audio element.</audio><br>Hey look, a flying pig!</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f15.wav" autoplay/>Your browser does not support the audio element.</audio><br>Неожиданно катастрофа приобрела глобальные масштабы.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/cross-lingual/female/uttid_f16.wav" autoplay/>Your browser does not support the audio element.</audio><br>De manière informelle, la capacité d'un modèle de classification correspond à sa complexité.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Post-training" style="text-align: center;">Post-training</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">without Post-training</th>
+					<th style="vertical-align : middle;text-align: center">with Post-training</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download.wav" autoplay/>Your browser does not support the audio element.</audio><br>于是蒲将军随属项羽。</td>
+						<td style="vertical-align : middle;text-align:center;">阿胶也是把<b>笛膜</b>贴在笛子上的常用胶种之一。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_2.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_19.wav" autoplay/>Your browser does not support the audio element.</audio><br>After a week of losses in the midterm election, Bush told an audience about the expansion of trade in Asia.</td>
+						<td style="vertical-align : middle;text-align:center;">There is a surcharge for having more than 2 passengers, <b>so this</b> option might be more expensive than necessary.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_20.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_21.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr> 
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_22.wav" autoplay/>Your browser does not support the audio element.</audio><br>無事で安心したよ。</td>
+						<td style="vertical-align : middle;text-align:center;">それは自己矛盾的に自己自身を<b>形成していくと</b>考えられる世界であるすなわち生命の世界であるのである</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_23.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_24.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_25.wav" autoplay/>Your browser does not support the audio element.</audio><br>할아버지께서 돌아가시면 저도 죽겠습니다.</td>
+						<td style="vertical-align : middle;text-align:center;"><b>원주의</b> 어머니만 남겨두고 다 내보낸 뒤에 <b>목걸이를</b> 안으로 걸어 버렸다</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_26.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_27.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_31.wav" autoplay/>Your browser does not support the audio element.</audio><br>В информационных сообщениях всего лишь кратко описана политическая ситуация в одной стране.</td>
+						<td style="vertical-align : middle;text-align:center;">Примером может служить посещение, фотографирование и изучение орангутангов <b>в</b> Борнео.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_32.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/Post-training/download_33.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Hotfix Capability" style="text-align: center;">Hotfix Capability</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">Before fix</th>
+					<th style="vertical-align : middle;text-align: center">Text</th>
+					<th style="vertical-align : middle;text-align: center">After fix</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">高管也通过电话、短信、微信等方式对报道<b>给</b>予好评。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/Chinese-purechar-0014.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;">高管也通过电话、短信、微信等方式对报道<b>[j][ǐ]</b>予好评。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/Chinese-phnmix-0014.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">I resented being treated as an <b>invalid</b>. That's a file name in <b>invalid</b> format.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/English-purechar-0020.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;">I resented being treated as an <b>[IH1][N][V][AH0][L][IH0][D]</b>. That's a file name in <b>[IH2][N][V][AE1][L][AH0][D]</b> format.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/English-phnmix-0020.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">我买了一台美<b>的</b>空调and <b>wind</b> the clock.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/Mix-purechar-0001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;">我买了一台美<b>[d][ì]</b>空调and <b>[W][AY1][N][D]</b> the clock.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/Mix-phnmix-0001.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">Her handwriting is <b>minute</b>并且很整洁，说明她<b>好</b>干净。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/Mix-purechar-0002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;">Her handwriting is <b>[M][AY0][N][UW1][T]</b>并且很整洁，说明她<b>[h][ào]</b>干净。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/hotfix/Mix-phnmix-0002.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Instructed Voice Generation" style="text-align: center;">Instructed Voice Generation</h2>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Prompt</th>
+					<th style="vertical-align : middle;text-align: center">Emotion-A</th>
+					<th style="vertical-align : middle;text-align: center">Emotion-B</th>
+					<th style="vertical-align : middle;text-align: center">Style-A</th>
+					<th style="vertical-align : middle;text-align: center">Style-B</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">中立<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/1/Neutral_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>出来野餐不要再用一次性木筷，因为这是浪费木材。</td>
+						<td style="vertical-align : middle;text-align:center;">生气<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/1/Angry.wav" autoplay/>Your browser does not support the audio element.</audio><br>这片土地是我们的！我再也不能忍受外来的侵略者了！他们必须得到应有的惩罚！</td>
+						<td style="vertical-align : middle;text-align:center;">伤心<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/1/Sad.wav" autoplay/>Your browser does not support the audio element.</audio><br>这里一片荒凉，没有水，也没有生机，孤独感和无助让我心如刀割。</td>
+						<td style="vertical-align : middle;text-align:center;">粤语<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/1/cantonese.wav" autoplay/>Your browser does not support the audio element.</audio><br>好少咯，一般系放嗰啲国庆啊，中秋嗰啲可能会咯。</td>
+						<td style="vertical-align : middle;text-align:center;">细粒度控制<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/1/stress.wav" autoplay/>Your browser does not support the audio element.</audio><br>[breath]因为他们那一辈人[breath]在乡里面住的要<strong>习惯</strong>一点，[breath]邻居都很活络，[breath]嗯，都很熟<strong>悉</strong>。[breath]</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">生气<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/2/Angry_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>刚才还好好的，一眨眼又消失了，真的是要气死我了。</td>
+						<td style="vertical-align : middle;text-align:center;">恐惧<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/2/Fearful.wav" autoplay/>Your browser does not support the audio element.</audio><br>我...我不知道哪里可能会有危险。要小心，我... 我害怕谁会突然冒出来！</td>
+						<td style="vertical-align : middle;text-align:center;">高兴<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/2/Happy.wav" autoplay/>Your browser does not support the audio element.</audio><br>在这辽阔的戈壁上，有种无拘无束、自由自在的快乐！人生啊，真美好！</td>
+						<td style="vertical-align : middle;text-align:center;">重庆话<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/2/Chongqing.wav" autoplay/>Your browser does not support the audio element.</audio><br>硬是清早八晨的四五点钟爬起来就从那窗户跳出去，哎哟那个当时肯定是当场死亡啦不用说了，那个啷个整嘛？</td>
+						<td style="vertical-align : middle;text-align:center;">轻声<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/2/Soft.wav" autoplay/>Your browser does not support the audio element.</audio><br>现代科技让世界变得更加紧密相连。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">高兴<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/3/Happy_ZH_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>能和大家在一起，我好开心啊。</td>
+						<td style="vertical-align : middle;text-align:center;">惊讶<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/3/Surprised.wav" autoplay/>Your browser does not support the audio element.</audio><br>哇，这个湖怎么可以这么美，真是让人难以置信！</td>
+						<td style="vertical-align : middle;text-align:center;">生气<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/3/Angry.wav" autoplay/>Your browser does not support the audio element.</audio><br>这个废弃的矿区什么都没有留下！尽是些破败和危险，荒唐至极！我真是不明白为什么会有人对这种地方感兴趣！</td>
+						<td style="vertical-align : middle;text-align:center;">西安话<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/3/Xian.wav" autoplay/>Your browser does not support the audio element.</audio><br>么啥经验知道么，么租过房因为西安之前租房在西安租房不是贵么。</td>
+						<td style="vertical-align : middle;text-align:center;">小猪佩奇<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/3/Peppa.wav" autoplay/>Your browser does not support the audio element.</audio><br>哦乔治，不管什么东西，你怎么总是说是恐龙啊。</td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">伤心<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/4/Sad_EN_prompt.wav" autoplay/>Your browser does not support the audio element.</audio><br>Dogs are sitting by the door.</td>
+						<td style="vertical-align : middle;text-align:center;">Angry<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/4/Angry.wav" autoplay/>Your browser does not support the audio element.</audio><br>I'm furious at these thorns for snagging my clothes while I'm just trying to pick these berries!</td>
+						<td style="vertical-align : middle;text-align:center;">Fearful<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/4/Fearful.wav" autoplay/>Your browser does not support the audio element.</audio><br>I'm not sure if I can handle this. I'm really worried about what might happen. We need to be very cautious.</td>
+						<td style="vertical-align : middle;text-align:center;">Fast<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/4/Fast.wav" autoplay/>Your browser does not support the audio element.</audio><br>Standing on the peak of the mountain, I can see the vast landscape spreading out in front of me, the valleys deep below, rivers winding their way through the terrain, and small villages dotting the landscape, all under a sky that stretches far into the horizon.</td>
+						<td style="vertical-align : middle;text-align:center;">Soft<br><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/insturct/4/Soft.wav" autoplay/>Your browser does not support the audio element.</audio><br>The crowd's cheer is a gentle hum, filling the night air with excitement and anticipation.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+
+ 
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 id="Target Speaker Fine-tune Models" style="text-align: center;">Target Speaker Fine-tune Models</h2>
+	<h3 id="Chinese and English" style="text-align: center;">Chinese and English</h3>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+					<tr>
+						<th style="vertical-align : middle;text-align: center">Speaker </th>
+						<th style="vertical-align : middle;text-align: center">Text</th>
+						<th style="vertical-align : middle;text-align: center">Generated</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="vertical-align : middle;text-align:center;">longcheng</td>
+							<td style="vertical-align : middle;text-align:center;">真不好意思，从小至今，他还从来没有被哪一位异性朋友亲吻过呢。</td>
+							<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/00004506-00000103.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						</tr>
+						<tr>
+							<td style="vertical-align : middle;text-align:center;">longhua</td>
+							<td style="vertical-align : middle;text-align:center;">I'm never more aware of a room's acoustics than when I'm trying to enjoy a snack I have no intention of sharing.</td>
+							<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/common_voice_en_120405-common_voice_en_120402.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						</tr>
+						<tr>
+							<td style="vertical-align : middle;text-align:center;">longshu</td>
+							<td style="vertical-align : middle;text-align:center;">Technology has made it easier to learn new languages。通过apps和online courses，anyone can start learning中文或者其他语言。</td>
+							<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/common_voice_en_10119832-common_voice_en_10119847.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						</tr>
+						<tr>
+							<td style="vertical-align : middle;text-align:center;">longbella</td>
+							<td style="vertical-align : middle;text-align:center;">电影和音乐是了解一个国家culture很好的窗口。Watching movies and listening to songs in different languages can be both entertaining and educational。</td>
+							<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/common_voice_en_103675-common_voice_en_103676.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						</tr>
+					</tbody>
+			</table>
+		</div>
+
+	<h3 id="Minority Language" style="text-align: center;">Minority Language</h3>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+				<th style="vertical-align : middle;text-align: center">Language</th>
+				<th style="vertical-align : middle;text-align: center">Text</th>
+				<th style="vertical-align : middle;text-align: center">Longwan</th>
+				<th style="vertical-align : middle;text-align: center">Longshu</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">ZH</td>
+						<td style="vertical-align : middle;text-align:center;">我们将为全球城市的可持续发展贡献力量。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_zh.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_zh.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">EN</td>
+						<td style="vertical-align : middle;text-align:center;">These include various sports events including soccer, basketball, and volleyball tournaments.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_en.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_en.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">DE</td>
+						<td style="vertical-align : middle;text-align:center;">Üben sich deren Figuren zumeist im passiven Beobachten, erscheinen Pflanzen und Tieren hingegen als wesentliche Akteure des Geschehens.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_de.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_de.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">ES</td>
+						<td style="vertical-align : middle;text-align:center;">La lucha por el podio la protagonizaban ahora estos tres pilotos.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_es.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_es.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">FR</td>
+						<td style="vertical-align : middle;text-align:center;">Il sera donc difficile de voir le mammouth d'antan déambuler dans la toundra russe.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_fr.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_fr.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">IT</td>
+						<td style="vertical-align : middle;text-align:center;">Non mi sono per niente annoiato, ogni scena era come se fosse nuova, che film fantastico.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_it.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_it.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">JA</td>
+						<td style="vertical-align : middle;text-align:center;">兄はここに入っていました。</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_ja.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_ja.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">KO</td>
+						<td style="vertical-align : middle;text-align:center;">거기엔철학도있어야 하고.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_ko.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_ko.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>	
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">RU</td>
+						<td style="vertical-align : middle;text-align:center;">По его словам, чтобы снизить число нарушений на выборах, надо навести порядок с выдачей открепительных, а также с практикой досрочного голосования.</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longwan_ru.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/minority_langugae/sft_longshu_ru.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>				
+				</tbody>
+			</table>
+		</div>
+		<h3 id="Speaking Style Control" style="text-align: center;">Instruct ability transfer</h3>
+		<div class="table-responsive pt-3">
+			<table class="table table-hover pt-2">
+				<thead>
+				<tr>
+					<th style="vertical-align : middle;text-align: center">Style and Text</th>
+					<th style="vertical-align : middle;text-align: center">Generated</th>
+				</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltsad&gt这真是令人痛心的消息，我们的心要与所有受到影响的人在一起。&lt/sad&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/sad_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltsurprised&gt天啊，这里居然什么都没有！怎么会这么荒凉？&lt/surprised&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/surprised_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltangry&gt这片竹林就是我的家！不要试图破坏它，否则我绝不会对你们手下留情！&lt/angry&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/angry_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltfearful&gt“这些健康理念……就是，我不知道，我是说，呃……真的有点难理解……可能不太适合我吧？”&lt/fearful&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/fearful_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltfast&gt您能先给我提供一下订单编号吗，先生？&lt/fast&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/fast_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltslow&gt但并不是每一位写手都可以与网站签约。&lt/slow&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/slow_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltpeppa&gt你好，我是佩奇。&lt/peppa&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/peppa_sft0.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltpeppa&gt哦这就是我想要跟你说的事情，我们是这么说的，在泥坑里面跳来跳去。&lt/peppa&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/peppa_sft1.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+					<tr>
+						<td style="vertical-align : middle;text-align:center;">&ltrobot&gt您输入的手机号码未绑定宽带。&lt/robot&gt</td>
+						<td style="vertical-align : middle;text-align:center;"><audio controls="controls" style="width: 190px;"><source src="audio/c3_large/SFT/instruct_transfer/robot_sft.wav" autoplay/>Your browser does not support the audio element.</audio></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+</div>
+
+
+
+
+<div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
+	<h2 style="text-align: center;">Disclaimer</h2>
+	<p>The content provided above is for academic purposes only and is intended to demonstrate technical capabilities. Some examples are sourced from the internet. If any content infringes on your rights, please contact us to request its removal.</p>
+</div>
+
+</article>
+</main>
+</div>
+
+</body>
+
+</script>
+</html>
