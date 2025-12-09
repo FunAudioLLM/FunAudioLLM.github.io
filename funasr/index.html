@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <!-- 这里只是meta info -->
+  <!-- TODO: Replace with your paper title and author names -->
+  <meta name="title" content="通义百聆语音识别大模型Fun-ASR开源">
+  <!-- TODO: Write a compelling 150-160 character description of your research -->
+  <meta name="description" content="Fun-ASR 是通义实验室推出的端到端语音识别大模型，是基于数千万小时真实语音数据训练而成，具备强大的上下文理解能力与行业适应性，支持低延迟实时听写，并且覆盖31个语种。在教育、金融等垂直领域表现出色，能准确识别专业术语与行业表达，有效应对“幻觉”生成和语种混淆等挑战，实现“听得清、懂其意、写得准”。Fun-ASR 广泛适用于多种高要求语音处理场景，凭借高精度、低延迟、可定制化等核心优势，可以应用于会议AI纪要、实时字幕等场景。">
+  <!-- TODO: Add 5-10 relevant keywords for your research area -->
+  <meta name="keywords" content="Multilingual, Fun-ASR">
+  <!-- TODO: List all authors -->
+  <meta name="author" content="Tongyi Fun Team">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <!-- TODO: Replace with your institution or lab name -->
+  <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME">
+  <!-- TODO: Same as paper title above -->
+  <meta property="og:title" content="PAPER_TITLE">
+  <!-- TODO: Same as description above -->
+  <meta property="og:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <!-- TODO: Replace with your actual website URL -->
+  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
+  <!-- TODO: Create a 1200x630px preview image and update path -->
+  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
+  <meta property="article:author" content="FIRST_AUTHOR_NAME">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="KEYWORD1">
+  <meta property="article:tag" content="KEYWORD2">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- TODO: Replace with your lab/institution Twitter handle -->
+  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
+  <!-- TODO: Replace with first author's Twitter handle -->
+  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
+  <!-- TODO: Same as paper title above -->
+  <meta name="twitter:title" content="PAPER_TITLE">
+  <!-- TODO: Same as description above -->
+  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
+  <!-- TODO: Same as social preview image above -->
+  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
+  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="PAPER_TITLE">
+  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
+  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
+  <meta name="citation_publication_date" content="2024">
+  <meta name="citation_conference_title" content="CONFERENCE_NAME">
+  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <!-- Fun-ASR: 通义百聆语音识别大模型页面标题 -->
+  <title>Fun-ASR: Tongyi Bailin Speech Recognition Model - Alibaba Tongyi Lab</title>
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/tongyi.ico">
+  <link rel="apple-touch-icon" href="static/images/tongyi.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+  
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "PAPER_TITLE",
+    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Tongyi Fun Team",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Alibaba Group"
+        }
+      }
+    ],
+    "datePublished": "2024-01-01",
+    "publisher": {
+      "@type": "Organization",
+      "name": "CONFERENCE_OR_JOURNAL_NAME"
+    },
+    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
+    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
+    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
+    "abstract": "FULL_ABSTRACT_TEXT_HERE",
+    "citation": "BIBTEX_CITATION_HERE",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "mainEntity": {
+      "@type": "WebPage",
+      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
+    },
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "RESEARCH_AREA_1"
+      },
+      {
+        "@type": "Thing", 
+        "name": "RESEARCH_AREA_2"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Alibaba Group",
+    "url": "https://www.alibaba.com",
+    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
+    "sameAs": [
+      "https://twitter.com/alibaba_group",
+      "https://github.com/alibaba"
+    ]
+  }
+  </script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works Dropdown -->
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>More Works from Our Lab</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="works-list">
+        <!-- TODO: Replace with your lab's related works -->
+        <a href="https://arxiv.org/abs/PAPER_ID_1" class="work-item" target="_blank">
+          <div class="work-info">
+            <!-- TODO: Replace with actual paper title -->
+            <h5>Paper Title 1</h5>
+            <!-- TODO: Replace with brief description -->
+            <p>Brief description of the work and its main contribution.</p>
+            <!-- TODO: Replace with venue and year -->
+            <span class="work-venue">Conference/Journal 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <!-- TODO: Add more related works or remove extra items -->
+        <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 2</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2023</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Paper Title 3</h5>
+            <p>Brief description of the work and its main contribution.</p>
+            <span class="work-venue">Conference/Journal 2023</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- Fun-ASR项目标题 -->
+            <h1 class="title is-1 publication-title">Fun-ASR: End-to-End Speech Recognition Large Model</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Tongyi Fun Team -->
+              <span class="author-block">
+                <a href="https://tongyi.aliyun.com/landing?family=fun" target="_blank">Tongyi Fun Team</a><sup>*</sup></span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <!-- Alibaba Group -->
+                    <span class="author-block">Alibaba Group<br><a href="mailto:Fun-ASR@list.alibaba-inc.com">Fun-ASR@list.alibaba-inc.com</a><br>2025.12</span>
+                    <!-- 团队贡献说明 -->
+                    <span class="eql-cntrb"><small><br><sup>*</sup>todo</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                         <!-- GitHub Repository -->
+                      <span class="link-block">
+                        <a href="https://github.com/FunAudioLLM/Fun-ASR" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fab fa-github"></i>
+                        </span>
+                        <span>Code</span>
+                      </a>
+                    </span>
+
+                    <!-- ModelScope Demo -->
+                    <span class="link-block">
+                      <a href="https://modelscope.cn/studios/iic/FunAudio-ASR" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-play"></i>
+                      </span>
+                      <span>Demo</span>
+                    </a>
+                  </span>
+
+                <!-- Documentation -->
+                <span class="link-block">
+                  <a href="https://help.aliyun.com/zh/model-studio/recording-file-recognition" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fas fa-book"></i>
+                  </span>
+                  <span>Docs</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <!-- Fun-ASR项目摘要 -->
+          <p>
+            Fun-ASR is an end-to-end speech recognition large model launched by Tongyi Laboratory, trained on tens of millions of hours of real speech data. It possesses strong contextual understanding capabilities and industry adaptability, supports low-latency real-time dictation, and covers 31 languages. It excels in vertical fields such as education and finance, accurately recognizing professional terms and industry expressions, effectively addressing challenges like "hallucination" generation and language confusion, achieving "clear hearing, understanding meaning, and accurate writing." Fun-ASR is widely applicable to various high-demand speech processing scenarios, with core advantages including high accuracy, low latency, and customization, suitable for applications like AI meeting minutes and real-time subtitles.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Image carousel -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <!-- <div class="container" style="max-width: 50%;"> -->
+      <div class="container">
+      <div class="columns is-centered">
+      <div class="column is-10">
+      <div id="results-carousel" class="carousel results-carousel">
+      <div class="item">
+        <!-- TODO: Replace with your research result images -->
+        <img src="static/images/FunAudio_img.png" alt="Architecture" loading="lazy" style="width:100%"/>
+        <!-- Fun-ASR整体架构图 -->
+        <h2 class="subtitle has-text-centered">
+          Fun-ASR Architecture Overview
+        </h2>
+      </div>
+      <div class="item">
+        <img src="static/images/compare.png" alt="comparer" loading="lazy" style="width:100%"/> />
+        <!-- Fun-ASR整体架构图 -->
+        <h2 class="subtitle has-text-centered">
+          Fun-ASR Performance Comparison with Other Models
+        </h2>
+      </div>      
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/encoder-pretrain.png" alt="encoder-pretrain" loading="lazy" style="width:70%"/>/>
+        <h2 class="subtitle has-text-centered">
+          Pre-training Pipeline for Audio Encoder
+        </h2>
+      </div>
+      <div class="item">
+        <!-- Your image here -->
+        <img src="static/images/rl_framework.png" alt="rl_framework" loading="lazy" style="width:100%"/>/>
+        <h2 class="subtitle has-text-centered">
+         The FunRL Framework
+       </h2>
+     </div>
+     <div class="item">
+      <!-- Your image here -->
+      <img src="static/images/rl_time.png" alt="rl_time" loading="lazy" style="height:800px; width:100%"/>/>
+      <h2 class="subtitle has-text-centered">
+        Time Consumption Analysis
+      </h2>
+    </div>
+  </div>
+  </div>
+  </div> 
+</div>
+</div>
+</section>
+<!-- End image carousel -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <!-- 大标题 -->
+    <h2 class="title is-3 has-text-centered">ASR Capability Demonstrations</h2>
+    <div class="content has-text-centered">
+      <p>点击播放试听 Fun-ASR 在不同场景下的识别效果。</p>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 板块2：多语种识别  -->
+    <!-- ========================================== -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">Multi-Dialect Recognition (中文方言)</h3>
+      <p>支持的方言包括吴语、粤语、闽语、客家话、赣语、湘语、晋语，支持的口音官话覆盖中原、西南、冀鲁、江淮、兰银、胶辽、东北、北京、港台等，包括河南、陕西、湖北、四川、重庆、云南、贵州、广东、广西、河北、天津、山东、安徽、南京、江苏、杭州、甘肃、宁夏 等 20 多个地区。</p>
+      <div class="columns is-multiline">
+        
+        <!-- 样本 1: 上海话 -->
+        <div class="column is-12"> <!-- 占满整行 -->
+          <div class="sample-card">
+            <div class="columns is-vcentered"> <!-- 垂直居中对齐 -->
+              
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">上海话 / Shanghai</span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_sh.wav" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">空气变好了路也不堵了路上人车也少了。</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 样本 2: 粤语 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              
+              <!-- 左侧 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">粤语 / Cantonese</span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_yue.wav" type="audio/wav">
+                </audio>
+              </div>
+
+              <!-- 右侧 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">佢最想要有露台，佢想感受呢个国家嘅生气以佢280000呢个预算有少少难度，佢可能要做少少妥协不过我会尽力帮佢揾到佢想要嘅单位。</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>  
+
+        <!-- 样本 3: 湖南话 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              
+              <!-- 左侧 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">湖南话 / HUNAN</span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_hunan.wav" type="audio/wav">
+                </audio>
+              </div>
+
+              <!-- 右侧 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">孩子说好吃的话父母八成都会买的。</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>  
+
+      </div>
+    </div>
+
+    <div class="asr-section">
+      <h3 class="asr-category-title">Multilingual Recognition(多语言自由说)</h3>
+      <p>支持的语种包括：TODO</p>
+      <div class="columns is-multiline">
+        
+        <!-- 样本 1: 日语 -->
+        <div class="column is-12"> <!-- 占满整行 -->
+          <div class="sample-card">
+            <div class="columns is-vcentered"> <!-- 垂直居中对齐 -->
+              
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">日语 / Japanese</span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_sh.wav" type="audio/wav">
+                  Your browser does not support the audio element.
+                </audio>
+              </div>
+
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">TODO</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              
+              <!-- 左侧 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">越南语 / Vietnamese</span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_yue.wav" type="audio/wav">
+                </audio>
+              </div>
+
+              <!-- 右侧 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">TODO</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>  
+
+        <!-- 样本 3: 湖南话 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              
+              <!-- 左侧 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">自由说 / Code-switching</span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_hunan.wav" type="audio/wav">
+                </audio>
+              </div>
+
+              <!-- 右侧 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">TODO</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>  
+
+      </div>
+    </div>
+    <!-- 远场复杂背景噪声 -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">Robust Far-Field Recognition (远场复杂背景)</h3>
+      <p>针对远距离拾音及高噪声场景（如会议室、车载环境、工业现场等）进行深度优化，显著提升复杂声学条件下的语音识别稳定性与准确率。</p>
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag far-field">Far-Field</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">远场</p>
+                <audio controls class="sample-audio">
+                  <source src="static/audios/far_2.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧文本 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">然后被冠以了渣男线的称号，好了，不管这个，那么前方即将到达沈杜公路站，左边是8号线。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag far-field">Noise</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">噪声</p>
+                <audio controls class="sample-audio">
+                  <source src="static/audios/far_3.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧文本 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">周末要不要去露营，最近天气超舒服，露营？我怕虫子咬，而且晚上睡帐篷会不会很冷啊？放心，我借了专业装备还有暖宝宝，再带点火锅食材，边吃边看星星超惬意。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag far-field">Noise</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">噪声</p>
+                <audio controls class="sample-audio">
+                  <source src="static/audios/far_4.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧文本 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">  &lt;music&gt;唯一的遗憾就是他那个八宝鸭还有烤鸭都没吃上 估计得提前预定吧 &lt;impact_sounds&gt;&lt;/impact_sounds&gt;只能怪我自己没有做好功课&lt;/music&gt;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag far-field">Noise</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">噪声</p>
+                <audio controls class="sample-audio">
+                  <source src="static/audios/far_5.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧文本 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">识别结果 (ASR Output)</span>
+                  <p class="transcript-text">别紧张&lt;breathing&gt;&lt;/breathing&gt;我只是我是在这边逛街 然后看到你们在这边拍照 想跟你交个朋友&lt;impact_sounds&gt; 认识&lt;/impact_sounds&gt;一下</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 多语言自由说。1个日语，1个越南语，1个codeswitch。-->
+    <!-- 歌词识别 -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">Music & Lyrics Transcription (歌词识别)</h3>
+      <p>强化在音乐背景干扰下的语音识别性能，并首次支持对歌曲中歌词内容的精准识别，拓展语音技术在音乐、短视频、智能音箱等娱乐与消费场景的应用潜力。</p>
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag music">Music + Vocal</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">Music</p>
+                <!-- 注意：这里的音频源你之前写的是 dia_sh.wav，记得替换成真正的歌词音频 -->
+                <audio controls class="sample-audio">
+                  <source src="static/audios/lyrics.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧歌词 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">Lyrics Output</span>
+                  <p class="transcript-text">
+我看到我的身后盯着我的人群，
+喜欢或恨不一样的神情，
+我知道这可能就是所谓的成名，
+我知道必须往前一步也不能停。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag music">Music + Vocal</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">Music</p>
+                <audio controls class="sample-audio">
+                  <source src="static/audios/lyrics_2.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧歌词 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">Lyrics Output</span>
+                  <p class="transcript-text">
+明明那么远，为何却感觉离他那么近？
+闭上眼，你甚至能背出他所有押韵。
+虽然不听说唱了，但你已学会自信。
+我代表所有中文说唱歌手向你致敬。
+如今面对困难的你，早已不再抱怨。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-12">
+          <div class="sample-card">
+            <span class="sample-tag music">Music + Vocal</span>
+            <div class="columns is-vcentered">
+              <!-- 左侧音频 -->
+              <div class="column is-4">
+                <p style="margin-bottom:0.5rem; font-weight:bold;">Music</p>
+                <audio controls class="sample-audio">
+                  <source src="static/audios/lyrics_3.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧歌词 -->
+              <div class="column is-8">
+                <div class="transcript-box">
+                  <span class="transcript-label">Lyrics Output</span>
+                  <p class="transcript-text">
+你听啊秋末的落叶，
+你听它叹息着离别，
+只剩我独自领略海与山风和月，
+你听啊。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="asr-section">
+        <h3 class="asr-category-title">Streaming ASR (流式识别)</h3>
+        <p>流式识别低首字延迟，首字输出理论延迟优化至160ms，在保持音频流逐段输入、实时返回中间结果与最终转写文本能力的同时，真正实现“说话即出字”的毫秒级响应体验。</p>
+         <div class="content">
+            <video poster="" id="streaming-video" controls loop playsinline height="100%">
+              <source src="static/videos/fun-asr-streaming-demo.mp4" type="video/mp4">
+            </video>
+         </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 性能测试表格展示 -->
+    <!-- ========================================== -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">Performance Benchmarks</h3>
+      <p>Fun-ASR 在多个公开数据集和工业测试集上均达到业界领先水平，以下为详细性能对比数据。</p>
+      
+      <!-- 开源数据集性能对比 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Open-Source Dataset Performance (WER %)</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Test Set</th>
+                <th>Whisper-large-v3</th>
+                <th>Seed-ASR</th>
+                <th>Seed-ASR*</th>
+                <th>Kimi-Audio</th>
+                <th>Step-Audio2</th>
+                <th>FireRed-ASR</th>
+                <th>Fun-ASR-nano</th>
+                <th>Fun-ASR</th>
+                <th>Fun-ASR (1126)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>AIShell1</td>
+                <td>4.72</td>
+                <td>0.68</td>
+                <td>1.63</td>
+                <td>0.71</td>
+                <td>0.63</td>
+                <td>0.54</td>
+                <td>1.76</td>
+                <td>1.22</td>
+                <td>1.28</td>
+              </tr>
+              <tr>
+                <td>AIShell2</td>
+                <td>4.68</td>
+                <td>2.27</td>
+                <td>2.76</td>
+                <td>2.86</td>
+                <td>2.10</td>
+                <td>2.58</td>
+                <td>2.80</td>
+                <td>2.30</td>
+                <td>2.35</td>
+              </tr>
+              <tr>
+                <td>Fleurs-zh</td>
+                <td>5.18</td>
+                <td>3.43</td>
+                <td>3.23</td>
+                <td>3.11</td>
+                <td>2.68</td>
+                <td>4.81</td>
+                <td>3.47</td>
+                <td>2.64</td>
+                <td>2.89</td>
+              </tr>
+              <tr>
+                <td>Fleurs-en</td>
+                <td>6.23</td>
+                <td>9.39</td>
+                <td>9.39</td>
+                <td>6.99</td>
+                <td>3.03</td>
+                <td>10.79</td>
+                <td>7.95</td>
+                <td>5.84</td>
+                <td>6.24</td>
+              </tr>
+              <tr>
+                <td>Librispeech-clean</td>
+                <td>1.86</td>
+                <td>1.58</td>
+                <td>2.8</td>
+                <td>1.32</td>
+                <td>1.17</td>
+                <td>1.84</td>
+                <td>1.75</td>
+                <td>1.57</td>
+                <td>1.51</td>
+              </tr>
+              <tr>
+                <td>Librispeech-other</td>
+                <td>3.43</td>
+                <td>2.84</td>
+                <td>5.69</td>
+                <td>2.63</td>
+                <td>2.42</td>
+                <td>4.52</td>
+                <td>4.37</td>
+                <td>3.24</td>
+                <td>3.13</td>
+              </tr>
+              <tr>
+                <td>WenetSpeech Meeting</td>
+                <td>18.39</td>
+                <td>5.69</td>
+                <td>7.07</td>
+                <td>6.24</td>
+                <td>4.75</td>
+                <td>4.95</td>
+                <td>8.78</td>
+                <td>6.49</td>
+                <td>6.53</td>
+              </tr>
+              <tr>
+                <td>WenetSpeech Net</td>
+                <td>11.89</td>
+                <td>4.66</td>
+                <td>4.84</td>
+                <td>6.45</td>
+                <td>4.67</td>
+                <td>4.94</td>
+                <td>6.28</td>
+                <td>5.46</td>
+                <td>5.50</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); font-style: italic;">
+          note: Seed-ASR* results are evaluated using the official API on volcengine
+        </p>
+      </div>
+
+      <!-- 工业数据集性能对比 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Industry Dataset Performance (WER %)</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Test Set</th>
+                <th>Seed-ASR</th>
+                <th>Whisper-large-v3</th>
+                <th>FireRed-ASR</th>
+                <th>Kimi-Audio</th>
+                <th>Paraformer v2</th>
+                <th>Fun-ASR-nano</th>
+                <th>Fun-ASR</th>
+                <th>Fun-ASR (1126)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>In-house</td>
+                <td>7.20</td>
+                <td>16.58</td>
+                <td>10.10</td>
+                <td>9.02</td>
+                <td>8.11</td>
+                <td>7.26</td>
+                <td>6.66</td>
+                <td>6.31</td>
+              </tr>
+              <tr>
+                <td>Fairfield</td>
+                <td>4.59</td>
+                <td>22.21</td>
+                <td>7.49</td>
+                <td>10.95</td>
+                <td>9.55</td>
+                <td>5.43</td>
+                <td>4.66</td>
+                <td>4.34</td>
+              </tr>
+              <tr>
+                <td>Home Scenario</td>
+                <td>8.08</td>
+                <td>18.17</td>
+                <td>9.67</td>
+                <td>23.79</td>
+                <td>6.87</td>
+                <td>6.02</td>
+                <td>5.17</td>
+                <td>5.18</td>
+              </tr>
+              <tr>
+                <td>Complex Background</td>
+                <td>12.90</td>
+                <td>32.57</td>
+                <td>15.56</td>
+                <td>15.56</td>
+                <td>15.19</td>
+                <td>17.07</td>
+                <td>11.29</td>
+                <td>11.45</td>
+              </tr>
+              <tr>
+                <td>English General</td>
+                <td>15.65</td>
+                <td>18.56</td>
+                <td>21.62</td>
+                <td>18.12</td>
+                <td>19.48</td>
+                <td>15.87</td>
+                <td>14.22</td>
+                <td>13.73</td>
+              </tr>
+              <tr>
+                <td>Opensource</td>
+                <td>3.83</td>
+                <td>7.05</td>
+                <td>5.31</td>
+                <td>3.20</td>
+                <td>6.23</td>
+                <td>4.65</td>
+                <td>3.60</td>
+                <td>3.68</td>
+              </tr>
+              <tr class="average-row">
+                <td>Average</td>
+                <td>8.71</td>
+                <td>19.19</td>
+                <td>11.63</td>
+                <td>13.54</td>
+                <td>10.91</td>
+                <td>9.38</td>
+                <td>7.60</td>
+                <td>7.45</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 流式识别性能 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Streaming ASR Performance (WER %)</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Test Set</th>
+                <th>Seed-ASR</th>
+                <th>Fun-ASR</th>
+                <th>Fun-ASR-nano</th>
+                <th>Fun-ASR (1126)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>In-house</td>
+                <td>8.64</td>
+                <td>7.00</td>
+                <td>7.97</td>
+                <td>8.20</td>
+              </tr>
+              <tr>
+                <td>Fairfield</td>
+                <td>5.51</td>
+                <td>5.33</td>
+                <td>6.92</td>
+                <td>5.76</td>
+              </tr>
+              <tr>
+                <td>Home Scenario</td>
+                <td>9.70</td>
+                <td>5.33</td>
+                <td>6.51</td>
+                <td>6.72</td>
+              </tr>
+              <tr>
+                <td>Complex Background</td>
+                <td>15.48</td>
+                <td>12.50</td>
+                <td>14.83</td>
+                <td>14.11</td>
+              </tr>
+              <tr>
+                <td>English General</td>
+                <td>18.78</td>
+                <td>14.74</td>
+                <td>16.70</td>
+                <td>14.85</td>
+              </tr>
+              <tr>
+                <td>OpenSource Test Sets</td>
+                <td>3.80</td>
+                <td>3.60</td>
+                <td>5.13</td>
+                <td>4.65</td>
+              </tr>
+              <tr class="average-row">
+                <td>Average</td>
+                <td>10.32</td>
+                <td>8.08</td>
+                <td>9.68</td>
+                <td>9.05</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Code Switching 性能 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Code Switching Performance (WER %)</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Test Set</th>
+                <th colspan="3">Offline</th>
+                <th colspan="3">Streaming</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>w/o CS</th>
+                <th>w/o RL</th>
+                <th>w/ RL</th>
+                <th>w/o CS</th>
+                <th>w/o RL</th>
+                <th>w/ RL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>A</td>
+                <td>4.53</td>
+                <td>1.70</td>
+                <td>1.59</td>
+                <td>6.19</td>
+                <td>5.85</td>
+                <td>2.28</td>
+              </tr>
+              <tr>
+                <td>B</td>
+                <td>4.76</td>
+                <td>4.56</td>
+                <td>4.50</td>
+                <td>6.32</td>
+                <td>5.68</td>
+                <td>5.07</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 噪声鲁棒性 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Noise Robustness Performance (WER %)</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Environment</th>
+                <th>Fun-ASR (w/o NRT)</th>
+                <th>Fun-ASR (w/ NRT)</th>
+                <th>Fun-ASR (NRT + RL)</th>
+                <th>Fun-ASR (1126)(NRT + RL)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Canteen</td>
+                <td>20.67</td>
+                <td>20.34</td>
+                <td>19.88</td>
+                <td>19.28</td>
+              </tr>
+              <tr>
+                <td>Dinner</td>
+                <td>14.02</td>
+                <td>9.88</td>
+                <td>9.55</td>
+                <td>8.77</td>
+              </tr>
+              <tr>
+                <td>Meeting</td>
+                <td>6.45</td>
+                <td>6.27</td>
+                <td>6.24</td>
+                <td>6.05</td>
+              </tr>
+              <tr>
+                <td>Office</td>
+                <td>15.02</td>
+                <td>11.58</td>
+                <td>11.42</td>
+                <td>10.42</td>
+              </tr>
+              <tr>
+                <td>Outdoor</td>
+                <td>10.12</td>
+                <td>9.85</td>
+                <td>9.58</td>
+                <td>9.37</td>
+              </tr>
+              <tr>
+                <td>Park</td>
+                <td>13.67</td>
+                <td>11.88</td>
+                <td>11.37</td>
+                <td>10.89</td>
+              </tr>
+              <tr>
+                <td>Shop</td>
+                <td>12.22</td>
+                <td>11.48</td>
+                <td>11.24</td>
+                <td>10.46</td>
+              </tr>
+              <tr>
+                <td>Street</td>
+                <td>12.05</td>
+                <td>10.58</td>
+                <td>10.86</td>
+                <td>9.85</td>
+              </tr>
+              <tr>
+                <td>Subway</td>
+                <td>14.11</td>
+                <td>13.31</td>
+                <td>13.29</td>
+                <td>11.84</td>
+              </tr>
+              <tr>
+                <td>Supermarket</td>
+                <td>14.27</td>
+                <td>8.81</td>
+                <td>8.75</td>
+                <td>7.74</td>
+              </tr>
+              <tr>
+                <td>Walk Street</td>
+                <td>13.89</td>
+                <td>13.87</td>
+                <td>13.94</td>
+                <td>12.94</td>
+              </tr>
+              <tr class="average-row">
+                <td>Average</td>
+                <td>13.32</td>
+                <td>11.58</td>
+                <td>11.45</td>
+                <td>10.69</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 热词定制性能 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Hotword Customization Performance</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Topic</th>
+                <th colspan="3">Offline (w/o RL)</th>
+                <th colspan="3">Offline (w/ RL)</th>
+                <th colspan="3">Streaming (w/o RL)</th>
+                <th colspan="3">Streaming (w/ RL)</th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>WER</th>
+                <th>Accuracy</th>
+                <th>Recall</th>
+                <th>WER</th>
+                <th>Accuracy</th>
+                <th>Recall</th>
+                <th>WER</th>
+                <th>Accuracy</th>
+                <th>Recall</th>
+                <th>WER</th>
+                <th>Accuracy</th>
+                <th>Recall</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Biology</td>
+                <td>1.67</td>
+                <td>0.98</td>
+                <td>0.99</td>
+                <td>1.70</td>
+                <td>0.97</td>
+                <td>1.00</td>
+                <td>2.04</td>
+                <td>0.98</td>
+                <td>0.98</td>
+                <td>1.97</td>
+                <td>0.99</td>
+                <td>0.98</td>
+              </tr>
+              <tr>
+                <td>Math</td>
+                <td>0.86</td>
+                <td>0.99</td>
+                <td>0.99</td>
+                <td>0.86</td>
+                <td>0.99</td>
+                <td>0.99</td>
+                <td>1.29</td>
+                <td>0.99</td>
+                <td>0.99</td>
+                <td>1.01</td>
+                <td>0.99</td>
+                <td>1.00</td>
+              </tr>
+              <tr>
+                <td>Religion</td>
+                <td>3.20</td>
+                <td>0.98</td>
+                <td>0.98</td>
+                <td>2.87</td>
+                <td>0.99</td>
+                <td>0.99</td>
+                <td>3.71</td>
+                <td>0.99</td>
+                <td>0.98</td>
+                <td>3.35</td>
+                <td>0.99</td>
+                <td>0.97</td>
+              </tr>
+              <tr>
+                <td>Food</td>
+                <td>1.90</td>
+                <td>0.98</td>
+                <td>0.99</td>
+                <td>1.55</td>
+                <td>0.99</td>
+                <td>1.00</td>
+                <td>2.01</td>
+                <td>0.99</td>
+                <td>0.99</td>
+                <td>1.47</td>
+                <td>0.99</td>
+                <td>0.99</td>
+              </tr>
+              <tr>
+                <td>Name</td>
+                <td>0.53</td>
+                <td>1.00</td>
+                <td>0.95</td>
+                <td>0.35</td>
+                <td>1.00</td>
+                <td>1.00</td>
+                <td>1.29</td>
+                <td>1.00</td>
+                <td>0.95</td>
+                <td>0.88</td>
+                <td>1.00</td>
+                <td>0.98</td>
+              </tr>
+              <tr>
+                <td>Brand</td>
+                <td>0.41</td>
+                <td>1.00</td>
+                <td>0.99</td>
+                <td>0.33</td>
+                <td>1.00</td>
+                <td>0.99</td>
+                <td>1.08</td>
+                <td>0.99</td>
+                <td>0.95</td>
+                <td>0.38</td>
+                <td>1.00</td>
+                <td>1.00</td>
+              </tr>
+              <tr>
+                <td>Astronomy</td>
+                <td>2.11</td>
+                <td>1.00</td>
+                <td>0.97</td>
+                <td>1.97</td>
+                <td>0.99</td>
+                <td>0.97</td>
+                <td>2.28</td>
+                <td>0.98</td>
+                <td>0.95</td>
+                <td>2.39</td>
+                <td>1.00</td>
+                <td>0.98</td>
+              </tr>
+              <tr>
+                <td>Chemistry</td>
+                <td>1.76</td>
+                <td>0.99</td>
+                <td>0.97</td>
+                <td>1.91</td>
+                <td>0.99</td>
+                <td>0.98</td>
+                <td>2.81</td>
+                <td>0.98</td>
+                <td>0.97</td>
+                <td>1.83</td>
+                <td>0.99</td>
+                <td>0.97</td>
+              </tr>
+              <tr>
+                <td>Philosophy</td>
+                <td>3.03</td>
+                <td>0.99</td>
+                <td>0.96</td>
+                <td>2.84</td>
+                <td>0.99</td>
+                <td>0.97</td>
+                <td>3.31</td>
+                <td>0.99</td>
+                <td>0.96</td>
+                <td>3.03</td>
+                <td>0.99</td>
+                <td>0.95</td>
+              </tr>
+              <tr>
+                <td>Physics</td>
+                <td>1.72</td>
+                <td>0.99</td>
+                <td>1.00</td>
+                <td>1.82</td>
+                <td>0.98</td>
+                <td>1.00</td>
+                <td>2.31</td>
+                <td>0.99</td>
+                <td>0.98</td>
+                <td>1.80</td>
+                <td>0.99</td>
+                <td>0.99</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 多语言性能 -->
+      <div class="performance-table-container">
+        <h4 class="table-title">Multilingual ASR Performance (WER/CER %)</h4>
+        <div class="table-wrapper">
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Language</th>
+                <th>Test Set</th>
+                <th>Kimi-Audio</th>
+                <th>Whisper Large v3</th>
+                <th>seamless-m4t-large-v2</th>
+                <th>Fun-ASR-ML</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="5">Chinese</td>
+                <td>Fleurs</td>
+                <td>2.69</td>
+                <td>4.71</td>
+                <td>5.15</td>
+                <td>3.00</td>
+              </tr>
+              <tr>
+                <td>CommonVoice</td>
+                <td>7.21</td>
+                <td>12.61</td>
+                <td>10.76</td>
+                <td>5.76</td>
+              </tr>
+              <tr>
+                <td>WeNetSpeech Test Net</td>
+                <td>5.37</td>
+                <td>9.83</td>
+                <td>9.87</td>
+                <td>6.48</td>
+              </tr>
+              <tr>
+                <td>AIShell2 iOS Test</td>
+                <td>2.56</td>
+                <td>4.83</td>
+                <td>4.79</td>
+                <td>2.60</td>
+              </tr>
+              <tr>
+                <td>In-house Test Set</td>
+                <td>36.42</td>
+                <td>16.54</td>
+                <td>14.85</td>
+                <td>7.91</td>
+              </tr>
+              <tr>
+                <td rowspan="5">English</td>
+                <td>Fleurs</td>
+                <td>4.40</td>
+                <td>4.11</td>
+                <td>6.59</td>
+                <td>3.18</td>
+              </tr>
+              <tr>
+                <td>CommonVoice</td>
+                <td>10.31</td>
+                <td>9.66</td>
+                <td>7.63</td>
+                <td>7.67</td>
+              </tr>
+              <tr>
+                <td>Librispeech Test Clean</td>
+                <td>1.28</td>
+                <td>2.56</td>
+                <td>2.56</td>
+                <td>1.62</td>
+              </tr>
+              <tr>
+                <td>Librispeech Test Other</td>
+                <td>2.42</td>
+                <td>4.34</td>
+                <td>4.84</td>
+                <td>3.39</td>
+              </tr>
+              <tr>
+                <td>In-house Test Set</td>
+                <td>12.40</td>
+                <td>11.78</td>
+                <td>43.74</td>
+                <td>11.19</td>
+              </tr>
+              <tr>
+                <td rowspan="3">Indonesian</td>
+                <td>Fleurs</td>
+                <td>-</td>
+                <td>6.07</td>
+                <td>9.36</td>
+                <td>8.10</td>
+              </tr>
+              <tr>
+                <td>CommonVoice</td>
+                <td>-</td>
+                <td>7.27</td>
+                <td>6.10</td>
+                <td>5.49</td>
+              </tr>
+              <tr>
+                <td>GigaSpeech2 Test</td>
+                <td>-</td>
+                <td>19.11</td>
+                <td>22.30</td>
+                <td>16.71</td>
+              </tr>
+              <tr>
+                <td rowspan="3">Thai</td>
+                <td>Fleurs</td>
+                <td>-</td>
+                <td>8.48</td>
+                <td>9.25</td>
+                <td>6.00</td>
+              </tr>
+              <tr>
+                <td>CommonVoice</td>
+                <td>-</td>
+                <td>5.92</td>
+                <td>2.81</td>
+                <td>0.90</td>
+              </tr>
+              <tr>
+                <td>GigaSpeech2 Test</td>
+                <td>-</td>
+                <td>19.35</td>
+                <td>21.70</td>
+                <td>19.09</td>
+              </tr>
+              <tr>
+                <td rowspan="4">Vietnamese</td>
+                <td>Fleurs</td>
+                <td>-</td>
+                <td>6.51</td>
+                <td>8.07</td>
+                <td>5.50</td>
+              </tr>
+              <tr>
+                <td>CommonVoice</td>
+                <td>-</td>
+                <td>13.51</td>
+                <td>13.85</td>
+                <td>7.41</td>
+              </tr>
+              <tr>
+                <td>GigaSpeech2 Test</td>
+                <td>-</td>
+                <td>13.82</td>
+                <td>43.31</td>
+                <td>8.98</td>
+              </tr>
+              <tr>
+                <td>In-house Test Set</td>
+                <td>-</td>
+                <td>11.46</td>
+                <td>32.10</td>
+                <td>7.06</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--BibTex citation -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
+  title={Your Paper Title Here},
+  author={First Author and Second Author and Third Author},
+  journal={Conference/Journal Name},
+  year={2024},
+  url={https://your-domain.com/your-project-page}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>

@@ -1,0 +1,11 @@
+##
+funasr_tech_report.pdf
+*.sty
+*.tex
+*.zip
+*.bst
+*.bib
+*.txt
+PROJECT.md
+ref.md
+img/
