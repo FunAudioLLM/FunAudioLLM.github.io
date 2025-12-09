@@ -1,0 +1,16 @@
+#
+##
+funasr/funasr_tech_report.pdf
+funasr/*.sty
+funasr/*.tex
+funasr/*.zip
+funasr/*.bst
+funasr/*.bib
+funasr/*.txt
+funasr/*.md
+funasr/img/
+funasr/table.html
+funasr/test.html
+funasr/*.py
+## Mac
+funasr/.DS_Store
