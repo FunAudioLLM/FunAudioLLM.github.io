@@ -139,4 +139,92 @@ $(document).ready(function() {
     // Setup video autoplay for carousel
     setupVideoCarouselAutoplay();
 
+    // Initialize language switcher
+    initLanguageSwitcher();
+
 })
+
+// Language Switcher Functionality
+function initLanguageSwitcher() {
+    // Get saved language preference or default to English
+    const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+    setLanguage(savedLang);
+
+    // Add click listeners to language buttons
+    const langButtons = document.querySelectorAll('.lang-btn');
+    langButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            setLanguage(lang);
+            localStorage.setItem('preferredLanguage', lang);
+        });
+    });
+}
+
+function setLanguage(lang) {
+    // Set HTML lang attribute
+    document.documentElement.setAttribute('lang', lang);
+
+    // Update active button state
+    const langButtons = document.querySelectorAll('.lang-btn');
+    langButtons.forEach(button => {
+        if (button.getAttribute('data-lang') === lang) {
+            button.classList.add('active');
+        } else {
+            button.classList.remove('active');
+        }
+    });
+
+    // Update copy button text based on language
+    updateCopyButtonText(lang);
+}
+
+function updateCopyButtonText(lang) {
+    const copyText = document.querySelector('.copy-text');
+    if (copyText) {
+        const copySpan = copyText.querySelector('.lang-en, .lang-zh');
+        if (copySpan) {
+            // Reset to default state
+            copyText.innerHTML = copySpan.outerHTML;
+        }
+    }
+}
+
+// Handle BibTeX copy button text update after language switch
+const originalCopyFunction = copyBibTeX;
+copyBibTeX = function() {
+    const bibtexElement = document.getElementById('bibtex-code');
+    const button = document.querySelector('.copy-bibtex-btn');
+    const copyText = button.querySelector('.copy-text');
+    const currentLang = document.documentElement.getAttribute('lang');
+
+    if (bibtexElement) {
+        navigator.clipboard.writeText(bibtexElement.textContent).then(function() {
+            // Success feedback
+            button.classList.add('copied');
+            copyText.innerHTML = currentLang === 'zh' ? '已复制' : 'Copied';
+
+            setTimeout(function() {
+                button.classList.remove('copied');
+                // Restore original text based on current language
+                updateCopyButtonText(currentLang);
+            }, 2000);
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = bibtexElement.textContent;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+
+            button.classList.add('copied');
+            copyText.innerHTML = currentLang === 'zh' ? '已复制' : 'Copied';
+            setTimeout(function() {
+                button.classList.remove('copied');
+                updateCopyButtonText(currentLang);
+            }, 2000);
+        });
+    }
+}
