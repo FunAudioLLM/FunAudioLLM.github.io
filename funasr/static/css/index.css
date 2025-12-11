@@ -817,6 +817,30 @@ a:focus {
   height: 40px;
 }
 
+/* 隐藏音频进度条，只保留播放控制 */
+.sample-audio::-webkit-media-controls-panel {
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.sample-audio::-webkit-media-controls-timeline {
+  display: none !important;
+}
+
+.sample-audio::-webkit-media-controls-current-time-display,
+.sample-audio::-webkit-media-controls-time-remaining-display {
+  display: none !important;
+}
+
+/* Firefox 隐藏进度条 */
+.sample-audio::-moz-range-thumb {
+  display: none;
+}
+
+.sample-audio .controls {
+  display: none !important;
+}
+
 /* 识别结果文本框 */
 .transcript-box {
   background: #ffffff;
@@ -1012,5 +1036,97 @@ a:focus {
   background: var(--background-secondary);
 }
 
+/* Language Switcher Styles */
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 8px 12px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: var(--transition);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.lang-btn:hover {
+  background: var(--background-secondary);
+  color: var(--text-primary);
+}
+
+.lang-btn.active {
+  background: var(--primary-color);
+  color: white;
+}
+
+.lang-divider {
+  color: var(--text-light);
+  font-weight: 400;
+}
+
+/* Language hiding/showing */
+.lang-zh {
+  display: none;
+}
+
+html[lang="zh"] .lang-en {
+  display: none;
+}
+
+html[lang="zh"] .lang-zh {
+  display: inline;
+}
+
+html[lang="en"] .lang-en {
+  display: inline;
+}
+
+html[lang="en"] .lang-zh {
+  display: none;
+}
+
+/* For block elements */
+html[lang="zh"] .lang-en.block,
+html[lang="en"] .lang-zh.block {
+  display: none;
+}
+
+html[lang="zh"] .lang-zh.block,
+html[lang="en"] .lang-en.block {
+  display: block;
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 768px) {
+  .language-switcher {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .lang-btn {
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+}
 
 
