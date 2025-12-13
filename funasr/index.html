@@ -277,8 +277,12 @@
 <!-- End paper abstract -->
 
 
-<p>TODO: 把所有图改成英文。更新表格数据。示例里面，常规的中英两语，以及歌曲中是否要添加英语。例子不同语言加载不同？还是相关板块下面都混合中英例子（比如歌词、噪声）（实现上更简单）等等</p>
-
+<p>TODO: 
+性能表格是否需要丰富，图中文字变英文？ 
+tech report 的链接。
+示例音频的删减？
+流式asr的demo
+</p>
 <!-- Image carousel -->
 <section class="hero is-small">
   <div class="hero-body">
@@ -336,9 +340,9 @@
             </div>
             <div class="item">
             <!-- Your image here -->
-            <img src="static/images/compare.png" alt="compare_1" loading="lazy" style="height:800px; width:100%"/>
+            <img src="static/images/hotwords_compare.png" alt="compare_1" loading="lazy" style="height:800px; width:100%"/>
             <h2 class="subtitle has-text-centered">
-              Performance Comparison in Different Scenarios (Contd.)
+              Hot words Performance Comparison in Different Domain
             </h2>
           </div>
         </div>
@@ -407,7 +411,7 @@
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">空气变好了路也不堵了路上人车也少了。</p>
+                  <p class="transcript-text">人跟狗，包括人跟动物接触长了，全有感情。葛末随了阿拉社会个富裕。</p>
                   
                 </div>
               </div>
@@ -439,7 +443,7 @@
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">佢最想要有露台，佢想感受呢个国家嘅生气以佢280000呢个预算有少少难度，佢可能要做少少妥协不过我会尽力帮佢揾到佢想要嘅单位。</p>
+                  <p class="transcript-text">啲身体好劲啊，跟住咧佢哋有一个人咧就突然可能就有高原反应啦，突然间就啊窒息咗，即系晕晕咗。</p>
                 </div>
               </div>
 
@@ -470,13 +474,49 @@
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">孩子说好吃的话父母八成都会买的。</p>
+                  <p class="transcript-text">但总来讲孙膑对兵法的理解运用比庞涓略胜一筹。</p>
                 </div>
               </div>
+
 
             </div>
           </div>
         </div>  
+
+        <!--  -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              
+              <!-- 左侧 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Southern Min</span>
+                  <span class="lang-zh">闽南语</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_minnan.wav" type="audio/wav">
+                </audio>
+              </div>
+
+              <!-- 右侧 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">嗯，下摆若有机会吧，因为即久吼开了吼卷啊遮厉害，会倒贴钱啊。</p>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        </div>  
+
+
+
 
       </div>
     </div>
@@ -702,11 +742,221 @@
             </div>
           </div>
         </div>
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag far-field" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Noise</span>
+                  <span class="lang-zh">噪声</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/noise_en.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">So what's interesting here is I feel that you know brands knowing this when people sort of speak to the voice assistance at home and if you want to be the brand.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
 
     <!-- 多语言自由说。1个日语，1个越南语，1个codeswitch。-->
+
+    <!-- 行业定制化能力 -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">
+        <span class="lang-en">Industry Customization Capability</span>
+        <span class="lang-zh">行业定制化能力</span>
+      </h3>
+      <p class="lang-en">In industrial ASR applications, personalized customization is an essential technology. Customization refers to applying additional probability preferences to specific words/phrases (such as names, places, brands, professional terms) during the recognition process, thereby significantly improving their recall rate while minimizing the impact on general recognition accuracy.</p>
+      <p class="lang-zh">在ASR的工业落地中，个性化定制是必不可少的技术。所谓定制化，是指在识别过程中对特定词/短语（如人名、地名、品牌、专业术语等）施加额外概率偏好，从而显著提高它们的识别召回率，同时尽量不损伤通用识别准确率。</p>
+
+      <p class="lang-en">Our solution introduces RAG (Retrieval-Augmented Generation) mechanism: building a dedicated RAG library with user-configured customized words, dynamically extracting relevant vocabulary based on CTC first-pass decoding results, and precisely injecting only relevant vocabulary into the LLM's prompt to avoid interference from unrelated information. This approach expands the number of customized context words to over a thousand without increasing inference complexity, while maintaining high customized recognition performance.</p>
+      <p class="lang-zh">我们的解决方案：引入RAG（检索增强生成）机制，将用户配置的定制词构建成专属RAG库，依据CTC第一遍解码结果动态抽取相关词汇，仅将相关词汇精准注入LLM的Prompt中避免无关信息干扰。该方案在不增加推理复杂度的前提下，将定制化上文数量扩充到上千个以上，并且保持较高的定制化识别效果。</p>
+
+      <div class="columns is-multiline">
+        <!-- 样本 1: 医学领域 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Medical Field</span>
+                  <span class="lang-zh">医学领域</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/rag_medical.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">肾脏中肾小球囊上的细胞膜孔隙很小</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 样本 2: 数学领域 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Mathematics</span>
+                  <span class="lang-zh">数学领域</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/rag_math.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">对微分形式的积分是微分几何中的基本概念</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 样本 3: 历史领域 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">History</span>
+                  <span class="lang-zh">历史领域</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/rag_history.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">由罗马皇帝钦点的犹地亚王大希律王统治期间</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 样本 4: 生物化学领域 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Biochemistry</span>
+                  <span class="lang-zh">生物化学领域</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/rag_biochemistry.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">利用三磷酸腺苷的水解所产生的能量来驱动其他化学反应</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 样本 5: 物理学领域 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Physics</span>
+                  <span class="lang-zh">物理学领域</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/rag_physics.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">根据碰撞理论月面样本缺少挥发性物质</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 样本 6: 化学领域 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Chemistry</span>
+                  <span class="lang-zh">化学领域</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/rag_chemistry.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧：文本 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">比如说酯在当时被认为是一种含氧酸盐</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- 歌词识别 -->
     <div class="asr-section">
       <h3 class="asr-category-title">
@@ -810,6 +1060,102 @@
             </div>
           </div>
         </div>
+<!-- english song -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Music + Vocal</span>
+                  <span class="lang-zh">音乐 + 人声</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/lyrics_2.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧歌词 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">Lyrics Output</span>
+                    <span class="lang-zh">歌词输出</span>
+                  </span>
+                  <p class="transcript-text">
+Hey diddle diddle, the cat and the fiddle, the cow jumped over the moon. 
+The little dog laughed to see such sport, and the dish ran away with the spoon. 
+Hey diddle diddle, the cat and the fiddle, the cow jumped over the moon. 
+The little dog laughed to see such sport, and the dish ran away with the spoon.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Music + Vocal</span>
+                  <span class="lang-zh">音乐 + 人声</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/lyrics_3.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧歌词 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">Lyrics Output</span>
+                    <span class="lang-zh">歌词输出</span>
+                  </span>
+                  <p class="transcript-text">
+I see your monsters. I see your pain. 
+Tell me your problems; I'll chase them away. 
+I'll be your lighthouse. I'll make it okay. 
+When I see your monsters, I'll stand there so brave and chase them all away.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <!-- 左侧：标签 + 音频 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Music + Vocal</span>
+                  <span class="lang-zh">音乐 + 人声</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/lyrics_en_3.wav" type="audio/wav">
+                </audio>
+              </div>
+              <!-- 右侧歌词 -->
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">Lyrics Output</span>
+                    <span class="lang-zh">歌词输出</span>
+                  </span>
+                  <p class="transcript-text">
+It may be a good idea for Joe, 
+but it wouldn't be good for me to sit in a mortgaged bungalow with my little ones on my knee. 
+I'd much rather go and blow my dough on a casual chickadee. 
+I don't want a mark that I'll have to toe—my toe can go where it wants to go. 
+It wants to go where the wild girls grow in extravagant quantity to bask in the warm and peaceful glow of connubial constancy. 
+May be awfully good for good old Joe, but it wouldn't be good for me!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -846,6 +1192,7 @@
             <thead>
               <tr>
                 <th>Test Set</th>
+                <th>GLM-ASR-Nano</th>
                 <th>Whisper-large-v3</th>
                 <th>Seed-ASR</th>
                 <th>Seed-ASR*</th>
@@ -860,6 +1207,7 @@
             <tbody>
               <tr>
                 <td>AIShell1</td>
+                <td>3.47</td>
                 <td>4.72</td>
                 <td>0.68</td>
                 <td>1.63</td>
@@ -872,6 +1220,7 @@
               </tr>
               <tr>
                 <td>AIShell2</td>
+                <td>3.47</td>
                 <td>4.68</td>
                 <td>2.27</td>
                 <td>2.76</td>
@@ -884,6 +1233,7 @@
               </tr>
               <tr>
                 <td>Fleurs-zh</td>
+                <td>3.65</td>
                 <td>5.18</td>
                 <td>3.43</td>
                 <td>3.23</td>
@@ -896,6 +1246,7 @@
               </tr>
               <tr>
                 <td>Fleurs-en</td>
+                <td>6.95</td>
                 <td>6.23</td>
                 <td>9.39</td>
                 <td>9.39</td>
@@ -908,6 +1259,7 @@
               </tr>
               <tr>
                 <td>Librispeech-clean</td>
+                <td>2.17</td>
                 <td>1.86</td>
                 <td>1.58</td>
                 <td>2.8</td>
@@ -920,6 +1272,7 @@
               </tr>
               <tr>
                 <td>Librispeech-other</td>
+                <td>4.43</td>
                 <td>3.43</td>
                 <td>2.84</td>
                 <td>5.69</td>
@@ -932,6 +1285,7 @@
               </tr>
               <tr>
                 <td>WenetSpeech Meeting</td>
+                <td>8.21</td>
                 <td>18.39</td>
                 <td>5.69</td>
                 <td>7.07</td>
@@ -944,6 +1298,7 @@
               </tr>
               <tr>
                 <td>WenetSpeech Net</td>
+                <td>6.33</td>
                 <td>11.89</td>
                 <td>4.66</td>
                 <td>4.84</td>
@@ -971,6 +1326,7 @@
             <thead>
               <tr>
                 <th>Test Set</th>
+                <th>GLM-ASR-Nano</th>
                 <th>Seed-ASR</th>
                 <th>Whisper-large-v3</th>
                 <th>FireRed-ASR</th>
@@ -978,87 +1334,122 @@
                 <th>Paraformer v2</th>
                 <th>Fun-ASR-nano</th>
                 <th>Fun-ASR</th>
-                <th>Fun-ASR (1126)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>In-house</td>
+                <td>Nearfield</td>
+                <td>16.95</td>
                 <td>7.20</td>
                 <td>16.58</td>
                 <td>10.10</td>
                 <td>9.02</td>
                 <td>8.11</td>
-                <td>7.26</td>
-                <td>6.66</td>
+                <td>7.79</td>
                 <td>6.31</td>
               </tr>
               <tr>
                 <td>Fairfield</td>
+                <td>9.44</td>
                 <td>4.59</td>
                 <td>22.21</td>
                 <td>7.49</td>
                 <td>10.95</td>
                 <td>9.55</td>
-                <td>5.43</td>
-                <td>4.66</td>
+                <td>5.79</td>
                 <td>4.34</td>
               </tr>
-              <tr>
-                <td>Home Scenario</td>
-                <td>8.08</td>
-                <td>18.17</td>
-                <td>9.67</td>
-                <td>23.79</td>
-                <td>6.87</td>
-                <td>6.02</td>
-                <td>5.17</td>
-                <td>5.18</td>
-              </tr>
+
               <tr>
                 <td>Complex Background</td>
+                <td>23.79</td>
                 <td>12.90</td>
                 <td>32.57</td>
                 <td>15.56</td>
                 <td>15.56</td>
                 <td>15.19</td>
-                <td>17.07</td>
-                <td>11.29</td>
+                <td>14.59</td>
                 <td>11.45</td>
               </tr>
               <tr>
                 <td>English General</td>
+                <td>16.47</td>
                 <td>15.65</td>
                 <td>18.56</td>
                 <td>21.62</td>
                 <td>18.12</td>
                 <td>19.48</td>
-                <td>15.87</td>
-                <td>14.22</td>
+                <td>15.28</td>
                 <td>13.73</td>
               </tr>
               <tr>
                 <td>Opensource</td>
+                <td>4.67</td>
                 <td>3.83</td>
                 <td>7.05</td>
                 <td>5.31</td>
-                <td>3.20</td>
+                <td>3.79</td>
                 <td>6.23</td>
-                <td>4.65</td>
-                <td>3.60</td>
+                <td>4.22</td>
                 <td>3.68</td>
+              </tr>
+              <!-- add dialect accent lyrics hiphop，注意顺序 -->
+            <tr>
+              <td>Dialect</td>
+              <td>54.21</td> 
+              <td>29.45</td>
+              <td>66.14</td>
+              <td>52.82</td>
+              <td>71.94</td>
+              <td>41.16</td>
+              <td>28.18</td>
+              <td>19.55</td>
+              </tr>
+              <tr>
+                <td>Accent</td>
+                <td>19.78</td>
+                <td>10.23</td> 
+                <td>36.03</td>
+                <td>14.05</td>
+                <td>27.20</td>
+                <td>17.80</td>
+                <td>12.90</td>
+                <td>10.01</td>
+              </tr>
+              <tr>
+                <td>Lyrics</td>
+                <td>46.56</td>
+                <td>30.26</td>
+                <td>54.82</td>
+                <td>42.87</td>
+                <td>65.18</td>
+                <td>50.14</td>
+                <td>30.85</td>
+                <td>21.23</td>
+              </tr>
+              <tr>
+                <td>Hiphop</td>
+                <td>43.32</td>
+                <td>29.46</td>
+                <td>46.56</td>
+                <td>33.88</td>
+                <td>57.25</td>
+                <td>43.79</td>
+                <td>30.87</td>
+                <td>24.86</td>
               </tr>
               <tr class="average-row">
                 <td>Average</td>
-                <td>8.71</td>
-                <td>19.19</td>
-                <td>11.63</td>
-                <td>13.54</td>
-                <td>10.91</td>
-                <td>9.38</td>
-                <td>7.60</td>
-                <td>7.45</td>
+                <td>26.13</td>
+                <td>15.95</td>
+                <td>33.39</td>
+                <td>22.63</td>
+                <td>31.00</td>
+                <td>23.49</td>
+                <td>16.72</td>
+                <td>12.80</td>
               </tr>
+              </tbody>
             </tbody>
           </table>
         </div>
@@ -1075,58 +1466,50 @@
                 <th>Seed-ASR</th>
                 <th>Fun-ASR</th>
                 <th>Fun-ASR-nano</th>
-                <th>Fun-ASR (1126)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>In-house</td>
+                <td>Nearfield</td>
                 <td>8.64</td>
                 <td>7.00</td>
                 <td>7.97</td>
-                <td>8.20</td>
               </tr>
               <tr>
                 <td>Fairfield</td>
                 <td>5.51</td>
                 <td>5.33</td>
                 <td>6.92</td>
-                <td>5.76</td>
               </tr>
               <tr>
                 <td>Home Scenario</td>
                 <td>9.70</td>
                 <td>5.33</td>
                 <td>6.51</td>
-                <td>6.72</td>
               </tr>
               <tr>
                 <td>Complex Background</td>
                 <td>15.48</td>
                 <td>12.50</td>
                 <td>14.83</td>
-                <td>14.11</td>
               </tr>
               <tr>
                 <td>English General</td>
                 <td>18.78</td>
                 <td>14.74</td>
                 <td>16.70</td>
-                <td>14.85</td>
               </tr>
               <tr>
                 <td>OpenSource Test Sets</td>
                 <td>3.80</td>
                 <td>3.60</td>
                 <td>5.13</td>
-                <td>4.65</td>
               </tr>
               <tr class="average-row">
                 <td>Average</td>
                 <td>10.32</td>
                 <td>8.08</td>
                 <td>9.68</td>
-                <td>9.05</td>
               </tr>
             </tbody>
           </table>
@@ -1159,7 +1542,7 @@
                 <td>A</td>
                 <td>4.53</td>
                 <td>1.70</td>
-                <td>1.59</td>
+                <td>1.55</td>
                 <td>6.19</td>
                 <td>5.85</td>
                 <td>2.28</td>
@@ -1167,8 +1550,8 @@
               <tr>
                 <td>B</td>
                 <td>4.76</td>
-                <td>4.56</td>
                 <td>4.50</td>
+                <td>4.49</td>
                 <td>6.32</td>
                 <td>5.68</td>
                 <td>5.07</td>
@@ -1189,92 +1572,79 @@
                 <th>Fun-ASR (w/o NRT)</th>
                 <th>Fun-ASR (w/ NRT)</th>
                 <th>Fun-ASR (NRT + RL)</th>
-                <th>Fun-ASR (1126)(NRT + RL)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Canteen</td>
                 <td>20.67</td>
-                <td>20.34</td>
-                <td>19.88</td>
+                <td>19.66</td>
                 <td>19.28</td>
               </tr>
               <tr>
                 <td>Dinner</td>
                 <td>14.02</td>
-                <td>9.88</td>
-                <td>9.55</td>
+                <td>9.02</td>
                 <td>8.77</td>
               </tr>
               <tr>
                 <td>Meeting</td>
                 <td>6.45</td>
-                <td>6.27</td>
-                <td>6.24</td>
+                <td>6.25</td>
                 <td>6.05</td>
               </tr>
               <tr>
                 <td>Office</td>
                 <td>15.02</td>
-                <td>11.58</td>
-                <td>11.42</td>
+                <td>10.52</td>
                 <td>10.42</td>
               </tr>
               <tr>
                 <td>Outdoor</td>
                 <td>10.12</td>
-                <td>9.85</td>
-                <td>9.58</td>
+                <td>9.63</td>
                 <td>9.37</td>
               </tr>
               <tr>
                 <td>Park</td>
                 <td>13.67</td>
-                <td>11.88</td>
-                <td>11.37</td>
+                <td>11.04</td>  
                 <td>10.89</td>
               </tr>
               <tr>
                 <td>Shop</td>
                 <td>12.22</td>
-                <td>11.48</td>
-                <td>11.24</td>
+                <td>10.57</td>
                 <td>10.46</td>
               </tr>
               <tr>
                 <td>Street</td>
                 <td>12.05</td>
-                <td>10.58</td>
-                <td>10.86</td>
+                <td>10.10</td>
                 <td>9.85</td>
               </tr>
               <tr>
                 <td>Subway</td>
                 <td>14.11</td>
-                <td>13.31</td>
-                <td>13.29</td>
+                <td>11.89</td>
                 <td>11.84</td>
               </tr>
               <tr>
                 <td>Supermarket</td>
                 <td>14.27</td>
-                <td>8.81</td>
-                <td>8.75</td>
+                <td>8.03</td>
                 <td>7.74</td>
               </tr>
               <tr>
                 <td>Walk Street</td>
                 <td>13.89</td>
-                <td>13.87</td>
-                <td>13.94</td>
+                <td>13.34</td>
                 <td>12.94</td>
               </tr>
               <tr class="average-row">
                 <td>Average</td>
                 <td>13.32</td>
-                <td>11.58</td>
-                <td>11.45</td>
+                <td>10.91</td>
                 <td>10.69</td>
               </tr>
             </tbody>
@@ -1480,6 +1850,7 @@
                 <th>Whisper Large v3</th>
                 <th>seamless-m4t-large-v2</th>
                 <th>Fun-ASR-ML</th>
+                <th>Fun-ASR-ML-Nano</th>
               </tr>
             </thead>
             <tbody>
@@ -1490,6 +1861,7 @@
                 <td>4.71</td>
                 <td>5.15</td>
                 <td>3.00</td>
+                <td>3.51</td>
               </tr>
               <tr>
                 <td>CommonVoice</td>
@@ -1497,6 +1869,7 @@
                 <td>12.61</td>
                 <td>10.76</td>
                 <td>5.76</td>
+                <td>6.2</td>
               </tr>
               <tr>
                 <td>WeNetSpeech Test Net</td>
@@ -1504,6 +1877,7 @@
                 <td>9.83</td>
                 <td>9.87</td>
                 <td>6.48</td>
+                <td>6.35</td>
               </tr>
               <tr>
                 <td>AIShell2 iOS Test</td>
@@ -1511,13 +1885,15 @@
                 <td>4.83</td>
                 <td>4.79</td>
                 <td>2.60</td>
+                <td>2.74</td>
               </tr>
               <tr>
-                <td>In-house Test Set</td>
+                <td>Nearfield Test Set</td>
                 <td>36.42</td>
                 <td>16.54</td>
                 <td>14.85</td>
                 <td>7.91</td>
+                <td>7.89</td>
               </tr>
               <tr>
                 <td rowspan="5">English</td>
@@ -1526,6 +1902,7 @@
                 <td>4.11</td>
                 <td>6.59</td>
                 <td>3.18</td>
+                <td>5.49</td>
               </tr>
               <tr>
                 <td>CommonVoice</td>
@@ -1533,6 +1910,7 @@
                 <td>9.66</td>
                 <td>7.63</td>
                 <td>7.67</td>
+                <td>9.90</td>
               </tr>
               <tr>
                 <td>Librispeech Test Clean</td>
@@ -1540,6 +1918,7 @@
                 <td>2.56</td>
                 <td>2.56</td>
                 <td>1.62</td>
+                <td>1.68</td>
               </tr>
               <tr>
                 <td>Librispeech Test Other</td>
@@ -1547,13 +1926,15 @@
                 <td>4.34</td>
                 <td>4.84</td>
                 <td>3.39</td>
+                <td>4.03</td>
               </tr>
               <tr>
-                <td>In-house Test Set</td>
+                <td>Nearfield Test Set</td>
                 <td>12.40</td>
                 <td>11.78</td>
                 <td>43.74</td>
                 <td>11.19</td>
+                <td>11.61</td>
               </tr>
               <tr>
                 <td rowspan="3">Indonesian</td>
@@ -1562,6 +1943,7 @@
                 <td>6.07</td>
                 <td>9.36</td>
                 <td>8.10</td>
+                <td>6.56</td>
               </tr>
               <tr>
                 <td>CommonVoice</td>
@@ -1569,6 +1951,7 @@
                 <td>7.27</td>
                 <td>6.10</td>
                 <td>5.49</td>
+                <td>8.09</td>
               </tr>
               <tr>
                 <td>GigaSpeech2 Test</td>
@@ -1576,6 +1959,7 @@
                 <td>19.11</td>
                 <td>22.30</td>
                 <td>16.71</td>
+                <td>18.52</td>
               </tr>
               <tr>
                 <td rowspan="3">Thai</td>
@@ -1584,6 +1968,7 @@
                 <td>8.48</td>
                 <td>9.25</td>
                 <td>6.00</td>
+                <td>8.05</td>
               </tr>
               <tr>
                 <td>CommonVoice</td>
@@ -1591,6 +1976,7 @@
                 <td>5.92</td>
                 <td>2.81</td>
                 <td>0.90</td>
+                <td>1.97</td>
               </tr>
               <tr>
                 <td>GigaSpeech2 Test</td>
@@ -1598,6 +1984,7 @@
                 <td>19.35</td>
                 <td>21.70</td>
                 <td>19.09</td>
+                <td>18.96</td>
               </tr>
               <tr>
                 <td rowspan="4">Vietnamese</td>
@@ -1606,6 +1993,7 @@
                 <td>6.51</td>
                 <td>8.07</td>
                 <td>5.50</td>
+                <td>7.75</td>
               </tr>
               <tr>
                 <td>CommonVoice</td>
@@ -1613,6 +2001,7 @@
                 <td>13.51</td>
                 <td>13.85</td>
                 <td>7.41</td>
+                <td>9.26</td>
               </tr>
               <tr>
                 <td>GigaSpeech2 Test</td>
@@ -1620,13 +2009,15 @@
                 <td>13.82</td>
                 <td>43.31</td>
                 <td>8.98</td>
+                <td>9.29</td>
               </tr>
               <tr>
-                <td>In-house Test Set</td>
+                <td>Nearfield Test Set</td>
                 <td>-</td>
                 <td>11.46</td>
                 <td>32.10</td>
                 <td>7.06</td>
+                <td>7.72</td>
               </tr>
             </tbody>
           </table>
