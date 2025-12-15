@@ -299,6 +299,13 @@ tech report 的链接。
               </h2>
             </div>
             <div class="item">
+              <!-- TODO: Replace with your research result images -->
+              <img src="static/images/FunAudio_train_pipeline.png" alt="Architecture" loading="lazy" style="width:100%"/>
+              <h2 class="subtitle has-text-centered">
+                Fun-ASR Training Pipeline
+              </h2>
+            </div>
+            <div class="item">
               <!-- Your image here -->
               <img src="static/images/encoder-pretrain.png" alt="encoder-pretrain" loading="lazy" style="width:70%"/>
               <h2 class="subtitle has-text-centered">
@@ -334,20 +341,20 @@ tech report 的链接。
           <div id="architecture-carousel" class="carousel results-carousel">
             <div class="item">
               <!-- Your image here -->
+              <img class="lang-zh" src="static/images/offline_radar.png" alt="compare_radar" loading="lazy" style="width:100%"/>
+              <img class="lang-en" src="static/images/offline_radar_en.png" alt="compare_radar" loading="lazy" style="width:100%"/>
+              <h2 class="subtitle has-text-centered">
+              Performance Comparison in Different Scenarios(Radar Chart) 
+              </h2>
+            </div>
+            <div class="item">
+              <!-- Your image here -->
               <img class="lang-en" src="static/images/compare_en.png" alt="compare" loading="lazy" style="width:100%"/>
               <img class="lang-zh" src="static/images/compare_zh.png" alt="compare" loading="lazy" style="width:100%"/>
               <h2 class="subtitle has-text-centered">
               Performance Comparison in Different Scenarios
               </h2>
             </div>
-            <div class="item">
-            <!-- Your image here -->
-              <img class="lang-en" src="static/images/hotwords_compare.png" alt="compare_1" loading="lazy" style="height:800px; width:100%"/>
-              <img class="lang-zh" src="static/images/hotwords_compare.png" alt="compare_1" loading="lazy" style="height:800px; width:100%"/>
-              <h2 class="subtitle has-text-centered">
-              Hot words Performance Comparison in Different Domain
-            </h2>
-          </div>
         </div>
       </div>
     </div>
@@ -1162,19 +1169,38 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
       </div>
     </div>
 
+    <!-- Video carousel -->
+     <!-- done，注意取消video 元素里面，controls的muted -->
     <div class="asr-section">
-        <h3 class="asr-category-title">
-          <span class="lang-en">Streaming ASR</span>
-          <span class="lang-zh">流式识别</span>
-        </h3>
-        <p class="lang-en">Streaming ASR with low first-character latency, optimized theoretical first-character output delay to 160ms. While maintaining the ability to process audio streams segment by segment and return intermediate results with final transcribed text in real-time, it truly achieves millisecond-level response experience of "instant text output while speaking".</p>
-        <p class="lang-zh">流式识别低首字延迟，首字输出理论延迟优化至160ms，在保持音频流逐段输入、实时返回中间结果与最终转写文本能力的同时，真正实现"说话即出字"的毫秒级响应体验。</p>
-         <div class="content">
-            <video poster="" id="streaming-video" controls loop playsinline height="100%">
-              <source src="static/videos/fun-asr-streaming-demo.mp4" type="video/mp4">
-            </video>
-         </div>
+      <h3 class="asr-category-title">
+        <span class="lang-en">Streaming ASR Demo</span>
+        <span class="lang-zh">流式转录示例</span>
+      </h3>
+      <div class="container">
+      <div class="columns is-centered">
+      <div class="column is-10">  
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-video1">
+          <!-- TODO: Add poster image for better preview -->
+          <video poster="" id="video1" controls loop height="100%" preload="metadata" >
+            <!-- Your video file here -->
+            <source src="static/videos/en.mov" type="video/mp4" >
+          </video>
+        </div>
+        <div class="item item-video2">
+          <!-- TODO: Add poster image for better preview -->
+          <video poster="" id="video2" controls loop height="100%" preload="metadata" >
+            <!-- Your video file here -->
+            <source src="static/videos/zh.mov" type="video/mp4" >
+          </video>
+        </div>
+      </div>
+      </div>
+      </div> 
+      </div>
     </div>
+<!-- End video carousel -->
+
 
     <!-- ========================================== -->
     <!-- 性能测试表格展示 -->
