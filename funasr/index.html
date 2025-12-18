@@ -220,6 +220,18 @@
                       </a>
                     </span>
 
+                    <!-- Paper -->
+                    <span class="link-block">
+                      <a href="https://arxiv.org/abs/2509.12508" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                      </span>
+                      <span>Paper</span>
+                    </a>
+                    </span>
+
+
                     <!-- ModelScope Demo -->
                     <span class="link-block">
                       <a href="https://modelscope.cn/studios/FunAudioLLM/Fun-ASR-Nano/" target="_blank"
@@ -1485,6 +1497,7 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
       </div>
 
       <!-- 流式识别性能 -->
+<!-- 流式识别性能 -->
       <div class="performance-table-container">
         <h4 class="table-title">Streaming ASR Performance (WER %)</h4>
         <div class="table-wrapper">
@@ -1493,52 +1506,64 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
               <tr>
                 <th>Test Set</th>
                 <th>Seed-ASR</th>
-                <th>Fun-ASR</th>
                 <th>Fun-ASR-nano</th>
+                <th>Fun-ASR</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Nearfield</td>
                 <td>8.64</td>
-                <td>7.00</td>
-                <td>7.97</td>
+                <td>8.10</td>
+                <td>6.75</td>
               </tr>
               <tr>
-                <td>Fairfield</td>
+                <td>Farfield</td>
                 <td>5.51</td>
-                <td>5.33</td>
-                <td>6.92</td>
-              </tr>
-              <tr>
-                <td>Home Scenario</td>
-                <td>9.70</td>
-                <td>5.33</td>
-                <td>6.51</td>
+                <td>6.38</td>
+                <td>4.72</td>
               </tr>
               <tr>
                 <td>Complex Background</td>
                 <td>15.48</td>
-                <td>12.50</td>
-                <td>14.83</td>
+                <td>15.52</td>
+                <td>12.49</td>
               </tr>
               <tr>
                 <td>English General</td>
                 <td>18.78</td>
-                <td>14.74</td>
-                <td>16.70</td>
+                <td>16.46</td>
+                <td>14.68</td>
               </tr>
               <tr>
-                <td>OpenSource Test Sets</td>
+                <td>OpenSource</td>
                 <td>3.80</td>
-                <td>3.60</td>
-                <td>5.13</td>
+                <td>5.06</td>
+                <td>4.08</td>
               </tr>
-              <tr class="average-row">
-                <td>Average</td>
-                <td>10.32</td>
-                <td>8.08</td>
-                <td>9.68</td>
+              <tr>
+                <td>Dialect</td>
+                <td>-</td>
+                <td>30.72</td>
+                <td>18.25</td>
+              </tr>
+              <tr>
+                <td>Accent</td>
+                <td>-</td>
+                <td>15.42</td>
+                <td>11.49</td>
+              </tr>
+              <tr>
+                <td>Lyrics</td>
+                <td>-</td>
+                <td>31.54</td>
+                <td>22.05</td>
+              </tr>
+              <tr>
+                <td>Hiphop</td>
+                <td>-</td>
+                <td>36.55</td>
+                <td>28.90</td>
               </tr>
             </tbody>
           </table>
@@ -2106,7 +2131,11 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
       primaryClass={cs.CL},
       url={https://arxiv.org/abs/2509.12508}, 
 }</code></pre>
-    </div>
+<!-- add a note that this paper will be updated sooner, please update your notation if needed -->
+<div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); font-style: italic;">
+  <span class="lang-en">note: This paper will be updated soon on arXiv. Please update your citation if needed.</span>
+  <span class="lang-zh">注：该论文将在 arXiv 上更新。 如有需要，请更新您的引用。</span>
+</div>
 </section>
 <!--End BibTex citation -->
 
