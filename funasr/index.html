@@ -1225,7 +1225,7 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
       <p class="lang-en">Fun-ASR achieves industry-leading performance on multiple public datasets and industrial test sets. The following are detailed performance comparison data.</p>
       <p class="lang-zh">Fun-ASR 在多个公开数据集和工业测试集上均达到业界领先水平，以下为详细性能对比数据。</p>
       
-      <!-- 开源数据集性能对比 -->
+<!-- 开源数据集性能对比 -->
       <div class="performance-table-container">
         <h4 class="table-title">Open-Source Dataset Performance (WER %)</h4>
         <div class="table-wrapper">
@@ -1233,7 +1233,8 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
             <thead>
               <tr>
                 <th>Test Set</th>
-                <th>GLM-ASR-Nano</th>
+                <th>GLM-ASR-nano</th>
+                <th>GLM-ASR-nano*</th>
                 <th>Whisper-large-v3</th>
                 <th>Seed-ASR</th>
                 <th>Seed-ASR*</th>
@@ -1242,25 +1243,51 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <th>FireRed-ASR</th>
                 <th>Fun-ASR-nano</th>
                 <th>Fun-ASR</th>
-                <th>Fun-ASR (1126)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>Model Size</td>
+                <td>1.5B</td>
+                <td>1.5B</td>
+                <td>1.6B</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>1.1B</td>
+                <td>0.8B</td>
+                <td>7.7B</td>
+              </tr>
+              <tr>
+                <td>OpenSource</td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
+                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
+              </tr>
+              <tr>
                 <td>AIShell1</td>
-                <td>3.47</td>
+                <td>1.81</td>
+                <td>2.17</td>
                 <td>4.72</td>
                 <td>0.68</td>
                 <td>1.63</td>
                 <td>0.71</td>
                 <td>0.63</td>
                 <td>0.54</td>
-                <td>1.76</td>
+                <td>1.80</td>
                 <td>1.22</td>
-                <td>1.28</td>
               </tr>
               <tr>
                 <td>AIShell2</td>
+                <td>-</td>
                 <td>3.47</td>
                 <td>4.68</td>
                 <td>2.27</td>
@@ -1268,12 +1295,12 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>2.86</td>
                 <td>2.10</td>
                 <td>2.58</td>
-                <td>2.80</td>
-                <td>2.30</td>
-                <td>2.35</td>
+                <td>2.75</td>
+                <td>2.39</td>
               </tr>
               <tr>
                 <td>Fleurs-zh</td>
+                <td>-</td>
                 <td>3.65</td>
                 <td>5.18</td>
                 <td>3.43</td>
@@ -1281,12 +1308,12 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>3.11</td>
                 <td>2.68</td>
                 <td>4.81</td>
-                <td>3.47</td>
                 <td>2.56</td>
                 <td>2.53</td>
               </tr>
               <tr>
                 <td>Fleurs-en</td>
+                <td>5.78</td>
                 <td>6.95</td>
                 <td>6.23</td>
                 <td>9.39</td>
@@ -1294,12 +1321,12 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>6.99</td>
                 <td>3.03</td>
                 <td>10.79</td>
-                <td>7.95</td>
                 <td>5.96</td>
                 <td>4.74</td>
               </tr>
               <tr>
                 <td>Librispeech-clean</td>
+                <td>2.00</td>
                 <td>2.17</td>
                 <td>1.86</td>
                 <td>1.58</td>
@@ -1307,12 +1334,12 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>1.32</td>
                 <td>1.17</td>
                 <td>1.84</td>
-                <td>1.75</td>
-                <td>1.57</td>
+                <td>1.76</td>
                 <td>1.51</td>
               </tr>
               <tr>
                 <td>Librispeech-other</td>
+                <td>4.19</td>
                 <td>4.43</td>
                 <td>3.43</td>
                 <td>2.84</td>
@@ -1320,12 +1347,12 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>2.63</td>
                 <td>2.42</td>
                 <td>4.52</td>
-                <td>4.37</td>
-                <td>3.24</td>
-                <td>3.13</td>
+                <td>4.33</td>
+                <td>3.03</td>
               </tr>
               <tr>
                 <td>WenetSpeech Meeting</td>
+                <td>6.73</td>
                 <td>8.21</td>
                 <td>18.39</td>
                 <td>5.69</td>
@@ -1333,12 +1360,12 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>6.24</td>
                 <td>4.75</td>
                 <td>4.95</td>
-                <td>8.78</td>
-                <td>6.49</td>
-                <td>6.53</td>
+                <td>6.60</td>
+                <td>6.17</td>
               </tr>
               <tr>
                 <td>WenetSpeech Net</td>
+                <td>-</td>
                 <td>6.33</td>
                 <td>11.89</td>
                 <td>4.66</td>
@@ -1346,16 +1373,15 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>6.45</td>
                 <td>4.67</td>
                 <td>4.94</td>
-                <td>6.28</td>
+                <td>6.01</td>
                 <td>5.46</td>
-                <td>5.50</td>
               </tr>
             </tbody>
           </table>
         </div>
         <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); font-style: italic;">
-          <span class="lang-en">note: Seed-ASR* results are evaluated using the official API on volcengine</span>
-          <span class="lang-zh">注：Seed-ASR* 结果使用 volcengine 上的官方 API 评估</span>
+          <span class="lang-en">Note: Seed-ASR* results are evaluated using the official API on volcengine; GLM-ASR-nano* results are evaluated using the opensource checkpoint.</span>
+          <span class="lang-zh">注：Seed-ASR* 结果使用 volcengine 上的官方 API 评估；GLM-ASR-nano* 结果使用开源 checkpoint 评估。</span>
         </p>
       </div>
 
@@ -1368,8 +1394,8 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
               <tr>
                 <th>Test Set</th>
                 <th>GLM-ASR-Nano</th>
-                <th>Seed-ASR</th>
                 <th>Whisper-large-v3</th>
+                <th>Seed-ASR</th>
                 <th>FireRed-ASR</th>
                 <th>Kimi-Audio</th>
                 <th>Paraformer v2</th>
@@ -1379,10 +1405,32 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
             </thead>
             <tbody>
               <tr>
+                <td>Model Size</td>
+                <td>1.5B</td>
+                <td>1.6B</td>
+                <td>-</td>
+                <td>1.1B</td>
+                <td>8B</td>
+                <td>0.2B</td>
+                <td>0.8B</td>
+                <td>7.7B</td>
+              </tr>
+              <tr>
+                <td>OpenSource</td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
+                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
+              </tr>
+              <tr>
                 <td>Nearfield</td>
                 <td>16.95</td>
-                <td>7.20</td>
                 <td>16.58</td>
+                <td>7.20</td>
                 <td>10.10</td>
                 <td>9.02</td>
                 <td>8.11</td>
@@ -1390,22 +1438,21 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
                 <td>6.31</td>
               </tr>
               <tr>
-                <td>Fairfield</td>
+                <td>Farfield</td>
                 <td>9.44</td>
-                <td>4.59</td>
                 <td>22.21</td>
+                <td>4.59</td>
                 <td>7.49</td>
                 <td>10.95</td>
                 <td>9.55</td>
                 <td>5.79</td>
                 <td>4.34</td>
               </tr>
-
               <tr>
                 <td>Complex Background</td>
                 <td>23.79</td>
-                <td>12.90</td>
                 <td>32.57</td>
+                <td>12.90</td>
                 <td>15.56</td>
                 <td>15.56</td>
                 <td>15.19</td>
@@ -1415,8 +1462,8 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
               <tr>
                 <td>English General</td>
                 <td>16.47</td>
-                <td>15.65</td>
                 <td>18.56</td>
+                <td>15.65</td>
                 <td>21.62</td>
                 <td>18.12</td>
                 <td>19.48</td>
@@ -1426,71 +1473,69 @@ May be awfully good for good old Joe, but it wouldn't be good for me!
               <tr>
                 <td>Opensource</td>
                 <td>4.67</td>
-                <td>3.83</td>
                 <td>7.05</td>
+                <td>3.83</td>
                 <td>5.31</td>
                 <td>3.79</td>
                 <td>6.23</td>
                 <td>4.22</td>
-                <td>3.68</td>
+                <td>3.38</td>
               </tr>
-              <!-- add dialect accent lyrics hiphop，注意顺序 -->
-            <tr>
-              <td>Dialect</td>
-              <td>54.21</td> 
-              <td>29.45</td>
-              <td>66.14</td>
-              <td>52.82</td>
-              <td>71.94</td>
-              <td>41.16</td>
-              <td>28.18</td>
-              <td>19.55</td>
+              <tr>
+                <td>Dialect</td>
+                <td>54.21</td>
+                <td>66.14</td>
+                <td>29.45</td>
+                <td>52.82</td>
+                <td>71.94</td>
+                <td>41.16</td>
+                <td>28.18</td>
+                <td>15.21</td>
               </tr>
               <tr>
                 <td>Accent</td>
                 <td>19.78</td>
-                <td>10.23</td> 
                 <td>36.03</td>
+                <td>10.23</td>
                 <td>14.05</td>
                 <td>27.20</td>
                 <td>17.80</td>
                 <td>12.90</td>
-                <td>10.01</td>
+                <td>10.31</td>
               </tr>
               <tr>
                 <td>Lyrics</td>
                 <td>46.56</td>
-                <td>30.26</td>
                 <td>54.82</td>
+                <td>30.26</td>
                 <td>42.87</td>
                 <td>65.18</td>
                 <td>50.14</td>
                 <td>30.85</td>
-                <td>21.23</td>
+                <td>21.00</td>
               </tr>
               <tr>
                 <td>Hiphop</td>
                 <td>43.32</td>
-                <td>29.46</td>
                 <td>46.56</td>
+                <td>29.46</td>
                 <td>33.88</td>
                 <td>57.25</td>
                 <td>43.79</td>
                 <td>30.87</td>
-                <td>24.86</td>
+                <td>28.58</td>
               </tr>
               <tr class="average-row">
                 <td>Average</td>
                 <td>26.13</td>
-                <td>15.95</td>
                 <td>33.39</td>
+                <td>15.95</td>
                 <td>22.63</td>
                 <td>31.00</td>
                 <td>23.49</td>
                 <td>16.72</td>
-                <td>12.80</td>
+                <td>12.70</td>
               </tr>
-              </tbody>
             </tbody>
           </table>
         </div>
