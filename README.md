@@ -12,3 +12,5 @@ MinMo: https://funaudiollm.github.io/minmo
 InspireMusic: https://funaudiollm.github.io/inspiremusic
 
 Fun-ASR: https://funaudiollm.github.io/funasr
+
+Fun-Audio-Chat: https://funaudiollm.github.io/funaudiochat
