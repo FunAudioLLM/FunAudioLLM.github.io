@@ -341,73 +341,6 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- 板块：古诗词识别  -->
-    <!-- ========================================== -->
-    <div class="asr-section">
-      <h3 class="asr-category-title">
-        <span class="lang-en">Classical Chinese Poetry Recognition</span>
-        <span class="lang-zh">古诗词识别专项优化</span>
-      </h3>
-      <p class="lang-en">Fun-ASR v1.5 introduces dedicated optimization for classical Chinese poetry recitation. Classical poetry poses unique challenges: concise classical grammar, strict rhyming and rhythmic patterns, frequent use of典故 (allusions),异体字 (variant characters), and古今异义词 (words with shifted meanings), as well as non-natural speech features like拖腔 (elongated tones), pauses, and吟咏 (chanting). In internal evaluation, v1.5 achieves a character-level accuracy of 97% on classical poetry.</p>
-      <p class="lang-zh">Fun-ASR v1.5 对中文古诗词识别进行了专项优化。不同于现代口语，古诗词具有文言语法简练、押韵严格节奏固定、多用典故异体字古今异义词、诵读时存在拖腔停顿吟咏等非自然语流特征等挑战。在内部评测集中，v1.5 对古诗词的字符级准确率达到 97%。</p>
-      <div class="columns is-multiline">
-
-        <!-- 蓬山此去无多路 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Classical Poetry</span>
-                  <span class="lang-zh">古诗词</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/poetry_pengshan_v15.wav" type="audio/wav">
-                </audio>
-              </div>
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">蓬山此去无多路，青鸟殷勤为探看。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 子夏曰 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Classical Text</span>
-                  <span class="lang-zh">古文</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/poetry_zixia_v15.wav" type="audio/wav">
-                </audio>
-              </div>
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">子夏曰，博学而笃志，切问而近思，仁在其中矣。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ========================================== -->
     <!-- 板块：中文方言识别  -->
     <!-- ========================================== -->
     <div class="asr-section">
@@ -771,6 +704,73 @@
 
       </div>
     </div>
+    <!-- ========================================== -->
+    <!-- 板块：古诗词识别  -->
+    <!-- ========================================== -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">
+        <span class="lang-en">Classical Chinese Poetry Recognition</span>
+        <span class="lang-zh">古诗词识别专项优化</span>
+      </h3>
+      <p class="lang-en">Fun-ASR v1.5 introduces dedicated optimization for classical Chinese poetry recitation. Unlike modern spoken language, classical poetry poses unique challenges: concise classical grammar with omitted subjects, predicates, and objects; strict rhyming and fixed rhythmic patterns (e.g., five-character and seven-character regulated verse); frequent use of allusions, variant characters, and words with shifted meanings across eras; and non-natural speech features such as elongated tones, deliberate pauses, and chanting rhythms. In internal evaluation, v1.5 achieves a character-level accuracy of 97% on classical poetry.</p>
+      <p class="lang-zh">Fun-ASR v1.5 对中文古诗词识别进行了专项优化。不同于现代口语，古诗词具有文言语法简练、押韵严格节奏固定、多用典故异体字古今异义词、诵读时存在拖腔停顿吟咏等非自然语流特征等挑战。在内部评测集中，v1.5 对古诗词的字符级准确率达到 97%。</p>
+      <div class="columns is-multiline">
+
+        <!-- 蓬山此去无多路 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Classical Poetry</span>
+                  <span class="lang-zh">古诗词</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/poetry_pengshan_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">蓬山此去无多路，青鸟殷勤为探看。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 子夏曰 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Classical Text</span>
+                  <span class="lang-zh">古文</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/poetry_zixia_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">子夏曰，博学而笃志，切问而近思，仁在其中矣。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ========================================== -->
     <!-- 板块：标点预测与ITN  -->
     <!-- ========================================== -->
