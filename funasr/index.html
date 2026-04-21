@@ -7,11 +7,11 @@
   <!-- Primary Meta Tags -->
   <!-- 这里只是meta info -->
   <!-- TODO: Replace with your paper title and author names -->
-  <meta name="title" content="通义百聆语音识别大模型Fun-ASR开源">
+  <meta name="title" content="Fun-ASR v1.5: 30B参数MoE架构端到端语音识别大模型">
   <!-- TODO: Write a compelling 150-160 character description of your research -->
-  <meta name="description" content="Fun-ASR 是通义实验室推出的端到端语音识别大模型，是基于数千万小时真实语音数据训练而成，具备强大的上下文理解能力与行业适应性，支持低延迟实时听写，并且覆盖31个语种。在教育、金融等垂直领域表现出色，能准确识别专业术语与行业表达，有效应对“幻觉”生成和语种混淆等挑战，实现“听得清、懂其意、写得准”。Fun-ASR 广泛适用于多种高要求语音处理场景，凭借高精度、低延迟、可定制化等核心优势，可以应用于会议AI纪要、实时字幕等场景。">
+  <meta name="description" content="Fun-ASR v1.5 是阿里云通义实验室推出的30B参数MoE架构端到端语音识别大模型，支持30种语言高精度识别，覆盖中文七大方言与20余种口音，专项优化古诗词诵读识别，显著提升标点预测与ITN效果，v1.5聚焦听得更全、听得更准、写得更规范三大目标。">
   <!-- TODO: Add 5-10 relevant keywords for your research area -->
-  <meta name="keywords" content="Multilingual, Fun-ASR">
+  <meta name="keywords" content="Multilingual, Fun-ASR, v1.5, MoE, Dialect, Poetry, ITN">
   <!-- TODO: List all authors -->
   <meta name="author" content="Tongyi Fun Team">
   <meta name="robots" content="index, follow">
@@ -197,8 +197,8 @@
           <div class="column has-text-centered">
             <!-- Fun-ASR项目标题 -->
             <h1 class="title is-1 publication-title">
-              <span class="lang-en">Fun-ASR: End-to-End Speech Recognition Large  Language Model</span>
-              <span class="lang-zh">Fun-ASR: 端到端语音识别大模型</span>
+              <span class="lang-en">Fun-ASR v1.5: End-to-End Speech Recognition Large Model with 30B MoE Architecture</span>
+              <span class="lang-zh">Fun-ASR v1.5：30B参数MoE架构端到端语音识别大模型</span>
             </h1>
             <!-- Company Logo -->
             <div class="company-logo" style="margin: 1.5rem 0;">
@@ -234,7 +234,7 @@
 
                     <!-- ModelScope Demo -->
                     <span class="link-block">
-                      <a href="https://modelscope.cn/studios/FunAudioLLM/Fun-ASR-Nano/" target="_blank"
+                      <a href="https://modelscope.cn/studios/iic/FunAudio-ASR" target="_blank"
                       class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                         <i class="fas fa-play"></i>
@@ -276,10 +276,10 @@
         <div class="content has-text-justified">
           <!-- Fun-ASR项目摘要 -->
           <p class="lang-en">
-            Fun-ASR is an end-to-end speech recognition large model launched by Tongyi Laboratory, trained on tens of millions of hours of real speech data. It possesses strong contextual understanding capabilities and industry adaptability, supports low-latency real-time dictation, and covers 31 languages. It excels in vertical fields such as education and finance, accurately recognizing professional terms and industry expressions, effectively addressing challenges like "hallucination" generation and language confusion, achieving "clear hearing, understanding meaning, and accurate writing." Fun-ASR is widely applicable to various high-demand speech processing scenarios, with core advantages including high accuracy, low latency, and customization, suitable for applications like AI meeting minutes and real-time subtitles.
+            Fun-ASR v1.5 is a 30B-parameter MoE-based end-to-end speech recognition large model launched by Tongyi Laboratory, trained on tens of millions of hours of real speech data. It systematically advances language coverage, dialect recognition depth, and text output quality. The model supports high-precision recognition of 30 languages, fully covers seven major Chinese dialects and over 20 regional accents, and introduces dedicated optimization for classical Chinese poetry recitation, while significantly improving punctuation prediction and text normalization (ITN). v1.5 focuses on three core objectives — "hear more comprehensively, hear more accurately, write more standardized" — further narrowing the performance gap of speech recognition in complex real-world scenarios, providing a smarter and more reliable speech transcription engine for global communication, regional services, and cultural digitization.
           </p>
           <p class="lang-zh">
-            Fun-ASR 是通义实验室推出的端到端语音识别大模型，是基于数千万小时真实语音数据训练而成，具备强大的上下文理解能力与行业适应性，支持低延迟实时听写，并且覆盖31个语种。在教育、金融等垂直领域表现出色，能准确识别专业术语与行业表达，有效应对"幻觉"生成和语种混淆等挑战，实现"听得清、懂其意、写得准"。Fun-ASR 广泛适用于多种高要求语音处理场景，凭借高精度、低延迟、可定制化等核心优势，可以应用于会议AI纪要、实时字幕等场景。
+            Fun-ASR v1.5 是阿里云通义实验室推出的30B参数MoE架构端到端语音识别大模型，基于数千万小时真实语音数据训练，在语言覆盖广度、方言识别深度以及文本输出质量等维度实现系统性跃升。单模型支持30种语言的高精度识别，全面覆盖中文七大主要方言与20余种地方口音，并首次引入对中国历代古诗词诵读内容的专项优化能力，同时显著提升标点预测与文本归一化（ITN）效果。v1.5版本聚焦"听得更全、听得更准、写得更规范"三大目标，进一步缩小语音识别在复杂真实场景中的性能鸿沟，为全球化沟通、区域化服务与文化数字化提供更智能、更可靠的语音转写引擎。
           </p>
         </div>
       </div>
@@ -289,86 +289,30 @@
 <!-- End paper abstract -->
 
 
-<!-- <p>TODO: 
-性能表格是否需要丰富，图中文字变英文？ 
-tech report 的链接。
-示例音频的删减？
-流式asr的demo
-</p> -->
-
-<!-- Image carousel -->
+<!-- v1.5 Performance Benchmarks -->
 <section class="hero is-small">
   <div class="hero-body">
     <div class="container">
       <div class="columns is-centered">
         <div class="column is-10">
-          <div id="architecture-carousel" class="carousel results-carousel">
+          <div id="results-carousel" class="carousel results-carousel">
             <div class="item">
-              <!-- TODO: Replace with your research result images -->
-              <img src="static/images/FunAudio_img.png" alt="Architecture" loading="lazy" style="width:100%"/>
+              <img src="static/images/opensource_bench.png" alt="Open-Source Multilingual Benchmark" loading="lazy" style="width:100%"/>
               <h2 class="subtitle has-text-centered">
-                Fun-ASR Architecture Overview
+                <span class="lang-en">Open-Source Multilingual Benchmark</span>
+                <span class="lang-zh">开源多语言测试集</span>
               </h2>
             </div>
             <div class="item">
-              <!-- TODO: Replace with your research result images -->
-              <img src="static/images/FunAudio_train_pipeline.png" alt="Architecture" loading="lazy" style="width:100%"/>
+              <img src="static/images/industry_bench.png" alt="Industry Dialect Benchmark" loading="lazy" style="width:100%"/>
               <h2 class="subtitle has-text-centered">
-                Fun-ASR Training Pipeline
+                <span class="lang-en">Industry Dialect Benchmark</span>
+                <span class="lang-zh">工业方言测试集</span>
               </h2>
             </div>
-            <div class="item">
-              <!-- Your image here -->
-              <img src="static/images/encoder-pretrain.png" alt="encoder-pretrain" loading="lazy" style="width:70%"/>
-              <h2 class="subtitle has-text-centered">
-                Pre-training Pipeline for Audio Encoder
-              </h2>
-            </div>
-            <div class="item">
-              <!-- Your image here -->
-              <img src="static/images/rl_framework.png" alt="rl_framework" loading="lazy" style="width:100%"/>
-              <h2 class="subtitle has-text-centered">
-               The FunRL Framework
-             </h2>
-           </div>
-           <div class="item">
-            <!-- Your image here -->
-            <img src="static/images/rl_time.png" alt="rl_time" loading="lazy" style="height:800px; width:100%"/>
-            <h2 class="subtitle has-text-centered">
-              Time Consumption Analysis
-            </h2>
           </div>
         </div>
-      </div>
-    </div> 
-  </div>
-</section>
-
-
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-10">
-          <div id="architecture-carousel" class="carousel results-carousel">
-            <div class="item">
-              <!-- Your image here -->
-              <img class="lang-zh" src="static/images/offline_radar.png" alt="compare_radar" loading="lazy" style="width:100%"/>
-              <img class="lang-en" src="static/images/offline_radar_en.png" alt="compare_radar" loading="lazy" style="width:100%"/>
-              <h2 class="subtitle has-text-centered">
-              Performance Comparison in Different Scenarios(Radar Chart) 
-              </h2>
-            </div>
-            <div class="item">
-              <!-- Your image here -->
-              <img class="lang-en" src="static/images/compare_en.png" alt="compare" loading="lazy" style="width:100%"/>
-              <img class="lang-zh" src="static/images/compare_zh.png" alt="compare" loading="lazy" style="width:100%"/>
-              <h2 class="subtitle has-text-centered">
-              Performance Comparison in Different Scenarios
-              </h2>
-            </div>
-        </div>
-      </div>
+      </div> 
     </div>
   </div>
 </section>
@@ -397,148 +341,239 @@ tech report 的链接。
     </div>
 
     <!-- ========================================== -->
-    <!-- 板块2：多语种识别  -->
+    <!-- 板块：古诗词识别  -->
+    <!-- ========================================== -->
+    <div class="asr-section">
+      <h3 class="asr-category-title">
+        <span class="lang-en">Classical Chinese Poetry Recognition</span>
+        <span class="lang-zh">古诗词识别专项优化</span>
+      </h3>
+      <p class="lang-en">Fun-ASR v1.5 introduces dedicated optimization for classical Chinese poetry recitation. Classical poetry poses unique challenges: concise classical grammar, strict rhyming and rhythmic patterns, frequent use of典故 (allusions),异体字 (variant characters), and古今异义词 (words with shifted meanings), as well as non-natural speech features like拖腔 (elongated tones), pauses, and吟咏 (chanting). In internal evaluation, v1.5 achieves a character-level accuracy of 97% on classical poetry.</p>
+      <p class="lang-zh">Fun-ASR v1.5 对中文古诗词识别进行了专项优化。不同于现代口语，古诗词具有文言语法简练、押韵严格节奏固定、多用典故异体字古今异义词、诵读时存在拖腔停顿吟咏等非自然语流特征等挑战。在内部评测集中，v1.5 对古诗词的字符级准确率达到 97%。</p>
+      <div class="columns is-multiline">
+
+        <!-- 蓬山此去无多路 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Classical Poetry</span>
+                  <span class="lang-zh">古诗词</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/poetry_pengshan_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">蓬山此去无多路，青鸟殷勤为探看。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 子夏曰 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Classical Text</span>
+                  <span class="lang-zh">古文</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/poetry_zixia_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">子夏曰，博学而笃志，切问而近思，仁在其中矣。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- 板块：中文方言识别  -->
     <!-- ========================================== -->
     <div class="asr-section">
       <h3 class="asr-category-title">
         <span class="lang-en">Chinese Dialect Recognition</span>
         <span class="lang-zh">中文方言识别</span>
       </h3>
-      <p class="lang-en">Supports Wu, Cantonese, Min, Hakka, Gan, Xiang, and Jin dialects, covering over 20 regions including Henan, Shaanxi, Hubei, Sichuan, Chongqing, Yunnan, Guizhou, Guangdong, Guangxi, Hebei, Tianjin, Shandong, Anhui, Nanjing, Jiangsu, Hangzhou, Gansu, Ningxia, etc.</p>
-      <p class="lang-zh">支持的方言包括吴语、粤语、闽语、客家话、赣语、湘语、晋语，支持的口音官话覆盖中原、西南、冀鲁、江淮、兰银、胶辽、东北、北京、港台等，包括河南、陕西、湖北、四川、重庆、云南、贵州、广东、广西、河北、天津、山东、安徽、南京、江苏、杭州、甘肃、宁夏 等 20 多个地区。</p>
+      <p class="lang-en">Fun-ASR v1.5 comprehensively supports seven major Chinese dialect systems — Wu, Cantonese, Min, Hakka, Gan, Xiang, and Jin — and covers over 20 regional accents. It also provides dedicated optimization for high-demand local dialects. Trained on over 500,000 hours of real dialect speech data, v1.5 achieves a 56.2% relative reduction in CER compared to the previous version.</p>
+      <p class="lang-zh">Fun-ASR v1.5 不仅完整支持北方官话、吴语、粤语、闽南语、客家话、赣语、湘语七大汉语方言体系，并且支持的口音官话覆盖中原、西南、冀鲁、江淮、兰银、胶辽、东北、北京、港台等 20 多个地区。另外，还针对高需求地方方言进行重点优化。基于超过50万小时真实方言语音数据训练，v1.5 相比上一版本平均字错误率（CER）相对下降 56.2%。</p>
       <div class="columns is-multiline">
-        
-        <!-- 样本 1: 上海话 -->
-        <div class="column is-12"> <!-- 占满整行 -->
+
+        <!-- 上海话 -->
+        <div class="column is-12">
           <div class="sample-card">
-            <div class="columns is-vcentered"> <!-- 垂直居中对齐 -->
-              
-              <!-- 左侧：标签 + 音频 -->
+            <div class="columns is-vcentered">
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
                   <span class="lang-en">Shanghai Dialect</span>
                   <span class="lang-zh">上海话</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/dia_sh.wav" type="audio/wav">
-                  <span class="lang-en">Your browser does not support the audio element.</span>
-                  <span class="lang-zh">您的浏览器不支持音频元素。</span>
+                  <source src="static/audios/dia_shanghai_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧：文本 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">人跟狗，包括人跟动物接触长了，全有感情。葛末随了阿拉社会个富裕。</p>
-                  
+                  <p class="transcript-text">移动呢价钿比较实惠但是网速现在还可以反正也勿是老卡个</p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
 
-        <!-- 样本 2: 粤语 -->
+        <!-- 客家话 -->
         <div class="column is-12">
           <div class="sample-card">
             <div class="columns is-vcentered">
-              
-              <!-- 左侧 -->
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Cantonese</span>
-                  <span class="lang-zh">粤语</span>
+                  <span class="lang-en">Hakka</span>
+                  <span class="lang-zh">客家话</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/dia_yue.wav" type="audio/wav">
+                  <source src="static/audios/dia_hakka_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">啲身体好劲啊，跟住咧佢哋有一个人咧就突然可能就有高原反应啦，突然间就啊窒息咗，即系晕晕咗。</p>
+                  <p class="transcript-text">可以买点辅导书来，自己假如说会的话也可以教一下小孩子，嗯，现在网络很发达可以。</p>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>  
+        </div>
 
-        <!-- 样本 3: 湖南话 -->
+        <!-- 杭州话 -->
         <div class="column is-12">
           <div class="sample-card">
             <div class="columns is-vcentered">
-              
-              <!-- 左侧 -->
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Hangzhou Dialect</span>
+                  <span class="lang-zh">杭州话</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_hangzhou_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">喝姜茶呢可能有效果，但是如果发展成肺炎了，那你还是要用抗生素的噢。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 湖南话 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
                   <span class="lang-en">Hunan Dialect</span>
                   <span class="lang-zh">湖南话</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/dia_hunan.wav" type="audio/wav">
+                  <source src="static/audios/dia_hunan_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">但总来讲孙膑对兵法的理解运用比庞涓略胜一筹。</p>
+                  <p class="transcript-text">本来画得挺投入的，结果楼上传来一阵电钻声，把我灵感全吓跑了，还是找邻居商量下吧。</p>
                 </div>
               </div>
-
-
             </div>
           </div>
-        </div>  
+        </div>
 
-        <!--  -->
+        <!-- 苏州话 -->
         <div class="column is-12">
           <div class="sample-card">
             <div class="columns is-vcentered">
-              
-              <!-- 左侧 -->
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Southern Min</span>
-                  <span class="lang-zh">闽南语</span>
+                  <span class="lang-en">Suzhou Dialect</span>
+                  <span class="lang-zh">苏州话</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/dia_minnan.wav" type="audio/wav">
+                  <source src="static/audios/dia_suzhou_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">嗯，下摆若有机会吧，因为即久吼开了吼卷啊遮厉害，会倒贴钱啊。</p>
+                  <p class="transcript-text">平常辰光匣好教教嗯笃捺亨操作手机，因为倷跟得上时代，时代葛进步，倷再会方便。</p>
                 </div>
               </div>
-
-
             </div>
           </div>
-        </div>  
+        </div>
 
-
-
+        <!-- 闽南话 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Southern Min</span>
+                  <span class="lang-zh">闽南话</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/dia_minnan_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">但是一个人若是两三两百箍一百外箍安无算贵吧，吼自助餐啊，啊你也有肉咯也有菜咯也有水果咯也有甜点咯，啥物计有咯。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -546,1585 +581,235 @@ tech report 的链接。
     <div class="asr-section">
       <h3 class="asr-category-title">
         <span class="lang-en">Multilingual Recognition</span>
-        <span class="lang-zh">多语言识别 (自由说)</span>
+        <span class="lang-zh">多语言识别</span>
       </h3>
-      <p class="lang-en">Supports 31 languages including Japanese, Vietnamese, and code-switching scenarios.</p>
-      <p class="lang-zh">支持的语种包括31种语言：日语、越南语等，支持语言自由切换场景。</p>
+      <p class="lang-en">Fun-ASR v1.5 supports 30 mainstream languages with high-precision recognition, including East Asian & Southeast Asian (Chinese, Japanese, Korean, Vietnamese, Thai, Indonesian, Malay, Filipino), South Asian & Middle Eastern (Hindi, Arabic), and European languages (English, French, German, Spanish, Portuguese, Russian, etc.). It also excels in mixed-language code-switching scenarios without presetting language tags.</p>
+      <p class="lang-zh">Fun-ASR v1.5 支持30种主流语言的精准识别，包括东亚与东南亚（中文、日语、韩语、越南语、泰语、印尼语、马来语、菲律宾语）、南亚与中东（印地语、阿拉伯语）、欧洲主流语言（英语、法语、德语、西班牙语、葡萄牙语、俄语等）。同时在混合语种对话、跨语言自由切换（Code-Switching）场景下表现尤为突出，无需预设语种标签。</p>
       <div class="columns is-multiline">
-        
-        <!-- 样本 1: 日语 -->
-        <div class="column is-12"> <!-- 占满整行 -->
+
+        <!-- 日语 -->
+        <div class="column is-12">
           <div class="sample-card">
-            <div class="columns is-vcentered"> <!-- 垂直居中对齐 -->
-              
-              <!-- 左侧：标签 + 音频 -->
+            <div class="columns is-vcentered">
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
                   <span class="lang-en">Japanese</span>
                   <span class="lang-zh">日语</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/ja.wav" type="audio/wav">
-                  <span class="lang-en">Your browser does not support the audio element.</span>
-                  <span class="lang-zh">您的浏览器不支持音频元素。</span>
+                  <source src="static/audios/ml_ja_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧：文本 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">人民たちは、金欲しさに王をのけ者にしてしまって、何でもすべて商人のところへ持って行ってしまいました。</p>
+                  <p class="transcript-text">私に電話してください。番号は139-1234-5678です。</p>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
 
+        <!-- 韩语 -->
         <div class="column is-12">
           <div class="sample-card">
             <div class="columns is-vcentered">
-              
-              <!-- 左侧 -->
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Vietnamese</span>
-                  <span class="lang-zh">越南语</span>
+                  <span class="lang-en">Korean</span>
+                  <span class="lang-zh">韩语</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/yuenan.wav" type="audio/wav">
+                  <source src="static/audios/ml_ko_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">Đi cùng với tiếp tục kêu gọi người dân đã qua lại các ổ dịch này, khai báo y tế và yêu cầu liên hệ để được xét nghiệm.</p>
+                  <p class="transcript-text">저는 이 주제에 따라 한 말씀 드리자면, 사실 저희도 이전에 비슷한 상황을 겪은 적이 있습니다.</p>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>  
+        </div>
 
-        <!-- 样本 3: 湖南话 -->
+        <!-- 马来语 -->
         <div class="column is-12">
           <div class="sample-card">
             <div class="columns is-vcentered">
-              
-              <!-- 左侧 -->
               <div class="column is-3 has-text-centered">
                 <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Code-switching</span>
-                  <span class="lang-zh">自由说</span>
+                  <span class="lang-en">Malay</span>
+                  <span class="lang-zh">马来语</span>
                 </span>
                 <audio controls style="width: 100%;">
-                  <source src="static/audios/ja_en_codeswitch.wav" type="audio/wav">
+                  <source src="static/audios/ml_ms_v15.wav" type="audio/wav">
                 </audio>
               </div>
-
-              <!-- 右侧 -->
               <div class="column is-9">
                 <div class="transcript-box">
                   <span class="transcript-label">
                     <span class="lang-en">ASR Output</span>
                     <span class="lang-zh">识别结果</span>
                   </span>
-                  <p class="transcript-text">このカフェのwi-fiがアン ステーブル 過ぎて、google meetでディスコネクトされて クライエントに悪い印象を与えてしまった。</p>
+                  <p class="transcript-text">Kejayaan projek ini tidak dapat dipisahkan daripada usaha pasukan, terutamanya kerja keras siang malam oleh jabatan penyelidikan dan pembangunan.</p>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>  
+        </div>
+
+        <!-- 泰语 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Thai</span>
+                  <span class="lang-zh">泰语</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/ml_th_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">ความหลากหลายทางวัฒนธรรมเป็นทรัพย์สมบัติล้ำค่าของสังคมมนุษย์ และเราควรเคารพและปกป้องประเพณีวัฒนธรรมทั้งหมด</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 西班牙语 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Spanish</span>
+                  <span class="lang-zh">西班牙语</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/ml_es_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">La diversidad cultural es un tesoro invaluable para la sociedad humana, y debemos respetar y proteger todas las tradiciones culturales.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 印尼语 -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">Indonesian</span>
+                  <span class="lang-zh">印尼语</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/ml_id_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">Mesin pencari perusahaan Google memegang posisi dominan di pasar global.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 英日Code-Switching -->
+        <div class="column is-12">
+          <div class="sample-card">
+            <div class="columns is-vcentered">
+              <div class="column is-3 has-text-centered">
+                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
+                  <span class="lang-en">EN-JA Code-Switching</span>
+                  <span class="lang-zh">英日语种切换</span>
+                </span>
+                <audio controls style="width: 100%;">
+                  <source src="static/audios/ml_en_ja_cs_v15.wav" type="audio/wav">
+                </audio>
+              </div>
+              <div class="column is-9">
+                <div class="transcript-box">
+                  <span class="transcript-label">
+                    <span class="lang-en">ASR Output</span>
+                    <span class="lang-zh">识别结果</span>
+                  </span>
+                  <p class="transcript-text">We've all had that experience of finally visiting a place we've dreamed about for years, only to find that it doesn't quite live up to our expectations. There's even a term for this in one of the most visited cities in the world, Paris Syndrome.何年も前から行きたかった場所をやっと訪れてみたら、思っていたほどではなかったという経験は誰しもあることだと思います。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
-    <!-- 远场复杂背景噪声 -->
-    <div class="asr-section">
-      <h3 class="asr-category-title">
-        <span class="lang-en">Robust Far-Field Recognition</span>
-        <span class="lang-zh">远场复杂背景识别</span>
-      </h3>
-      <p class="lang-en">Optimized for far-field pickup and high-noise scenarios (such as conference rooms, in-vehicle environments, industrial sites), significantly improving speech recognition stability and accuracy in complex acoustic conditions.</p>
-      <p class="lang-zh">针对远距离拾音及高噪声场景（如会议室、车载环境、工业现场等）进行深度优化，显著提升复杂声学条件下的语音识别稳定性与准确率。</p>
-      <div class="columns is-multiline">
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag far-field" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Far-Field</span>
-                  <span class="lang-zh">远场</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/far_2.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">然后被冠以了渣男线的称号，好了，不管这个，那么前方即将到达沈杜公路站，左边是8号线。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag far-field" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Noise</span>
-                  <span class="lang-zh">噪声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/far_3.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">周末要不要去露营，最近天气超舒服，露营？我怕虫子咬，而且晚上睡帐篷会不会很冷啊？放心，我借了专业装备还有暖宝宝，再带点火锅食材，边吃边看星星超惬意。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag far-field" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Noise</span>
-                  <span class="lang-zh">噪声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/far_4.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">  &lt;music&gt;唯一的遗憾就是他那个八宝鸭还有烤鸭都没吃上 估计得提前预定吧 &lt;impact_sounds&gt;&lt;/impact_sounds&gt;只能怪我自己没有做好功课&lt;/music&gt;</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag far-field" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Noise</span>
-                  <span class="lang-zh">噪声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/far_5.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">别紧张&lt;breathing&gt;&lt;/breathing&gt;我只是我是在这边逛街 然后看到你们在这边拍照 想跟你交个朋友&lt;impact_sounds&gt; 认识&lt;/impact_sounds&gt;一下</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag far-field" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Noise</span>
-                  <span class="lang-zh">噪声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/noise_en.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">So what's interesting here is I feel that you know brands knowing this when people sort of speak to the voice assistance at home and if you want to be the brand.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- 多语言自由说。1个日语，1个越南语，1个codeswitch。-->
-
-    <!-- 行业定制化能力 -->
-    <div class="asr-section">
-      <h3 class="asr-category-title">
-        <span class="lang-en">Industry Customization Capability</span>
-        <span class="lang-zh">行业定制化能力</span>
-      </h3>
-      <p class="lang-en">In industrial ASR applications, personalized customization is an essential technology. Customization refers to applying additional probability preferences to specific words/phrases (such as names, places, brands, professional terms) during the recognition process, thereby significantly improving their recall rate while minimizing the impact on general recognition accuracy.</p>
-      <p class="lang-zh">在ASR的工业落地中，个性化定制是必不可少的技术。所谓定制化，是指在识别过程中对特定词/短语（如人名、地名、品牌、专业术语等）施加额外概率偏好，从而显著提高它们的识别召回率，同时尽量不损伤通用识别准确率。</p>
-
-      <p class="lang-en">Our solution introduces RAG (Retrieval-Augmented Generation) mechanism: building a dedicated RAG library with user-configured customized words, dynamically extracting relevant vocabulary based on CTC first-pass decoding results, and precisely injecting only relevant vocabulary into the LLM's prompt to avoid interference from unrelated information. This approach expands the number of customized context words to over a thousand without increasing inference complexity, while maintaining high customized recognition performance.</p>
-      <p class="lang-zh">我们的解决方案：引入RAG（检索增强生成）机制，将用户配置的定制词构建成专属RAG库，依据CTC第一遍解码结果动态抽取相关词汇，仅将相关词汇精准注入LLM的Prompt中避免无关信息干扰。该方案在不增加推理复杂度的前提下，将定制化上文数量扩充到上千个以上，并且保持较高的定制化识别效果。</p>
-
-      <div class="columns is-multiline">
-        <!-- 样本 1: 医学领域 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Medical Field</span>
-                  <span class="lang-zh">医学领域</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/rag_medical.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧：文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">肾脏中肾小球囊上的细胞膜孔隙很小</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 样本 2: 数学领域 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Mathematics</span>
-                  <span class="lang-zh">数学领域</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/rag_math.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧：文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">对微分形式的积分是微分几何中的基本概念</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 样本 3: 历史领域 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">History</span>
-                  <span class="lang-zh">历史领域</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/rag_history.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧：文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">由罗马皇帝钦点的犹地亚王大希律王统治期间</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 样本 4: 生物化学领域 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Biochemistry</span>
-                  <span class="lang-zh">生物化学领域</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/rag_biochemistry.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧：文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">利用三磷酸腺苷的水解所产生的能量来驱动其他化学反应</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 样本 5: 物理学领域 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Physics</span>
-                  <span class="lang-zh">物理学领域</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/rag_physics.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧：文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">根据碰撞理论月面样本缺少挥发性物质</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 样本 6: 化学领域 -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Chemistry</span>
-                  <span class="lang-zh">化学领域</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/rag_chemistry.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧：文本 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">ASR Output</span>
-                    <span class="lang-zh">识别结果</span>
-                  </span>
-                  <p class="transcript-text">比如说酯在当时被认为是一种含氧酸盐</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 歌词识别 -->
-    <div class="asr-section">
-      <h3 class="asr-category-title">
-        <span class="lang-en">Music & Lyrics Transcription</span>
-        <span class="lang-zh">歌词识别</span>
-      </h3>
-      <p class="lang-en">Enhanced speech recognition performance in music background interference and first-time support for accurate recognition of lyrics in songs, expanding the application potential of speech technology in entertainment and consumer scenarios such as music, short videos, and smart speakers.</p>
-      <p class="lang-zh">强化在音乐背景干扰下的语音识别性能，并首次支持对歌曲中歌词内容的精准识别，拓展语音技术在音乐、短视频、智能音箱等娱乐与消费场景的应用潜力。</p>
-      <div class="columns is-multiline">
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Music + Vocal</span>
-                  <span class="lang-zh">音乐 + 人声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/lyrics.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧歌词 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">Lyrics Output</span>
-                    <span class="lang-zh">歌词输出</span>
-                  </span>
-                  <p class="transcript-text">
-我看到我的身后盯着我的人群，
-喜欢或恨不一样的神情，
-我知道这可能就是所谓的成名，
-我知道必须往前一步也不能停。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Music + Vocal</span>
-                  <span class="lang-zh">音乐 + 人声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/lyrics_2.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧歌词 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">Lyrics Output</span>
-                    <span class="lang-zh">歌词输出</span>
-                  </span>
-                  <p class="transcript-text">
-明明那么远，为何却感觉离他那么近？
-闭上眼，你甚至能背出他所有押韵。
-虽然不听说唱了，但你已学会自信。
-我代表所有中文说唱歌手向你致敬。
-如今面对困难的你，早已不再抱怨。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Music + Vocal</span>
-                  <span class="lang-zh">音乐 + 人声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/lyrics_3.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧歌词 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">Lyrics Output</span>
-                    <span class="lang-zh">歌词输出</span>
-                  </span>
-                  <p class="transcript-text">
-你听啊秋末的落叶，
-你听它叹息着离别，
-只剩我独自领略海与山风和月，
-你听啊。
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-<!-- english song -->
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Music + Vocal</span>
-                  <span class="lang-zh">音乐 + 人声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/lyrics_en_1.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧歌词 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">Lyrics Output</span>
-                    <span class="lang-zh">歌词输出</span>
-                  </span>
-                  <p class="transcript-text">
-Hey diddle diddle, the cat and the fiddle, the cow jumped over the moon. 
-The little dog laughed to see such sport, and the dish ran away with the spoon. 
-Hey diddle diddle, the cat and the fiddle, the cow jumped over the moon. 
-The little dog laughed to see such sport, and the dish ran away with the spoon.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Music + Vocal</span>
-                  <span class="lang-zh">音乐 + 人声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/lyrics_en_2.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧歌词 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">Lyrics Output</span>
-                    <span class="lang-zh">歌词输出</span>
-                  </span>
-                  <p class="transcript-text">
-I see your monsters. I see your pain. 
-Tell me your problems; I'll chase them away. 
-I'll be your lighthouse. I'll make it okay. 
-When I see your monsters, I'll stand there so brave and chase them all away.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="column is-12">
-          <div class="sample-card">
-            <div class="columns is-vcentered">
-              <!-- 左侧：标签 + 音频 -->
-              <div class="column is-3 has-text-centered">
-                <span class="sample-tag music" style="margin-bottom: 0.5rem; display: inline-block;">
-                  <span class="lang-en">Music + Vocal</span>
-                  <span class="lang-zh">音乐 + 人声</span>
-                </span>
-                <audio controls style="width: 100%;">
-                  <source src="static/audios/lyrics_en_3.wav" type="audio/wav">
-                </audio>
-              </div>
-              <!-- 右侧歌词 -->
-              <div class="column is-9">
-                <div class="transcript-box">
-                  <span class="transcript-label">
-                    <span class="lang-en">Lyrics Output</span>
-                    <span class="lang-zh">歌词输出</span>
-                  </span>
-                  <p class="transcript-text">
-It may be a good idea for Joe, 
-but it wouldn't be good for me to sit in a mortgaged bungalow with my little ones on my knee. 
-I'd much rather go and blow my dough on a casual chickadee. 
-I don't want a mark that I'll have to toe—my toe can go where it wants to go. 
-It wants to go where the wild girls grow in extravagant quantity to bask in the warm and peaceful glow of connubial constancy. 
-May be awfully good for good old Joe, but it wouldn't be good for me!
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Video carousel -->
-     <!-- done，注意取消video 元素里面，controls的muted -->
-    <div class="asr-section">
-      <h3 class="asr-category-title">
-        <span class="lang-en">Streaming ASR Demo</span>
-        <span class="lang-zh">流式转录示例</span>
-      </h3>
-      <div class="container">
-      <div class="columns is-centered">
-      <div class="column is-10">  
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video1" controls loop height="100%" preload="metadata" >
-            <!-- Your video file here -->
-            <source src="static/videos/en.mov" type="video/mp4" >
-          </video>
-        </div>
-        <div class="item item-video2">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video2" controls loop height="100%" preload="metadata" >
-            <!-- Your video file here -->
-            <source src="static/videos/zh.mov" type="video/mp4" >
-          </video>
-        </div>
-      </div>
-      </div>
-      </div> 
-      </div>
-    </div>
-<!-- End video carousel -->
-
-
     <!-- ========================================== -->
-    <!-- 性能测试表格展示 -->
+    <!-- 板块：标点预测与ITN  -->
     <!-- ========================================== -->
     <div class="asr-section">
       <h3 class="asr-category-title">
-        <span class="lang-en">Performance Benchmarks</span>
-        <span class="lang-zh">性能基准测试</span>
+        <span class="lang-en">Smarter Punctuation & Enhanced ITN</span>
+        <span class="lang-zh">文本输出更规范、更易用</span>
       </h3>
-      <p class="lang-en">Fun-ASR achieves industry-leading performance on multiple public datasets and industrial test sets. The following are detailed performance comparison data.</p>
-      <p class="lang-zh">Fun-ASR 在多个公开数据集和工业测试集上均达到业界领先水平，以下为详细性能对比数据。</p>
-      
-<!-- 开源数据集性能对比 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Open-Source Dataset Performance (WER %)</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Test Set</th>
-                <th>GLM-ASR-nano</th>
-                <th>GLM-ASR-nano*</th>
-                <th>Whisper-large-v3</th>
-                <th>Seed-ASR</th>
-                <th>Seed-ASR*</th>
-                <th>Kimi-Audio</th>
-                <th>Step-Audio2</th>
-                <th>FireRed-ASR</th>
-                <th>Fun-ASR-nano</th>
-                <th>Fun-ASR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Model Size</td>
-                <td>1.5B</td>
-                <td>1.5B</td>
-                <td>1.6B</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>1.1B</td>
-                <td>0.8B</td>
-                <td>7.7B</td>
-              </tr>
-              <tr>
-                <td>OpenSource</td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
-                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
-              </tr>
-              <tr>
-                <td>AIShell1</td>
-                <td>1.81</td>
-                <td>2.17</td>
-                <td>4.72</td>
-                <td>0.68</td>
-                <td>1.63</td>
-                <td>0.71</td>
-                <td>0.63</td>
-                <td>0.54</td>
-                <td>1.80</td>
-                <td>1.22</td>
-              </tr>
-              <tr>
-                <td>AIShell2</td>
-                <td>-</td>
-                <td>3.47</td>
-                <td>4.68</td>
-                <td>2.27</td>
-                <td>2.76</td>
-                <td>2.86</td>
-                <td>2.10</td>
-                <td>2.58</td>
-                <td>2.75</td>
-                <td>2.39</td>
-              </tr>
-              <tr>
-                <td>Fleurs-zh</td>
-                <td>-</td>
-                <td>3.65</td>
-                <td>5.18</td>
-                <td>3.43</td>
-                <td>3.23</td>
-                <td>3.11</td>
-                <td>2.68</td>
-                <td>4.81</td>
-                <td>2.56</td>
-                <td>2.53</td>
-              </tr>
-              <tr>
-                <td>Fleurs-en</td>
-                <td>5.78</td>
-                <td>6.95</td>
-                <td>6.23</td>
-                <td>9.39</td>
-                <td>9.39</td>
-                <td>6.99</td>
-                <td>3.03</td>
-                <td>10.79</td>
-                <td>5.96</td>
-                <td>4.74</td>
-              </tr>
-              <tr>
-                <td>Librispeech-clean</td>
-                <td>2.00</td>
-                <td>2.17</td>
-                <td>1.86</td>
-                <td>1.58</td>
-                <td>2.8</td>
-                <td>1.32</td>
-                <td>1.17</td>
-                <td>1.84</td>
-                <td>1.76</td>
-                <td>1.51</td>
-              </tr>
-              <tr>
-                <td>Librispeech-other</td>
-                <td>4.19</td>
-                <td>4.43</td>
-                <td>3.43</td>
-                <td>2.84</td>
-                <td>5.69</td>
-                <td>2.63</td>
-                <td>2.42</td>
-                <td>4.52</td>
-                <td>4.33</td>
-                <td>3.03</td>
-              </tr>
-              <tr>
-                <td>WenetSpeech Meeting</td>
-                <td>6.73</td>
-                <td>8.21</td>
-                <td>18.39</td>
-                <td>5.69</td>
-                <td>7.07</td>
-                <td>6.24</td>
-                <td>4.75</td>
-                <td>4.95</td>
-                <td>6.60</td>
-                <td>6.17</td>
-              </tr>
-              <tr>
-                <td>WenetSpeech Net</td>
-                <td>-</td>
-                <td>6.33</td>
-                <td>11.89</td>
-                <td>4.66</td>
-                <td>4.84</td>
-                <td>6.45</td>
-                <td>4.67</td>
-                <td>4.94</td>
-                <td>6.01</td>
-                <td>5.46</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); font-style: italic;">
-          <span class="lang-en">Note: Seed-ASR* results are evaluated using the official API on volcengine; GLM-ASR-nano* results are evaluated using the opensource checkpoint.</span>
-          <span class="lang-zh">注：Seed-ASR* 结果使用 volcengine 上的官方 API 评估；GLM-ASR-nano* 结果使用开源 checkpoint 评估。</span>
-        </p>
+
+      <!-- 标点预测 -->
+      <h4 style="margin-top: 1rem;">
+        <span class="lang-en">1. Smarter Punctuation Prediction</span>
+        <span class="lang-zh">1. 标点预测更加智能</span>
+      </h4>
+      <p class="lang-en">The model automatically inserts commas, periods, question marks, exclamation marks, etc., based on contextual semantics, making transcription results closer to written expression. For example:</p>
+      <p class="lang-zh">模型基于上下文语义自动插入逗号、句号、问号、感叹号等标点，使转写结果接近书面表达。例如：</p>
+      <div class="transcript-box" style="margin: 0.5rem 0 1.5rem 0;">
+        <p class="transcript-text" style="margin-bottom: 0.3rem;"><strong><span class="lang-en">Input:</span><span class="lang-zh">输入语音：</span></strong> "今天天气怎么样啊我想出去走走但又怕下雨"</p>
+        <p class="transcript-text" style="margin-bottom: 0;"><strong><span class="lang-en">Output:</span><span class="lang-zh">输出文本：</span></strong> "今天天气怎么样啊？我想出去走走，但又怕下雨。"</p>
       </div>
 
-      <!-- 工业数据集性能对比 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Industry Dataset Performance (WER %)</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Test Set</th>
-                <th>GLM-ASR-Nano</th>
-                <th>Whisper-large-v3</th>
-                <th>Seed-ASR</th>
-                <th>FireRed-ASR</th>
-                <th>Kimi-Audio</th>
-                <th>Paraformer v2</th>
-                <th>Fun-ASR-nano</th>
-                <th>Fun-ASR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Model Size</td>
-                <td>1.5B</td>
-                <td>1.6B</td>
-                <td>-</td>
-                <td>1.1B</td>
-                <td>8B</td>
-                <td>0.2B</td>
-                <td>0.8B</td>
-                <td>7.7B</td>
-              </tr>
-              <tr>
-                <td>OpenSource</td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #28a745; font-weight: bold;">✓</span></td>
-                <td><span style="color: #dc3545; font-weight: bold;">✗</span></td>
-              </tr>
-              <tr>
-                <td>Nearfield</td>
-                <td>16.95</td>
-                <td>16.58</td>
-                <td>7.20</td>
-                <td>10.10</td>
-                <td>9.02</td>
-                <td>8.11</td>
-                <td>7.79</td>
-                <td>6.31</td>
-              </tr>
-              <tr>
-                <td>Farfield</td>
-                <td>9.44</td>
-                <td>22.21</td>
-                <td>4.59</td>
-                <td>7.49</td>
-                <td>10.95</td>
-                <td>9.55</td>
-                <td>5.79</td>
-                <td>4.34</td>
-              </tr>
-              <tr>
-                <td>Complex Background</td>
-                <td>23.79</td>
-                <td>32.57</td>
-                <td>12.90</td>
-                <td>15.56</td>
-                <td>15.56</td>
-                <td>15.19</td>
-                <td>14.59</td>
-                <td>11.45</td>
-              </tr>
-              <tr>
-                <td>English General</td>
-                <td>16.47</td>
-                <td>18.56</td>
-                <td>15.65</td>
-                <td>21.62</td>
-                <td>18.12</td>
-                <td>19.48</td>
-                <td>15.28</td>
-                <td>13.73</td>
-              </tr>
-              <tr>
-                <td>Opensource</td>
-                <td>4.67</td>
-                <td>7.05</td>
-                <td>3.83</td>
-                <td>5.31</td>
-                <td>3.79</td>
-                <td>6.23</td>
-                <td>4.22</td>
-                <td>3.38</td>
-              </tr>
-              <tr>
-                <td>Dialect</td>
-                <td>54.21</td>
-                <td>66.14</td>
-                <td>29.45</td>
-                <td>52.82</td>
-                <td>71.94</td>
-                <td>41.16</td>
-                <td>28.18</td>
-                <td>15.21</td>
-              </tr>
-              <tr>
-                <td>Accent</td>
-                <td>19.78</td>
-                <td>36.03</td>
-                <td>10.23</td>
-                <td>14.05</td>
-                <td>27.20</td>
-                <td>17.80</td>
-                <td>12.90</td>
-                <td>10.31</td>
-              </tr>
-              <tr>
-                <td>Lyrics</td>
-                <td>46.56</td>
-                <td>54.82</td>
-                <td>30.26</td>
-                <td>42.87</td>
-                <td>65.18</td>
-                <td>50.14</td>
-                <td>30.85</td>
-                <td>21.00</td>
-              </tr>
-              <tr>
-                <td>Hiphop</td>
-                <td>43.32</td>
-                <td>46.56</td>
-                <td>29.46</td>
-                <td>33.88</td>
-                <td>57.25</td>
-                <td>43.79</td>
-                <td>30.87</td>
-                <td>28.58</td>
-              </tr>
-              <tr class="average-row">
-                <td>Average</td>
-                <td>26.13</td>
-                <td>33.39</td>
-                <td>15.95</td>
-                <td>22.63</td>
-                <td>31.00</td>
-                <td>23.49</td>
-                <td>16.72</td>
-                <td>12.70</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <!-- ITN -->
+      <h4 style="margin-top: 1.5rem;">
+        <span class="lang-en">2. Enhanced Text Normalization (ITN)</span>
+        <span class="lang-zh">2. 文本归一化（ITN）表现进一步提升</span>
+      </h4>
+      <p class="lang-en">Automatically converts colloquial non-standard expressions into standard formats:</p>
+      <p class="lang-zh">将口语中的非标准表达自动转换为规范格式：</p>
+      <div class="transcript-box" style="margin: 0.5rem 0;">
+        <p class="transcript-text" style="margin-bottom: 0.3rem;"><strong><span class="lang-en">Numbers:</span><span class="lang-zh">数字：</span></strong> "三千五百六十二" → "3562"</p>
+        <p class="transcript-text" style="margin-bottom: 0.3rem;"><strong><span class="lang-en">Dates:</span><span class="lang-zh">日期：</span></strong> "二零二六年三月二十九号" → "2026年3月29日"</p>
+        <p class="transcript-text" style="margin-bottom: 0.3rem;"><strong><span class="lang-en">Amounts:</span><span class="lang-zh">金额：</span></strong> "五万八千块" → "58000元"</p>
+        <p class="transcript-text" style="margin-bottom: 0;"><strong><span class="lang-en">Phone:</span><span class="lang-zh">电话：</span></strong> "幺三八零零幺三八零零零" → "13800138000"</p>
       </div>
-
-      <!-- 流式识别性能 -->
-<!-- 流式识别性能 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Streaming ASR Performance (WER %)</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Test Set</th>
-                <th>Seed-ASR</th>
-                <th>Fun-ASR-nano</th>
-                <th>Fun-ASR</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Nearfield</td>
-                <td>8.64</td>
-                <td>8.10</td>
-                <td>6.75</td>
-              </tr>
-              <tr>
-                <td>Farfield</td>
-                <td>5.51</td>
-                <td>6.38</td>
-                <td>4.72</td>
-              </tr>
-              <tr>
-                <td>Complex Background</td>
-                <td>15.48</td>
-                <td>15.52</td>
-                <td>12.49</td>
-              </tr>
-              <tr>
-                <td>English General</td>
-                <td>18.78</td>
-                <td>16.46</td>
-                <td>14.68</td>
-              </tr>
-              <tr>
-                <td>OpenSource</td>
-                <td>3.80</td>
-                <td>5.06</td>
-                <td>4.08</td>
-              </tr>
-              <tr>
-                <td>Dialect</td>
-                <td>-</td>
-                <td>30.72</td>
-                <td>18.25</td>
-              </tr>
-              <tr>
-                <td>Accent</td>
-                <td>-</td>
-                <td>15.42</td>
-                <td>11.49</td>
-              </tr>
-              <tr>
-                <td>Lyrics</td>
-                <td>-</td>
-                <td>31.54</td>
-                <td>22.05</td>
-              </tr>
-              <tr>
-                <td>Hiphop</td>
-                <td>-</td>
-                <td>36.55</td>
-                <td>28.90</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Code Switching 性能 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Code Switching Performance (WER %)</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Test Set</th>
-                <th colspan="3">Offline</th>
-                <th colspan="3">Streaming</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>w/o CS</th>
-                <th>w/o RL</th>
-                <th>w/ RL</th>
-                <th>w/o CS</th>
-                <th>w/o RL</th>
-                <th>w/ RL</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>A</td>
-                <td>4.53</td>
-                <td>1.70</td>
-                <td>1.55</td>
-                <td>6.19</td>
-                <td>5.85</td>
-                <td>2.28</td>
-              </tr>
-              <tr>
-                <td>B</td>
-                <td>4.76</td>
-                <td>4.50</td>
-                <td>4.49</td>
-                <td>6.32</td>
-                <td>5.68</td>
-                <td>5.07</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 噪声鲁棒性 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Noise Robustness Performance (WER %)</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Environment</th>
-                <th>Fun-ASR (w/o NRT)</th>
-                <th>Fun-ASR (w/ NRT)</th>
-                <th>Fun-ASR (NRT + RL)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Canteen</td>
-                <td>20.67</td>
-                <td>19.66</td>
-                <td>19.28</td>
-              </tr>
-              <tr>
-                <td>Dinner</td>
-                <td>14.02</td>
-                <td>9.02</td>
-                <td>8.77</td>
-              </tr>
-              <tr>
-                <td>Meeting</td>
-                <td>6.45</td>
-                <td>6.25</td>
-                <td>6.05</td>
-              </tr>
-              <tr>
-                <td>Office</td>
-                <td>15.02</td>
-                <td>10.52</td>
-                <td>10.42</td>
-              </tr>
-              <tr>
-                <td>Outdoor</td>
-                <td>10.12</td>
-                <td>9.63</td>
-                <td>9.37</td>
-              </tr>
-              <tr>
-                <td>Park</td>
-                <td>13.67</td>
-                <td>11.04</td>  
-                <td>10.89</td>
-              </tr>
-              <tr>
-                <td>Shop</td>
-                <td>12.22</td>
-                <td>10.57</td>
-                <td>10.46</td>
-              </tr>
-              <tr>
-                <td>Street</td>
-                <td>12.05</td>
-                <td>10.10</td>
-                <td>9.85</td>
-              </tr>
-              <tr>
-                <td>Subway</td>
-                <td>14.11</td>
-                <td>11.89</td>
-                <td>11.84</td>
-              </tr>
-              <tr>
-                <td>Supermarket</td>
-                <td>14.27</td>
-                <td>8.03</td>
-                <td>7.74</td>
-              </tr>
-              <tr>
-                <td>Walk Street</td>
-                <td>13.89</td>
-                <td>13.34</td>
-                <td>12.94</td>
-              </tr>
-              <tr class="average-row">
-                <td>Average</td>
-                <td>13.32</td>
-                <td>10.91</td>
-                <td>10.69</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 热词定制性能 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Hotword Customization Performance</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Topic</th>
-                <th colspan="3">Offline (w/o RL)</th>
-                <th colspan="3">Offline (w/ RL)</th>
-                <th colspan="3">Streaming (w/o RL)</th>
-                <th colspan="3">Streaming (w/ RL)</th>
-              </tr>
-              <tr>
-                <th></th>
-                <th>WER</th>
-                <th>Accuracy</th>
-                <th>Recall</th>
-                <th>WER</th>
-                <th>Accuracy</th>
-                <th>Recall</th>
-                <th>WER</th>
-                <th>Accuracy</th>
-                <th>Recall</th>
-                <th>WER</th>
-                <th>Accuracy</th>
-                <th>Recall</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Biology</td>
-                <td>1.67</td>
-                <td>0.98</td>
-                <td>0.99</td>
-                <td>1.70</td>
-                <td>0.97</td>
-                <td>1.00</td>
-                <td>2.04</td>
-                <td>0.98</td>
-                <td>0.98</td>
-                <td>1.97</td>
-                <td>0.99</td>
-                <td>0.98</td>
-              </tr>
-              <tr>
-                <td>Math</td>
-                <td>0.86</td>
-                <td>0.99</td>
-                <td>0.99</td>
-                <td>0.86</td>
-                <td>0.99</td>
-                <td>0.99</td>
-                <td>1.29</td>
-                <td>0.99</td>
-                <td>0.99</td>
-                <td>1.01</td>
-                <td>0.99</td>
-                <td>1.00</td>
-              </tr>
-              <tr>
-                <td>Religion</td>
-                <td>3.20</td>
-                <td>0.98</td>
-                <td>0.98</td>
-                <td>2.87</td>
-                <td>0.99</td>
-                <td>0.99</td>
-                <td>3.71</td>
-                <td>0.99</td>
-                <td>0.98</td>
-                <td>3.35</td>
-                <td>0.99</td>
-                <td>0.97</td>
-              </tr>
-              <tr>
-                <td>Food</td>
-                <td>1.90</td>
-                <td>0.98</td>
-                <td>0.99</td>
-                <td>1.55</td>
-                <td>0.99</td>
-                <td>1.00</td>
-                <td>2.01</td>
-                <td>0.99</td>
-                <td>0.99</td>
-                <td>1.47</td>
-                <td>0.99</td>
-                <td>0.99</td>
-              </tr>
-              <tr>
-                <td>Name</td>
-                <td>0.53</td>
-                <td>1.00</td>
-                <td>0.95</td>
-                <td>0.35</td>
-                <td>1.00</td>
-                <td>1.00</td>
-                <td>1.29</td>
-                <td>1.00</td>
-                <td>0.95</td>
-                <td>0.88</td>
-                <td>1.00</td>
-                <td>0.98</td>
-              </tr>
-              <tr>
-                <td>Brand</td>
-                <td>0.41</td>
-                <td>1.00</td>
-                <td>0.99</td>
-                <td>0.33</td>
-                <td>1.00</td>
-                <td>0.99</td>
-                <td>1.08</td>
-                <td>0.99</td>
-                <td>0.95</td>
-                <td>0.38</td>
-                <td>1.00</td>
-                <td>1.00</td>
-              </tr>
-              <tr>
-                <td>Astronomy</td>
-                <td>2.11</td>
-                <td>1.00</td>
-                <td>0.97</td>
-                <td>1.97</td>
-                <td>0.99</td>
-                <td>0.97</td>
-                <td>2.28</td>
-                <td>0.98</td>
-                <td>0.95</td>
-                <td>2.39</td>
-                <td>1.00</td>
-                <td>0.98</td>
-              </tr>
-              <tr>
-                <td>Chemistry</td>
-                <td>1.76</td>
-                <td>0.99</td>
-                <td>0.97</td>
-                <td>1.91</td>
-                <td>0.99</td>
-                <td>0.98</td>
-                <td>2.81</td>
-                <td>0.98</td>
-                <td>0.97</td>
-                <td>1.83</td>
-                <td>0.99</td>
-                <td>0.97</td>
-              </tr>
-              <tr>
-                <td>Philosophy</td>
-                <td>3.03</td>
-                <td>0.99</td>
-                <td>0.96</td>
-                <td>2.84</td>
-                <td>0.99</td>
-                <td>0.97</td>
-                <td>3.31</td>
-                <td>0.99</td>
-                <td>0.96</td>
-                <td>3.03</td>
-                <td>0.99</td>
-                <td>0.95</td>
-              </tr>
-              <tr>
-                <td>Physics</td>
-                <td>1.72</td>
-                <td>0.99</td>
-                <td>1.00</td>
-                <td>1.82</td>
-                <td>0.98</td>
-                <td>1.00</td>
-                <td>2.31</td>
-                <td>0.99</td>
-                <td>0.98</td>
-                <td>1.80</td>
-                <td>0.99</td>
-                <td>0.99</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- 多语言性能 -->
-      <div class="performance-table-container">
-        <h4 class="table-title">Multilingual ASR Performance (WER/CER %)</h4>
-        <div class="table-wrapper">
-          <table class="performance-table">
-            <thead>
-              <tr>
-                <th>Language</th>
-                <th>Test Set</th>
-                <th>Kimi-Audio</th>
-                <th>Whisper Large v3</th>
-                <th>seamless-m4t-large-v2</th>
-                <th>Fun-ASR-ML</th>
-                <th>Fun-ASR-ML-Nano</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td rowspan="5">Chinese</td>
-                <td>Fleurs</td>
-                <td>2.69</td>
-                <td>4.71</td>
-                <td>5.15</td>
-                <td>3.00</td>
-                <td>3.51</td>
-              </tr>
-              <tr>
-                <td>CommonVoice</td>
-                <td>7.21</td>
-                <td>12.61</td>
-                <td>10.76</td>
-                <td>5.76</td>
-                <td>6.2</td>
-              </tr>
-              <tr>
-                <td>WeNetSpeech Test Net</td>
-                <td>5.37</td>
-                <td>9.83</td>
-                <td>9.87</td>
-                <td>6.48</td>
-                <td>6.35</td>
-              </tr>
-              <tr>
-                <td>AIShell2 iOS Test</td>
-                <td>2.56</td>
-                <td>4.83</td>
-                <td>4.79</td>
-                <td>2.60</td>
-                <td>2.74</td>
-              </tr>
-              <tr>
-                <td>Nearfield Test Set</td>
-                <td>36.42</td>
-                <td>16.54</td>
-                <td>14.85</td>
-                <td>7.91</td>
-                <td>7.89</td>
-              </tr>
-              <tr>
-                <td rowspan="5">English</td>
-                <td>Fleurs</td>
-                <td>4.40</td>
-                <td>4.11</td>
-                <td>6.59</td>
-                <td>3.18</td>
-                <td>5.49</td>
-              </tr>
-              <tr>
-                <td>CommonVoice</td>
-                <td>10.31</td>
-                <td>9.66</td>
-                <td>7.63</td>
-                <td>7.67</td>
-                <td>9.90</td>
-              </tr>
-              <tr>
-                <td>Librispeech Test Clean</td>
-                <td>1.28</td>
-                <td>2.56</td>
-                <td>2.56</td>
-                <td>1.62</td>
-                <td>1.68</td>
-              </tr>
-              <tr>
-                <td>Librispeech Test Other</td>
-                <td>2.42</td>
-                <td>4.34</td>
-                <td>4.84</td>
-                <td>3.39</td>
-                <td>4.03</td>
-              </tr>
-              <tr>
-                <td>Nearfield Test Set</td>
-                <td>12.40</td>
-                <td>11.78</td>
-                <td>43.74</td>
-                <td>11.19</td>
-                <td>11.61</td>
-              </tr>
-              <tr>
-                <td rowspan="3">Indonesian</td>
-                <td>Fleurs</td>
-                <td>-</td>
-                <td>6.07</td>
-                <td>9.36</td>
-                <td>8.10</td>
-                <td>6.56</td>
-              </tr>
-              <tr>
-                <td>CommonVoice</td>
-                <td>-</td>
-                <td>7.27</td>
-                <td>6.10</td>
-                <td>5.49</td>
-                <td>8.09</td>
-              </tr>
-              <tr>
-                <td>GigaSpeech2 Test</td>
-                <td>-</td>
-                <td>19.11</td>
-                <td>22.30</td>
-                <td>16.71</td>
-                <td>18.52</td>
-              </tr>
-              <tr>
-                <td rowspan="3">Thai</td>
-                <td>Fleurs</td>
-                <td>-</td>
-                <td>8.48</td>
-                <td>9.25</td>
-                <td>6.00</td>
-                <td>8.05</td>
-              </tr>
-              <tr>
-                <td>CommonVoice</td>
-                <td>-</td>
-                <td>5.92</td>
-                <td>2.81</td>
-                <td>0.90</td>
-                <td>1.97</td>
-              </tr>
-              <tr>
-                <td>GigaSpeech2 Test</td>
-                <td>-</td>
-                <td>19.35</td>
-                <td>21.70</td>
-                <td>19.09</td>
-                <td>18.96</td>
-              </tr>
-              <tr>
-                <td rowspan="4">Vietnamese</td>
-                <td>Fleurs</td>
-                <td>-</td>
-                <td>6.51</td>
-                <td>8.07</td>
-                <td>5.50</td>
-                <td>7.75</td>
-              </tr>
-              <tr>
-                <td>CommonVoice</td>
-                <td>-</td>
-                <td>13.51</td>
-                <td>13.85</td>
-                <td>7.41</td>
-                <td>9.26</td>
-              </tr>
-              <tr>
-                <td>GigaSpeech2 Test</td>
-                <td>-</td>
-                <td>13.82</td>
-                <td>43.31</td>
-                <td>8.98</td>
-                <td>9.29</td>
-              </tr>
-              <tr>
-                <td>Nearfield Test Set</td>
-                <td>-</td>
-                <td>11.46</td>
-                <td>32.10</td>
-                <td>7.06</td>
-                <td>7.72</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
+      <p style="margin-top: 1rem; font-size: 0.95rem;">
+        <span class="lang-en" style="color: var(--text-secondary);">These improvements significantly reduce post-editing costs, particularly suitable for meeting minutes generation, news interview transcription, and legal records where text standardization is required.</span>
+        <span class="lang-zh" style="color: var(--text-secondary);">这些改进大幅降低后期编辑成本，特别适用于会议纪要生成、新闻采访整理、法律笔录等对文本规范性要求高的场景。</span>
+      </p>
     </div>
-
   </div>
 </section>
 
