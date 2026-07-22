@@ -12,6 +12,19 @@
 		.container { max-width: 1650px; }
 		table.table td, table.table th { word-break: break-word; }
 		table.table td audio { width: 170px; }
+		#crosslingual table.table th:nth-child(2) {
+			width: 82px;
+			min-width: 82px;
+			white-space: nowrap;
+			word-break: normal;
+		}
+		#longtext table.table th:first-child,
+		#longtext table.table td:first-child {
+			width: 92px;
+			min-width: 92px;
+			white-space: nowrap;
+			word-break: normal;
+		}
 	</style>
 </head>
 
@@ -29,7 +42,7 @@
         <p><b><a href="mailto:funaudiollm@alibaba-inc.com">funaudiollm@alibaba-inc.com</a></b></p>
 	</div>
 	<p><b>Abstract:</b>
-		In this paper, we present Qwen-Audio-3.0-TTS, a production-oriented speech synthesis system that jointly advances content consistency, speaker similarity, prosodic naturalness, audio quality, controllability, multilingual coverage, efficiency, and robustness. It combines a 12.5&nbsp;Hz low-frame-rate speech tokenizer for reduced inference latency with a five-stage progressive training paradigm for coordinated LM and FM optimization. free-style natural-language instruction following, and fine-grained inline control. The model provides production-level control through free-style natural-language instructions and fine-grained inline tags, while supporting 16 languages, 20 Chinese dialect regions, one-pass long-form synthesis up to 3 minutes, and robust generation from noisy, reverberant, or unclear reference speech. Across SEED-TTS-Eval, CV3-Eval, instruction-following, long-form, and acoustic-robustness evaluations, Qwen-Audio-3.0-TTS achieves state-of-the-art performance on many reported dimensions or the strongest aggregate results. It also ranks first on the independent Artificial Analysis Text-to-Speech Leaderboard. These results establish Qwen-Audio-3.0-TTS as a strong foundation for production-level speech synthesis.
+		In this paper, we present Qwen-Audio-3.0-TTS, a production-oriented speech synthesis system that jointly advances content consistency, speaker similarity, prosodic naturalness, audio quality, controllability, multilingual coverage, efficiency, and robustness. It combines a 12.5&nbsp;Hz low-frame-rate speech tokenizer for reduced inference latency with a five-stage progressive training paradigm for coordinated LM and FM optimization. The model provides production-level control through free-style natural-language instructions and fine-grained inline tags, while supporting 16 languages, 20 Chinese dialect regions, one-pass long-form synthesis up to 3 minutes, and robust generation from noisy, reverberant, or unclear reference speech. Across SEED-TTS-Eval, CV3-Eval, instruction-following, long-form, and acoustic-robustness evaluations, Qwen-Audio-3.0-TTS achieves state-of-the-art performance on many reported dimensions or the strongest aggregate results. It also ranks first on the independent Artificial Analysis Text-to-Speech Leaderboard. These results establish Qwen-Audio-3.0-TTS as a strong foundation for production-level speech synthesis.
 	</p>
 	<p><b>Key Contributions:</b></p>
 	<ul>
@@ -375,7 +388,7 @@
 			<table class="table table-hover pt-2">
 				<thead>
 				<tr>
-					<th style="vertical-align:middle;text-align:center">LANG</th>
+					<th style="vertical-align:middle;text-align:center">Language</th>
 					<th style="vertical-align:middle;text-align:center">Prompt</th>
 					<th style="vertical-align:middle;text-align:center">Tagged text</th>
 					<th style="vertical-align:middle;text-align:center">Qwen-Audio-3.0-TTS</th>
