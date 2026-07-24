@@ -8,11 +8,31 @@
 	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet" type="text/css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-	<title>Qwen-Audio-3.0-TTS</title>
+	<title>Qwen-Audio-3.0-TTS: Freely Controllable and Highly Robust Speech Synthesis with Multi-Stage Training Paradigm</title>
 	<style>
 		.container { max-width: 1650px; }
 		table.table td, table.table th { word-break: break-word; }
 		table.table td audio { width: 170px; }
+		.paper-title {
+			max-width: 1100px;
+			margin: 0 auto;
+			line-height: 1.25;
+			text-wrap: balance;
+		}
+		.affiliation-line {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.45rem;
+			margin: 2rem 0 2.5rem;
+			font-size: 1.05rem;
+			font-weight: 700;
+		}
+		.affiliation-label {
+			width: auto;
+			height: 1.45em;
+			flex: 0 0 auto;
+		}
 		#crosslingual table.table th:nth-child(2) {
 			width: 82px;
 			min-width: 82px;
@@ -38,9 +58,11 @@
 
 <div class="container pt-5 mt-5 shadow-lg p-5 mb-5 bg-white rounded">
 	<div class="text-center">
-	<h2>Qwen-Audio-3.0-TTS</h2>
-        <p class="fst-italic mb-0"><br>Alibaba Token Foundry</p>
-        <p><b><a href="mailto:funaudiollm@alibaba-inc.com">funaudiollm@alibaba-inc.com</a></b></p>
+		<h2 class="paper-title">Qwen-Audio-3.0-TTS: Freely Controllable and Highly Robust Speech Synthesis with Multi-Stage Training Paradigm</h2>
+		<p class="affiliation-line">
+			<img src="img/label.png" alt="Alibaba Token Foundry logo" class="affiliation-label">
+			<span>Alibaba Token Foundry</span>
+		</p>
 	</div>
 	<p><b>Abstract:</b>
 		In this paper, we present Qwen-Audio-3.0-TTS, a production-oriented speech synthesis system that jointly advances content consistency, speaker similarity, prosodic naturalness, audio quality, controllability, multilingual coverage, efficiency, and robustness. It combines a 12.5&nbsp;Hz low-frame-rate speech tokenizer for reduced inference latency with a five-stage progressive training paradigm for coordinated LM and FM optimization. The model provides production-level control through free-style natural-language instructions and fine-grained inline tags, while supporting 16 languages, 20 Chinese dialect regions, one-pass long-form synthesis up to 3 minutes, and robust generation from noisy, reverberant, or unclear reference speech. Across SEED-TTS-Eval, CV3-Eval, instruction-following, long-form, and acoustic-robustness evaluations, Qwen-Audio-3.0-TTS achieves state-of-the-art performance on many reported dimensions or the strongest aggregate results. It also ranks first on the independent Artificial Analysis Text-to-Speech Leaderboard. These results establish Qwen-Audio-3.0-TTS as a strong foundation for production-level speech synthesis.
